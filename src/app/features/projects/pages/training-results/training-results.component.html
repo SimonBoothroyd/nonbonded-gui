@@ -1,0 +1,18 @@
+<app-loadable [loadable]="optimizationResults$ | async" class="root__container">
+  <div fxLayout="column" fxFill class="dataset__container" fxLayoutGap="20px">
+    <div>
+      <mat-card>
+        <h3>Optimization Results</h3>
+        <div>Lorem Ipsum</div>
+      </mat-card>
+    </div>
+    <div class="inner__container">
+      <!--      <plotly-plot-->
+      <!--        [data]="graph.data"-->
+      <!--        [layout]="graph.layout"-->
+      <!--        [config]="{ displayModeBar: false, responsive: true }"-->
+      <!--      ></plotly-plot>-->
+      {{ optimizationResults$ | async | json }}
+    </div>
+  </div>
+</app-loadable>

@@ -1,0 +1,36 @@
+<app-loadable [loadable]="benchmarkResults$ | async" class="root__container">
+  <div fxLayout="column" fxFill class="dataset__container" fxLayoutGap="20px">
+    <div>
+      <mat-card>
+        <h3>Benchmarking Results</h3>
+      </mat-card>
+    </div>
+    <div class="inner__container">
+      <mat-card>
+        <h4>Statistics</h4>
+
+        <mat-radio-group
+          [ngModel]="statisticsType"
+          (change)="onStatisticTypeChanged()"
+          aria-label="Select an option"
+        >
+          <mat-radio-button value="RMSE">RMSE</mat-radio-button>
+          <mat-radio-button value="R^2">R^2</mat-radio-button>
+        </mat-radio-group>
+
+        <div *ngIf="statisticsType" class="graph__container" (resize)="onStatisticGraphResized()">
+          <plotly-plot
+            [data]="statisticsGraphData"
+            [layout]="statisticsGraphLayout"
+            [config]="{ displayModeBar: false }"
+            (initialized)="updatePlotly()"
+            [useResizeHandler]="false"
+            [style]="{position: 'relative', width: '100%', height: '100%'}">
+            #statisticsPlotComponent
+          ></plotly-plot>
+        </div>
+
+      </mat-card>
+    </div>
+  </div>
+</app-loadable>

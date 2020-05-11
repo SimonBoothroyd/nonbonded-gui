@@ -1,0 +1,16 @@
+<app-loadable [loadable]="dataSet$ | async" class="root__container">
+  <div fxLayout="column" fxFill class="dataset__container" fxLayoutGap="20px">
+    <div>
+      <mat-card>
+        <h3>Benchmarking Test Set</h3>
+        <div>
+          The test set contained a total of
+          {{ (dataSet$ | async).data_entries.length }} unique substances.
+        </div>
+      </mat-card>
+    </div>
+    <div class="inner__container">
+      <app-data-set [value]="dataSet$ | async"></app-data-set>
+    </div>
+  </div>
+</app-loadable>

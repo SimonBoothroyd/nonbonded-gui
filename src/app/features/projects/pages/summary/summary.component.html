@@ -1,0 +1,28 @@
+<app-loadable [loadable]="study$ | async" class="root__container">
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="2rem"
+    class="page__container"
+  >
+    <mat-card class="project__card">
+      <mat-card-title class="project__card-header">{{
+        (study$ | async).title
+      }}</mat-card-title>
+
+      <h3>Description</h3>
+
+      <div class="project__card-text">{{ (study$ | async).description }}</div>
+
+      <br />
+
+      <h3>Optimizations</h3>
+
+      <ul class="project__card-list">
+        <li *ngFor="let optimization of (study$ | async).optimizations">
+          {{ optimization.title }}
+        </li>
+      </ul>
+    </mat-card>
+  </div>
+</app-loadable>

@@ -1,0 +1,50 @@
+<div fxFill fxLayout="row" fxLayoutGap="20px" class="root__container">
+  <mat-card fxFlex="75" class="dataset__card_container">
+    <mat-grid-list [cols]="nColumns" rowHeight="1:1" gutterSize="20px">
+      <mat-grid-tile
+        *ngFor="let entry of value.data_entries"
+        [colspan]="entry.substance.smiles.length"
+        [class]="entry == selectedEntry ? 'tile__selected' : 'tile__container'"
+        (click)="selectedEntry = entry"
+      >
+        <img
+          *ngFor="let smiles of entry.substance.smiles"
+          [src]="'http://127.0.0.1:5000/api/v1/molecules/image/' + smiles"
+          height="100%"
+        />
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card>
+
+  <mat-card fxFlex="25" class="selected__card_container">
+    <div *ngIf="!selectedEntry">
+      No entry has been selected.
+    </div>
+    <div *ngIf="selectedEntry">
+      <h3 class="selected__card-header">
+        {{ selectedEntry.substance.smiles.join(' + ') }}
+      </h3>
+      <br />
+      <div>
+        {{ selectedEntry.values.length }} values are included in the data set for this
+        substance.
+      </div>
+      <br />
+      <h3>Values</h3>
+      <ul>
+        <li *ngFor="let data_value of selectedEntry.values">
+          <h4>{{ data_value.property_type }}</h4>
+          <div>
+            T={{ data_value.state_point.temperature.toFixed(3) }} K, P={{
+              data_value.state_point.pressure.toFixed(3)
+            }}
+            kPa, x=[{{ data_value.state_point.mole_fractions.join(', ') }}] Value={{
+              data_value.value.toFixed(3)
+            }}, Std={{ data_value.std_error.toFixed(3) }}
+          </div>
+          <br />
+        </li>
+      </ul>
+    </div>
+  </mat-card>
+</div>
