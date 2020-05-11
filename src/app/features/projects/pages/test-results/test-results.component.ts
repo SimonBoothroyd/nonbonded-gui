@@ -1,8 +1,9 @@
 import {
   ChangeDetectionStrategy,
-  Component, OnDestroy,
+  Component,
+  OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
@@ -79,32 +80,29 @@ export class TestResultsComponent implements OnInit, OnDestroy {
       'rgb(23, 190, 207)',
     ];
 
-    this.propertyTitles = []
+    this.propertyTitles = [];
 
     for (let propertyResult of benchmarkResult.property_results) {
+      let friendlyNComponents = propertyResult.n_components == 1 ? 'Pure' : 'Binary';
+      let propertyName = `${friendlyNComponents} ${propertyResult.property_type}`;
 
-      let friendlyNComponents = propertyResult.n_components == 1 ? "Pure" : "Binary"
-      let propertyName = `${friendlyNComponents} ${propertyResult.property_type}`
-
-      this.propertyTitles.push(propertyName)
+      this.propertyTitles.push(propertyName);
     }
 
-    for (let statisticType of ["RMSE", "R^2"]) {
-
-      let traces = []
+    for (let statisticType of ['RMSE', 'R^2']) {
+      let traces = [];
       let traceCounter = 0;
 
       for (let propertyResult of benchmarkResult.property_results) {
-
-        let friendlyNComponents = propertyResult.n_components == 1 ? "Pure" : "Binary"
-        let propertyName = `${friendlyNComponents} ${propertyResult.property_type}`
+        let friendlyNComponents = propertyResult.n_components == 1 ? 'Pure' : 'Binary';
+        let propertyName = `${friendlyNComponents} ${propertyResult.property_type}`;
 
         let forceFieldCounter = 0;
 
         for (let forceFieldResult of propertyResult.force_field_results) {
-
           const value = forceFieldResult.statistic_data.values[statisticType];
-          const confidenceIntervals = forceFieldResult.statistic_data.confidence_intervals[statisticType]
+          const confidenceIntervals =
+            forceFieldResult.statistic_data.confidence_intervals[statisticType];
 
           const trace = {
             type: 'bar',
@@ -114,7 +112,7 @@ export class TestResultsComponent implements OnInit, OnDestroy {
               type: 'data',
               symmetric: false,
               array: [Math.abs(value - confidenceIntervals[1])],
-              arrayminus: [Math.abs(value - confidenceIntervals[0])]
+              arrayminus: [Math.abs(value - confidenceIntervals[0])],
             },
             legendgroup: forceFieldResult.force_field_name,
             marker: { color: defaultColors[forceFieldCounter % defaultColors.length] },
@@ -122,7 +120,7 @@ export class TestResultsComponent implements OnInit, OnDestroy {
             xaxis: `x${traceCounter + 1}`,
             yaxis: `y${traceCounter + 1}`,
             showlegend: traceCounter == 0,
-            hoverinfo: "none",
+            hoverinfo: 'none',
           };
 
           traces.push(trace);
@@ -132,8 +130,7 @@ export class TestResultsComponent implements OnInit, OnDestroy {
         traceCounter += 1;
       }
 
-      statisticTraces[statisticType] = traces
-
+      statisticTraces[statisticType] = traces;
     }
 
     this.statisticsTraces = statisticTraces;
@@ -146,57 +143,52 @@ export class TestResultsComponent implements OnInit, OnDestroy {
   }
 
   updatePlotly() {
-
     this.statisticsGraphData = this.statisticsTraces[this.statisticsType];
     this.statisticsGraphLayout = {
       grid: { rows: 1, columns: this.nProperties, pattern: 'independent' },
       height: 400,
       yaxis: { title: this.statisticsType },
-      legend: {orientation: "h", xanchor: 'center', y: -0.1, x: 0.5},
+      legend: { orientation: 'h', xanchor: 'center', y: -0.1, x: 0.5 },
       margin: {
         t: 50,
       },
       title: false,
     };
 
-    let annotations = []
+    let annotations = [];
 
     for (let i = 0; i < this.nProperties; i++) {
+      let axisName = i == 0 ? 'xaxis' : `xaxis${i + 1}`;
+      this.statisticsGraphLayout[axisName] = { showticklabels: false };
 
-      let axisName = i == 0 ? "xaxis" : `xaxis${i + 1}`
-      this.statisticsGraphLayout[axisName] = { showticklabels: false }
+      console.log((i + 0.5) / this.nProperties);
 
-      console.log((i + 0.5) / this.nProperties)
-
-      annotations.push(
-        {
-          text: this.propertyTitles[i],
-          font: {
-            size: 14,
-          },
-          showarrow: false,
-          x: 0.5,
-          y: 1.15,
-          xref: `x${i + 1}`,
-          yref: 'paper',
-        }
-      )
+      annotations.push({
+        text: this.propertyTitles[i],
+        font: {
+          size: 14,
+        },
+        showarrow: false,
+        x: 0.5,
+        y: 1.15,
+        xref: `x${i + 1}`,
+        yref: 'paper',
+      });
     }
 
-    this.statisticsGraphLayout.annotations = annotations
+    this.statisticsGraphLayout.annotations = annotations;
   }
 
   onStatisticTypeChanged() {
-
     if (
       !this.statisticsPlotComponent ||
       !this.statisticsPlotComponent.plotly ||
       !this.statisticsPlotComponent.plotlyInstance
     ) {
-      return
+      return;
     }
 
-    this.updatePlotly()
+    this.updatePlotly();
   }
   onStatisticGraphResized() {
     if (
@@ -204,9 +196,11 @@ export class TestResultsComponent implements OnInit, OnDestroy {
       !this.statisticsPlotComponent.plotly ||
       !this.statisticsPlotComponent.plotlyInstance
     ) {
-      return
+      return;
     }
 
-    this.statisticsPlotComponent.plotly.resize(this.statisticsPlotComponent.plotlyInstance);
+    this.statisticsPlotComponent.plotly.resize(
+      this.statisticsPlotComponent.plotlyInstance
+    );
   }
 }

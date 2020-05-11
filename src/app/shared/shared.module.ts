@@ -23,7 +23,7 @@ PlotlyViaCDNModule.plotlyVersion = 'latest';
     FlexLayoutModule,
     FormsModule,
     PlotlyViaCDNModule,
-    AngularResizedEventModule
+    AngularResizedEventModule,
   ],
   exports: [
     MaterialModule,
@@ -31,7 +31,7 @@ PlotlyViaCDNModule.plotlyVersion = 'latest';
     LoadableComponent,
     FormsModule,
     PlotlyViaCDNModule,
-    AngularResizedEventModule
+    AngularResizedEventModule,
   ],
 })
 export class SharedModule {
