@@ -9,7 +9,10 @@ import { LoadableComponent } from '@shared/components/loadable/loadable.componen
 import { throwIfAlreadyLoaded } from '@core/guards/module-import.guard';
 import { FormsModule } from '@angular/forms';
 
+import { AngularResizedEventModule } from 'angular-resize-event';
+
 import { PlotlyViaCDNModule } from 'angular-plotly.js';
+
 PlotlyViaCDNModule.plotlyVersion = 'latest';
 
 @NgModule({
@@ -20,6 +23,7 @@ PlotlyViaCDNModule.plotlyVersion = 'latest';
     FlexLayoutModule,
     FormsModule,
     PlotlyViaCDNModule,
+    AngularResizedEventModule
   ],
   exports: [
     MaterialModule,
@@ -27,6 +31,7 @@ PlotlyViaCDNModule.plotlyVersion = 'latest';
     LoadableComponent,
     FormsModule,
     PlotlyViaCDNModule,
+    AngularResizedEventModule
   ],
 })
 export class SharedModule {

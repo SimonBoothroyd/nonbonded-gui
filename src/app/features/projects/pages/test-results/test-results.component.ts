@@ -1,10 +1,8 @@
 import {
-  ApplicationRef,
   ChangeDetectionStrategy,
-  Component,
-  NgZone,
+  Component, OnDestroy,
   OnInit,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
@@ -22,7 +20,7 @@ import { PlotComponent } from 'angular-plotly.js';
   styleUrls: ['./test-results.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TestResultsComponent implements OnInit {
+export class TestResultsComponent implements OnInit, OnDestroy {
   @ViewChild(PlotComponent)
   statisticsPlotComponent: PlotComponent;
 
@@ -35,16 +33,18 @@ export class TestResultsComponent implements OnInit {
   public statisticsGraphLayout;
 
   public statisticsType: string;
-  private nProperties: number;
 
-  constructor(private store: Store<State>, private ref: ApplicationRef) {}
+  private nProperties: number;
+  private propertyTitles: string[];
+
+  constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
     this.benchmarkResults$ = this.store.select(getBenchmarkResultState);
 
     this.statisticsType = 'RMSE';
 
-    this.statisticsTraces = [];
+    this.statisticsTraces = {};
 
     this.statisticsGraphData = [];
     this.statisticsGraphLayout = {};
@@ -64,8 +64,7 @@ export class TestResultsComponent implements OnInit {
 
     this.nProperties = benchmarkResult.property_results.length;
 
-    let traces = [];
-    let traceCounter = 0;
+    let statisticTraces = {};
 
     const defaultColors = [
       'rgb(31, 119, 180)',
@@ -80,35 +79,66 @@ export class TestResultsComponent implements OnInit {
       'rgb(23, 190, 207)',
     ];
 
+    this.propertyTitles = []
+
     for (let propertyResult of benchmarkResult.property_results) {
-      let forceFieldCounter = 0;
 
-      for (let forceFieldResult of propertyResult.force_field_results) {
-        const value = forceFieldResult.statistic_data.values[this.statisticsType];
-        // const confidenceIntervals = forceFieldResult.statistic_data.confidence_intervals[statisticType]
+      let friendlyNComponents = propertyResult.n_components == 1 ? "Pure" : "Binary"
+      let propertyName = `${friendlyNComponents} ${propertyResult.property_type}`
 
-        const trace = {
-          type: 'bar',
-          x: [forceFieldResult.force_field_name],
-          y: [value],
-          legendgroup: forceFieldResult.force_field_name,
-          marker: { color: defaultColors[forceFieldCounter % defaultColors.length] },
-          name: forceFieldResult.force_field_name,
-          xaxis: `x${traceCounter + 1}`,
-          yaxis: `y${traceCounter + 1}`,
-          showlegend: traceCounter == 0,
-        };
-
-        traces.push(trace);
-        forceFieldCounter += 1;
-      }
-
-      traceCounter += 1;
+      this.propertyTitles.push(propertyName)
     }
 
-    this.statisticsTraces = traces;
+    for (let statisticType of ["RMSE", "R^2"]) {
 
-    if (!this.statisticsPlotComponent.plotlyInstance) {
+      let traces = []
+      let traceCounter = 0;
+
+      for (let propertyResult of benchmarkResult.property_results) {
+
+        let friendlyNComponents = propertyResult.n_components == 1 ? "Pure" : "Binary"
+        let propertyName = `${friendlyNComponents} ${propertyResult.property_type}`
+
+        let forceFieldCounter = 0;
+
+        for (let forceFieldResult of propertyResult.force_field_results) {
+
+          const value = forceFieldResult.statistic_data.values[statisticType];
+          const confidenceIntervals = forceFieldResult.statistic_data.confidence_intervals[statisticType]
+
+          const trace = {
+            type: 'bar',
+            x: [forceFieldResult.force_field_name],
+            y: [value],
+            error_y: {
+              type: 'data',
+              symmetric: false,
+              array: [Math.abs(value - confidenceIntervals[1])],
+              arrayminus: [Math.abs(value - confidenceIntervals[0])]
+            },
+            legendgroup: forceFieldResult.force_field_name,
+            marker: { color: defaultColors[forceFieldCounter % defaultColors.length] },
+            name: forceFieldResult.force_field_name,
+            xaxis: `x${traceCounter + 1}`,
+            yaxis: `y${traceCounter + 1}`,
+            showlegend: traceCounter == 0,
+            hoverinfo: "none",
+          };
+
+          traces.push(trace);
+          forceFieldCounter += 1;
+        }
+
+        traceCounter += 1;
+      }
+
+      statisticTraces[statisticType] = traces
+
+    }
+
+    this.statisticsTraces = statisticTraces;
+
+    if (!this.statisticsPlotComponent || !this.statisticsPlotComponent.plotlyInstance) {
       return;
     }
 
@@ -116,23 +146,67 @@ export class TestResultsComponent implements OnInit {
   }
 
   updatePlotly() {
-    this.statisticsGraphData = this.statisticsTraces;
+
+    this.statisticsGraphData = this.statisticsTraces[this.statisticsType];
     this.statisticsGraphLayout = {
       grid: { rows: 1, columns: this.nProperties, pattern: 'independent' },
       height: 400,
+      yaxis: { title: this.statisticsType },
+      legend: {orientation: "h", xanchor: 'center', y: -0.1, x: 0.5},
+      margin: {
+        t: 50,
+      },
+      title: false,
     };
 
-    this.ref.tick();
+    let annotations = []
+
+    for (let i = 0; i < this.nProperties; i++) {
+
+      let axisName = i == 0 ? "xaxis" : `xaxis${i + 1}`
+      this.statisticsGraphLayout[axisName] = { showticklabels: false }
+
+      console.log((i + 0.5) / this.nProperties)
+
+      annotations.push(
+        {
+          text: this.propertyTitles[i],
+          font: {
+            size: 14,
+          },
+          showarrow: false,
+          x: 0.5,
+          y: 1.15,
+          xref: `x${i + 1}`,
+          yref: 'paper',
+        }
+      )
+    }
+
+    this.statisticsGraphLayout.annotations = annotations
   }
 
-  onStatisticTypeChanged() {}
+  onStatisticTypeChanged() {
+
+    if (
+      !this.statisticsPlotComponent ||
+      !this.statisticsPlotComponent.plotly ||
+      !this.statisticsPlotComponent.plotlyInstance
+    ) {
+      return
+    }
+
+    this.updatePlotly()
+  }
   onStatisticGraphResized() {
     if (
       !this.statisticsPlotComponent ||
       !this.statisticsPlotComponent.plotly ||
       !this.statisticsPlotComponent.plotlyInstance
     ) {
-      this.statisticsPlotComponent.plotly.resize(this.statisticsPlotComponent.plotlyInstance);
+      return
     }
+
+    this.statisticsPlotComponent.plotly.resize(this.statisticsPlotComponent.plotlyInstance);
   }
 }

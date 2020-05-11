@@ -10,7 +10,7 @@
         <h4>Statistics</h4>
 
         <mat-radio-group
-          [ngModel]="statisticsType"
+          [(ngModel)]="statisticsType"
           (change)="onStatisticTypeChanged()"
           aria-label="Select an option"
         >
@@ -18,7 +18,7 @@
           <mat-radio-button value="R^2">R^2</mat-radio-button>
         </mat-radio-group>
 
-        <div *ngIf="statisticsType" class="graph__container" (resize)="onStatisticGraphResized()">
+        <div *ngIf="statisticsType" class="graph__container" (resized)="onStatisticGraphResized()">
           <plotly-plot
             [data]="statisticsGraphData"
             [layout]="statisticsGraphLayout"
