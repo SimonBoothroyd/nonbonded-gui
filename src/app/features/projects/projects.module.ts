@@ -16,7 +16,6 @@ import { TrainingDataSetComponent } from '@app/features/projects/pages/training-
 import { TrainingDataSetChildComponent } from '@app/features/projects/pages/training-data-set-child/training-data-set-child.component';
 import { TrainingResultsComponent } from './pages/training-results/training-results.component';
 import { TestResultsComponent } from './pages/test-results/test-results.component';
-import { ReshapeStatisticsPipe } from './pipes/reshape-statistics.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,6 @@ import { ReshapeStatisticsPipe } from './pipes/reshape-statistics.pipe';
     TrainingDataSetChildComponent,
     TrainingResultsComponent,
     TestResultsComponent,
-    ReshapeStatisticsPipe,
   ],
   imports: [CommonModule, ProjectsRoutes, SharedModule],
 })

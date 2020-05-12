@@ -34,7 +34,6 @@ export class TrainingDataSetComponent implements OnInit {
   }
 
   onOptimizationChanged(event: MatSelectChange): void {
-    console.log(event.value);
     this.router.navigate([event.value], { relativeTo: this.activatedRoute });
   }
 }

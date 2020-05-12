@@ -161,8 +161,6 @@ export class TestResultsComponent implements OnInit, OnDestroy {
       let axisName = i == 0 ? 'xaxis' : `xaxis${i + 1}`;
       this.statisticsGraphLayout[axisName] = { showticklabels: false };
 
-      console.log((i + 0.5) / this.nProperties);
-
       annotations.push({
         text: this.propertyTitles[i],
         font: {

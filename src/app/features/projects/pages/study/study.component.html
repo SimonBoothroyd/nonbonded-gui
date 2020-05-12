@@ -1,28 +1,29 @@
 <mat-sidenav-container class="root__container">
   <mat-sidenav mode="side" class="sidebar__nav" [(opened)]="navbarOpen">
+
     <mat-nav-list>
-      <mat-list-item>
+      <a mat-list-item [routerLink]="['summary']">
         <mat-icon mat-list-icon>class</mat-icon>
-        <a mat-line [routerLink]="['summary']">Summary</a>
-      </mat-list-item>
+        <div mat-line>Summary</div>
+      </a>
       <div mat-subheader>Optimization</div>
-      <mat-list-item>
+      <a mat-list-item [routerLink]="['training-set']">
         <mat-icon mat-list-icon>dns</mat-icon>
-        <a mat-line [routerLink]="['training-set']">Data Sets</a>
-      </mat-list-item>
-      <mat-list-item>
+        <div mat-line>Data Sets</div>
+      </a>
+      <a mat-list-item [routerLink]="['training-results']">
         <mat-icon mat-list-icon>scatter_plot</mat-icon>
-        <a mat-line [routerLink]="['training-results']">Results</a>
-      </mat-list-item>
+        <div mat-line>Results</div>
+      </a>
       <div mat-subheader>Benchmarking</div>
-      <mat-list-item>
+      <a mat-list-item [routerLink]="['test-set']">
         <mat-icon mat-list-icon>dns</mat-icon>
-        <a mat-line [routerLink]="['test-set']">Data Sets</a>
-      </mat-list-item>
-      <mat-list-item>
+        <div mat-line>Data Sets</div>
+      </a>
+      <a mat-list-item [routerLink]="['test-results']">
         <mat-icon mat-list-icon>bar_chart</mat-icon>
-        <a mat-line [routerLink]="['test-results']">Results</a>
-      </mat-list-item>
+        <div mat-line>Results</div>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
 
