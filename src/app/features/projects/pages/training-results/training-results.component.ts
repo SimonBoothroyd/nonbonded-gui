@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 
 import { State } from '@core/store';
 
-import { OptimizationResultsState } from '@core/store/results/results.interfaces';
-import { getOptimizationResultState } from '@core/store/results/results.selectors';
+// import { OptimizationResultsState } from '@core/store/results/results.interfaces';
+// import { getOptimizationResultState } from '@core/store/results/results.selectors';
 
 @Component({
   selector: 'app-training-results',
@@ -15,11 +15,11 @@ import { getOptimizationResultState } from '@core/store/results/results.selector
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrainingResultsComponent implements OnInit {
-  optimizationResults$: Observable<OptimizationResultsState>;
+  // optimizationResults$: Observable<OptimizationResultsState>;
 
   constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
-    this.optimizationResults$ = this.store.select(getOptimizationResultState, {});
+    // this.optimizationResults$ = this.store.select(getOptimizationResultState, {});
   }
 }

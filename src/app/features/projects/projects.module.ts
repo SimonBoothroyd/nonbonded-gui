@@ -16,6 +16,7 @@ import { TrainingDataSetComponent } from '@app/features/projects/pages/training-
 import { TrainingDataSetChildComponent } from '@app/features/projects/pages/training-data-set-child/training-data-set-child.component';
 import { TrainingResultsComponent } from './pages/training-results/training-results.component';
 import { TestResultsComponent } from './pages/test-results/test-results.component';
+import { TestDataSetChildComponent } from '@app/features/projects/pages/test-data-set-child/test-data-set-child.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { TestResultsComponent } from './pages/test-results/test-results.componen
     SummaryComponent,
     DataSetComponent,
     TestDataSetComponent,
+    TestDataSetChildComponent,
     TrainingDataSetComponent,
     TrainingDataSetChildComponent,
     TrainingResultsComponent,

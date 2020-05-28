@@ -13,14 +13,11 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { reducers } from '@core/store';
 import { throwIfAlreadyLoaded } from '@core/guards/module-import.guard';
 
-import { ProjectsEffects } from '@core/store/projects/projects.effects';
-import { DataSetEffects } from '@core/store/datasets/datasets.effects';
-import {
-  BenchmarksEffects,
-  OptimizationsEffects,
-} from '@core/store/results/results.effects';
-
 import { RouteSerializer } from '@core/store/routes/route.serializer';
+
+import { ProjectsEffects } from '@core/store/projects/projects.effects';
+import { ProjectEffects } from '@core/store/project/project.effects';
+import { StudyDetailsEffects } from '@core/store/study-details/study-details.effects';
 
 @NgModule({
   imports: [
@@ -32,12 +29,7 @@ import { RouteSerializer } from '@core/store/routes/route.serializer';
     HttpClientModule,
 
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([
-      DataSetEffects,
-      ProjectsEffects,
-      BenchmarksEffects,
-      OptimizationsEffects,
-    ]),
+    EffectsModule.forRoot([ProjectsEffects, ProjectEffects, StudyDetailsEffects]),
 
     StoreRouterConnectingModule.forRoot({
       serializer: RouteSerializer,

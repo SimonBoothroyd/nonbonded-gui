@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { State } from '@core/store';
 
 import { selectProjectsState } from '@core/store/projects/projects.selectors';
-import { ProjectCollectionState } from '@core/store/projects/projects.interfaces';
+import { ProjectsState } from '@core/store/projects/projects.interfaces';
 
 @Component({
   selector: 'app-projects-list',
@@ -16,11 +16,11 @@ import { ProjectCollectionState } from '@core/store/projects/projects.interfaces
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsListComponent implements OnInit {
-  projectCollection$: Observable<ProjectCollectionState>;
+  projects$: Observable<ProjectsState>;
 
   constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
-    this.projectCollection$ = this.store.select(selectProjectsState);
+    this.projects$ = this.store.select(selectProjectsState);
   }
 }

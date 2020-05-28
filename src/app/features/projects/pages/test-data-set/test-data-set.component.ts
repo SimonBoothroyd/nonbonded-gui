@@ -1,12 +1,16 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-
 import { Observable } from 'rxjs';
-
 import { Store } from '@ngrx/store';
 import { State } from '@core/store';
 
-import { DataSetState } from '@core/store/datasets/datasets.interfaces';
-import { getDataSetState } from '@core/store/datasets/datasets.selectors';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSelectChange } from '@angular/material/select';
+
+import { getRouterInfo } from '@core/store/routes/route.selectors';
+import { RouterStateUrl } from '@core/store/routes/route.serializer';
+
+import { StudyState } from '@core/store/project/project.interfaces';
+import { getCurrentStudyState } from '@core/store/project/project.selectors';
 
 @Component({
   selector: 'app-test-data-set',
@@ -15,11 +19,21 @@ import { getDataSetState } from '@core/store/datasets/datasets.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TestDataSetComponent implements OnInit {
-  dataSet$: Observable<DataSetState>;
+  study$: Observable<StudyState>;
+  routerInfo$: Observable<RouterStateUrl>;
 
-  constructor(private store: Store<State>) {}
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private store: Store<State>
+  ) {}
 
   ngOnInit(): void {
-    this.dataSet$ = this.store.select(getDataSetState, {});
+    this.study$ = this.store.select(getCurrentStudyState);
+    this.routerInfo$ = this.store.select(getRouterInfo);
+  }
+
+  onBenchmarkChanged(event: MatSelectChange): void {
+    this.router.navigate([event.value], { relativeTo: this.activatedRoute });
   }
 }

@@ -1,19 +1,22 @@
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
+import { PlotComponent } from 'angular-plotly.js';
+
 import { Observable, Subscription } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 
 import { State } from '@core/store';
 
-import { BenchmarkResultState } from '@core/store/results/results.interfaces';
-import { getBenchmarkResultState } from '@core/store/results/results.selectors';
-import { PlotComponent } from 'angular-plotly.js';
+import { TestResultsState, TestSummaryStatisticsState } from '@core/store/study-details/study-details.interfaces';
+import { getTestResults, getTestSummaryStatistics } from '@core/store/study-details/study-details.selectors';
+import { BreakpointObserver, Breakpoints, BreakpointState, MediaMatcher } from '@angular/cdk/layout';
+import { BreakPoint } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-test-results',
@@ -22,183 +25,224 @@ import { PlotComponent } from 'angular-plotly.js';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TestResultsComponent implements OnInit, OnDestroy {
+
   @ViewChild(PlotComponent)
-  statisticsPlotComponent: PlotComponent;
+  summaryStatisticsComponent: PlotComponent;
 
-  public benchmarkResults$: Observable<BenchmarkResultState>;
-  private resultsSubscription: Subscription;
+  @ViewChild(PlotComponent)
+  resultsComponent: PlotComponent;
 
-  private statisticsTraces;
+  public summaryStatistics$: Observable<TestSummaryStatisticsState>;
+  public summaryStatisticsSubscription: Subscription;
+  private _summaryStatistics: TestSummaryStatisticsState;
+  public summaryStatisticsGraphData;
+  public summaryStatisticsGraphLayout;
 
-  public statisticsGraphData;
-  public statisticsGraphLayout;
+  public results$: Observable<TestResultsState>;
+  public resultsSubscription: Subscription;
+  private _results: TestResultsState;
+  public resultsPropertyType: string;
+  public resultsGraphData;
+  public resultsGraphLayout;
 
-  public statisticsType: string;
+  private mediaMatchers: string;
 
-  private nProperties: number;
-  private propertyTitles: string[];
+  private nColumns: number
 
-  constructor(private store: Store<State>) {}
+  constructor(private store: Store<State>, private breakpointObserver: BreakpointObserver, private ref: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.benchmarkResults$ = this.store.select(getBenchmarkResultState);
+    this.initializeSummaryStatistics()
+    this.initializeResults()
 
-    this.statisticsType = 'RMSE';
+    this.nColumns = 1
 
-    this.statisticsTraces = {};
+    this.breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ])
+      .subscribe((state: BreakpointState) => this.updateColumns(state));
+  }
+  ngOnDestroy() {
+    if (this.summaryStatisticsSubscription) this.summaryStatisticsSubscription.unsubscribe();
+    if (this.resultsSubscription) this.resultsSubscription.unsubscribe();
+  }
 
-    this.statisticsGraphData = [];
-    this.statisticsGraphLayout = {};
+  initializeSummaryStatistics() {
+    this.summaryStatistics$ = this.store.select(getTestSummaryStatistics, {
+      statisticsType: 'RMSE',
+    });
 
-    this.resultsSubscription = this.benchmarkResults$.subscribe((state) => {
+    this._summaryStatistics = undefined;
+
+    this.summaryStatisticsGraphData = [];
+    this.summaryStatisticsGraphLayout = {};
+
+    this.summaryStatisticsSubscription = this.summaryStatistics$.subscribe((state) => {
       if (!state.success) return;
-      this.reshapeData(state);
+
+      this._summaryStatistics = state;
+
+      if (
+        !this.summaryStatisticsComponent ||
+        !this.summaryStatisticsComponent.plotlyInstance
+      ) {
+        return;
+      }
+
+      this.updateSummaryStatistics();
+    });
+  }
+  initializeResults() {
+    this.results$ = this.store.select(getTestResults);
+
+    this._results = undefined;
+
+    this.resultsGraphData = [];
+    this.resultsGraphLayout = {};
+
+    this.resultsSubscription = this.results$.subscribe((state) => {
+      if (!state.success) return;
+
+      this._results = state;
+      this.resultsPropertyType = Object.keys(state.traces)[0]
+
+      if (
+        !this.resultsComponent ||
+        !this.resultsComponent.plotlyInstance
+      ) {
+        return;
+      }
+
+      this.updateResults();
     });
   }
 
-  ngOnDestroy() {
-    this.resultsSubscription.unsubscribe();
+  updateColumns(state: BreakpointState) {
+    if (state.breakpoints[Breakpoints.XSmall]) this.nColumns = 1
+    else if (state.breakpoints[Breakpoints.Small]) this.nColumns = 1
+    else if (state.breakpoints[Breakpoints.Medium]) this.nColumns = 2
+    else if (state.breakpoints[Breakpoints.Large]) this.nColumns = 3
+    else this.nColumns = 4
+
+    console.log(state, this.nColumns)
+
+    this.updateResults()
+    this.updateSummaryStatistics()
+
+    this.ref.detectChanges();
   }
 
-  reshapeData(benchmarkResult) {
-    if (!benchmarkResult.success) return;
+  updateSummaryStatistics() {
 
-    this.nProperties = benchmarkResult.property_results.length;
+    if (!this._summaryStatistics) return
 
-    let statisticTraces = {};
+    const nProperties = this._summaryStatistics.propertyTitles.length;
 
-    const defaultColors = [
-      'rgb(31, 119, 180)',
-      'rgb(255, 127, 14)',
-      'rgb(44, 160, 44)',
-      'rgb(214, 39, 40)',
-      'rgb(148, 103, 189)',
-      'rgb(140, 86, 75)',
-      'rgb(227, 119, 194)',
-      'rgb(127, 127, 127)',
-      'rgb(188, 189, 34)',
-      'rgb(23, 190, 207)',
-    ];
+    this.summaryStatisticsGraphData = this._summaryStatistics.traces;
 
-    this.propertyTitles = [];
+    const nColumns = Math.min(this.nColumns + 2, nProperties)
+    const nRows = Math.ceil(nProperties / nColumns)
 
-    for (let propertyResult of benchmarkResult.property_results) {
-      let friendlyNComponents = propertyResult.n_components == 1 ? 'Pure' : 'Binary';
-      let propertyName = `${friendlyNComponents} ${propertyResult.property_type}`;
+    console.log(nColumns, nRows)
 
-      this.propertyTitles.push(propertyName);
-    }
+    this.summaryStatisticsGraphLayout = {
+      grid: { rows: nRows, columns: nColumns, pattern: 'independent'  },
+      width: 250 * nColumns,
+      height: 320 * nRows,
+      margin: {
+        t: 50,
+      },
+      title: false,
+      legend: { orientation: 'h', xanchor: 'center', y: -0.3, x: 0.5 },
+    };
 
-    for (let statisticType of ['RMSE', 'R^2']) {
-      let traces = [];
-      let traceCounter = 0;
+    for (let trace of this.summaryStatisticsGraphData) {
 
-      for (let propertyResult of benchmarkResult.property_results) {
-        let friendlyNComponents = propertyResult.n_components == 1 ? 'Pure' : 'Binary';
-        let propertyName = `${friendlyNComponents} ${propertyResult.property_type}`;
+      let xIndex = trace.index % nColumns
+      let yIndex = Math.floor(trace.index / nColumns)
 
-        let forceFieldCounter = 0;
+      trace.xaxis = `x${trace.index + 1}`
+      trace.yaxis = `y${trace.index + 1}`
 
-        for (let forceFieldResult of propertyResult.force_field_results) {
-          const value = forceFieldResult.statistic_data.values[statisticType];
-          const confidenceIntervals =
-            forceFieldResult.statistic_data.confidence_intervals[statisticType];
-
-          const trace = {
-            type: 'bar',
-            x: [forceFieldResult.force_field_name],
-            y: [value],
-            error_y: {
-              type: 'data',
-              symmetric: false,
-              array: [Math.abs(value - confidenceIntervals[1])],
-              arrayminus: [Math.abs(value - confidenceIntervals[0])],
-            },
-            legendgroup: forceFieldResult.force_field_name,
-            marker: { color: defaultColors[forceFieldCounter % defaultColors.length] },
-            name: forceFieldResult.force_field_name,
-            xaxis: `x${traceCounter + 1}`,
-            yaxis: `y${traceCounter + 1}`,
-            showlegend: traceCounter == 0,
-            hoverinfo: 'none',
-          };
-
-          traces.push(trace);
-          forceFieldCounter += 1;
-        }
-
-        traceCounter += 1;
+      this.summaryStatisticsGraphLayout[`xaxis${trace.index + 1}`] = {
+        showticklabels: false, title: this._summaryStatistics.propertyTitles[trace.index]
       }
-
-      statisticTraces[statisticType] = traces;
+      if (xIndex == 0) this.summaryStatisticsGraphLayout[`yaxis${trace.index + 1}`] = { title: 'RMSE' }
     }
-
-    this.statisticsTraces = statisticTraces;
-
-    if (!this.statisticsPlotComponent || !this.statisticsPlotComponent.plotlyInstance) {
-      return;
-    }
-
-    this.updatePlotly();
   }
+  updateResults() {
 
-  updatePlotly() {
-    this.statisticsGraphData = this.statisticsTraces[this.statisticsType];
-    this.statisticsGraphLayout = {
-      grid: { rows: 1, columns: this.nProperties, pattern: 'independent' },
-      height: 400,
-      yaxis: { title: this.statisticsType },
-      legend: { orientation: 'h', xanchor: 'center', y: -0.1, x: 0.5 },
+    if (!this._results) return
+
+    const nBenchmarks = this._results.benchmarkNames.length;
+
+    this.resultsGraphData = this._results.traces[this.resultsPropertyType];
+
+    const nColumns = Math.min(this.nColumns, nBenchmarks)
+    const nRows = Math.ceil(nBenchmarks / nColumns)
+
+    this.resultsGraphLayout = {
+      grid: { rows: nRows, columns: nColumns, pattern: 'independent'  },
+      width: 320 * nColumns + 300,
+      height: 320 * nRows,
       margin: {
         t: 50,
       },
       title: false,
     };
 
-    let annotations = [];
+    for (let trace of this.resultsGraphData) {
 
-    for (let i = 0; i < this.nProperties; i++) {
-      let axisName = i == 0 ? 'xaxis' : `xaxis${i + 1}`;
-      this.statisticsGraphLayout[axisName] = { showticklabels: false };
+      let xIndex = trace.index % nColumns
+      let yIndex = Math.floor(trace.index / nColumns)
 
-      annotations.push({
-        text: this.propertyTitles[i],
-        font: {
-          size: 14,
-        },
-        showarrow: false,
-        x: 0.5,
-        y: 1.15,
-        xref: `x${i + 1}`,
-        yref: 'paper',
-      });
+      trace.xaxis = `x${trace.index + 1}`
+      trace.yaxis = `y${trace.index + 1}`
+
+      this.resultsGraphLayout[`xaxis${trace.index + 1}`] = { title: this._results.benchmarkNames[trace.index] }
+      if (xIndex == 0) this.resultsGraphLayout[`yaxis${trace.index + 1}`] = { title: 'Reference Value' }
     }
-
-    this.statisticsGraphLayout.annotations = annotations;
   }
 
   onStatisticTypeChanged() {
     if (
-      !this.statisticsPlotComponent ||
-      !this.statisticsPlotComponent.plotly ||
-      !this.statisticsPlotComponent.plotlyInstance
+      !this.summaryStatisticsComponent ||
+      !this.summaryStatisticsComponent.plotly ||
+      !this.summaryStatisticsComponent.plotlyInstance
     ) {
       return;
     }
 
-    this.updatePlotly();
+    this.updateSummaryStatistics();
   }
+  onResultPropertyChanged() {
+    if (
+      !this.resultsComponent ||
+      !this.resultsComponent.plotly ||
+      !this.resultsComponent.plotlyInstance
+    ) {
+      return;
+    }
+
+    this.updateResults();
+  }
+
   onStatisticGraphResized() {
     if (
-      !this.statisticsPlotComponent ||
-      !this.statisticsPlotComponent.plotly ||
-      !this.statisticsPlotComponent.plotlyInstance
+      !this.summaryStatisticsComponent ||
+      !this.summaryStatisticsComponent.plotly ||
+      !this.summaryStatisticsComponent.plotlyInstance
     ) {
       return;
     }
 
-    this.statisticsPlotComponent.plotly.resize(
-      this.statisticsPlotComponent.plotlyInstance
+    this.summaryStatisticsComponent.plotly.resize(
+      this.summaryStatisticsComponent.plotlyInstance
     );
   }
 }

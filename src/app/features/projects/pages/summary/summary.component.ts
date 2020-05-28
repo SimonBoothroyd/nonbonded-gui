@@ -6,8 +6,8 @@ import { Store } from '@ngrx/store';
 
 import { State } from '@core/store';
 
-import { StudyState } from '@core/store/projects/projects.interfaces';
-import { getCurrentStudyState } from '@core/store/projects/projects.selectors';
+import { StudyState } from '@core/store/project/project.interfaces';
+import { getCurrentStudyState } from '@core/store/project/project.selectors';
 
 @Component({
   selector: 'app-summary',

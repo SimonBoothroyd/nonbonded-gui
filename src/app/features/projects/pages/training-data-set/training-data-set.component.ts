@@ -9,8 +9,8 @@ import { MatSelectChange } from '@angular/material/select';
 import { getRouterInfo } from '@core/store/routes/route.selectors';
 import { RouterStateUrl } from '@core/store/routes/route.serializer';
 
-import { StudyState } from '@core/store/projects/projects.interfaces';
-import { getCurrentStudyState } from '@core/store/projects/projects.selectors';
+import { StudyState } from '@core/store/project/project.interfaces';
+import { getCurrentStudyState } from '@core/store/project/project.selectors';
 
 @Component({
   selector: 'app-training-data-set',

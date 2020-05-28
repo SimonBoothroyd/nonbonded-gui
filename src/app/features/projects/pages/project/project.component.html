@@ -7,28 +7,32 @@
   >
     <mat-card class="project__card">
       <mat-card-title class="project__card-header">{{
-        (project$ | async).title
+        (project$ | async).name
       }}</mat-card-title>
 
-      <h3>Authors</h3>
+      <mat-list class="list-horizontal">
+        <mat-list-item *ngFor="let author of (project$ | async).authors">
+          <mat-icon matListIcon>account_circle</mat-icon>
+          <p matLine> {{author.name}} </p>
+        </mat-list-item>
+      </mat-list>
 
-      <ul class="project__card-list">
-        <li *ngFor="let author of (project$ | async).authors">{{ author.name }}</li>
-      </ul>
+      <div class="project__card-text">{{ (project$ | async).description }}</div>
 
-      <h3>Abstract</h3>
+    </mat-card>
 
-      <div class="project__card-text">{{ (project$ | async).abstract }}</div>
+    <h2>Studies</h2>
 
-      <br />
-
-      <h3>Studies</h3>
-
-      <ul class="project__card-list">
-        <li *ngFor="let study of (project$ | async).studies">
-          <a [routerLink]="['studies', study.identifier]">{{ study.title }}</a>
-        </li>
-      </ul>
+    <mat-card class="project__card" *ngFor="let study of (project$ | async).studies">
+      <mat-card-title class="study__card-header">{{
+        study.name
+        }}</mat-card-title>
+      <br/>
+      <div class="project__card-text">{{ study.description.split('\n')[0] }}</div>
+      <mat-card-actions>
+        <div fxFlex></div>
+        <a [routerLink]="['studies', study.id]"><button mat-button>MORE</button></a>
+      </mat-card-actions>
     </mat-card>
   </div>
 </app-loadable>

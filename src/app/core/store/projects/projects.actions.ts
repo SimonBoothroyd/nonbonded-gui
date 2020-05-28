@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ProjectCollection } from '@core/models/projects';
+import { Projects } from '@core/store/projects/projects.interfaces';
 
 export enum ProjectsActionsTypes {
   Load = '[PROJECTS] LOAD',
@@ -13,7 +13,7 @@ export class LoadProjects implements Action {
 
 export class LoadProjectsSuccess implements Action {
   readonly type = ProjectsActionsTypes.LoadSuccess;
-  constructor(public payload: ProjectCollection) {}
+  constructor(public payload: Projects) {}
 }
 export class LoadProjectsError implements Action {
   readonly type = ProjectsActionsTypes.LoadError;

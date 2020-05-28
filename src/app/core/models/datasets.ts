@@ -6,61 +6,85 @@
  */
 
 /**
- * The project that this data set belongs to.
+ * The unique identifier associated with the data set.
  */
-export type ProjectIdentifier = string;
+export type Id = string;
 /**
- * The study that this data set belongs to.
+ * A description of why and how this data set was chosen.
  */
-export type StudyIdentifier = string;
+export type Description = string;
 /**
- * The optimization that this data set belongs to.
+ * The full name of the author.
  */
-export type OptimizationIdentifier = string;
+export type Name = string;
 /**
- * The substance associated with this entry.
+ * The author's email address.
  */
-export type SubstanceType = Substance;
+export type Email = string;
 /**
- * The SMILES representations of the molecules in a substance.
+ * The author's host institute.
  */
-export type Smiles = string[];
+export type Institute = string;
 /**
- * The type of property that this value corresponds to.
+ * The authors who prepared the data set.
+ */
+export type Authors = Author[];
+/**
+ * The unique id assigned to this entry
+ */
+export type Id1 = number;
+/**
+ * The type of property that this value corresponds to. This should correspond to an `openff.evaluator.properties` property class name.
  */
 export type PropertyType = string;
 /**
- * The state point that this value corresponds to.
- */
-export type StatePointType = StatePoint;
-/**
- * The temperature of the state (K).
+ * The temperature (K) at which this value was measured.
  */
 export type Temperature = number;
 /**
- * The pressure of the state (kPa).
+ * The pressure (kPa) at which this value was measured.
  */
 export type Pressure = number;
 /**
- * The composition of the state.
+ * The phase that the property was measured in.
  */
-export type MoleFractions = number[];
+export type Phase = string;
 /**
- * The value in the default units of the property type.
+ * The value in the default unit for the property.
  */
 export type Value = number;
 /**
- * The uncertainty in the value in the default units of the property type.
+ * The std error in the default unit for the property.
  */
 export type StdError = number;
 /**
- * The values associated with this entry.
+ * The DOI which encodes the source of the measurement.
  */
-export type Values = DataSetValue[];
+export type Doi = string;
 /**
- * The entries in the selected data set.
+ * The smiles representation of the component.
  */
-export type DataEntries = DataSetEntry[];
+export type Smiles = string;
+/**
+ * The mole fraction of this component.
+ */
+export type MoleFraction = number;
+/**
+ * The exact amount of this component.
+ */
+export type ExactAmount = number;
+/**
+ * The role of this component in the system (e.g solvent, solute, ligand, etc.)
+ */
+export type Role = string;
+/**
+ * The components in the systems for which the measurement was made.
+ */
+export type Components = Component[];
+/**
+ * The entries in the data set.
+ */
+export type Entries = DataSetEntry[];
 /**
  * A collection of data sets.
  */
@@ -68,28 +92,37 @@ export type DataSets = DataSet[];
 
 export interface DataSetCollection {
   data_sets?: DataSets;
+  [k: string]: unknown;
 }
 export interface DataSet {
-  project_identifier: ProjectIdentifier;
-  study_identifier: StudyIdentifier;
-  optimization_identifier: OptimizationIdentifier;
-  data_entries: DataEntries;
+  id: Id;
+  description: Description;
+  authors: Authors;
+  entries: Entries;
+  [k: string]: unknown;
+}
+export interface Author {
+  name: Name;
+  email: Email;
+  institute: Institute;
+  [k: string]: unknown;
 }
 export interface DataSetEntry {
-  substance: SubstanceType;
-  values: Values;
-}
-export interface Substance {
-  smiles: Smiles;
-}
-export interface DataSetValue {
+  id?: Id1;
   property_type: PropertyType;
-  state_point: StatePointType;
-  value: Value;
-  std_error: StdError;
-}
-export interface StatePoint {
   temperature: Temperature;
   pressure: Pressure;
-  mole_fractions: MoleFractions;
+  phase?: Phase;
+  value: Value;
+  std_error: StdError;
+  doi: Doi;
+  components: Components;
+  [k: string]: unknown;
+}
+export interface Component {
+  smiles: Smiles;
+  mole_fraction: MoleFraction;
+  exact_amount?: ExactAmount;
+  role?: Role;
+  [k: string]: unknown;
 }

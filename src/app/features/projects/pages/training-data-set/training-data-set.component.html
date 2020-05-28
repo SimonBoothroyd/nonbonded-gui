@@ -12,9 +12,9 @@
           >
             <mat-option
               *ngFor="let optimization of (study$ | async).optimizations"
-              [value]="optimization.identifier"
+              [value]="optimization.id"
             >
-              {{ optimization.title }}
+              {{ optimization.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>

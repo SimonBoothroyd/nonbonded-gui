@@ -1,22 +1,22 @@
+import { withLoadable } from '@core/loadable/with-loadable';
+import {
+  initialProjectsState,
+  ProjectsState,
+} from '@core/store/projects/projects.interfaces';
 import {
   ProjectsActions,
   ProjectsActionsTypes,
 } from '@core/store/projects/projects.actions';
-import { withLoadable } from '@core/loadable/with-loadable';
-import {
-  initialProjectCollectionState,
-  ProjectCollectionState,
-} from '@core/store/projects/projects.interfaces';
 
 function baseReducer(
-  state: ProjectCollectionState = { ...initialProjectCollectionState },
+  state: ProjectsState = { ...initialProjectsState },
   action: ProjectsActions
-): ProjectCollectionState {
+): ProjectsState {
   switch (action.type) {
     case ProjectsActionsTypes.LoadSuccess:
       return {
         ...state,
-        projects: action.payload.projects,
+        ...action.payload,
       };
 
     default:
@@ -24,10 +24,7 @@ function baseReducer(
   }
 }
 
-export function reducer(
-  state: ProjectCollectionState,
-  action: ProjectsActions
-): ProjectCollectionState {
+export function reducer(state: ProjectsState, action: ProjectsActions): ProjectsState {
   return withLoadable(baseReducer, {
     loadingActionType: ProjectsActionsTypes.Load,
     successActionType: ProjectsActionsTypes.LoadSuccess,

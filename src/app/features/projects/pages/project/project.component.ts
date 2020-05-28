@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { State } from '@core/store';
-import { getCurrentProjectState } from '@core/store/projects/projects.selectors';
-import { ProjectState } from '@core/store/projects/projects.interfaces';
+import { selectProjectState } from '@core/store/project/project.selectors';
+import { ProjectState } from '@core/store/project/project.interfaces';
 
 @Component({
   selector: 'app-project',
@@ -20,6 +20,6 @@ export class ProjectComponent implements OnInit {
   constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
-    this.project$ = this.store.select(getCurrentProjectState);
+    this.project$ = this.store.select(selectProjectState);
   }
 }

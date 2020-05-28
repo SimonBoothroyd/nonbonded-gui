@@ -28,7 +28,19 @@
 .project__card-header {
   text-align: center;
 }
-.project__card-list li {
-  font-size: 15px;
-  margin-bottom: 1rem;
+
+.study__card-header {
+  text-align: center;
+  font-size: 1rem;
+}
+
+mat-list.list-horizontal {
+  padding: 1rem;
+  text-align: center;
+  .mat-list-item {
+    display: inline-block;
+    height: auto;
+    width: auto;
+    margin: auto;
+  }
 }

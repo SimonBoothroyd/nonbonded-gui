@@ -10,24 +10,22 @@ import { select, Store } from '@ngrx/store';
 
 import { State } from '@core/store';
 
+import { getHasProjectLoaded } from '@core/store/project/project.selectors';
+import { LoadProject } from '@core/store/project/project.actions';
 import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
-import { getHasDataSetsLoaded } from '@core/store/datasets/datasets.selectors';
-import { LoadDataSets } from '@core/store/datasets/datasets.actions';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DataSetsStoreGuard implements CanActivate {
+export class ProjectStoreGuard implements CanActivate {
   constructor(private store: Store<State>) {}
 
   getFromStoreOrAPI(next: ActivatedRouteSnapshot): Observable<boolean> {
     return this.store.pipe(
-      select(getHasDataSetsLoaded),
+      select(getHasProjectLoaded),
       tap((loaded) => {
         if (!loaded) {
-          this.store.dispatch(
-            new LoadDataSets(next.params.projectId, next.params.studyId)
-          );
+          this.store.dispatch(new LoadProject(next.params.projectId));
         }
       }),
       filter((loaded) => loaded),

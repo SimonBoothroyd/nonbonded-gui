@@ -20,14 +20,13 @@
 }
 
 .inner__container {
-  overflow: hidden;
+  overflow: auto;
   height: 100%;
   width: 100%;
 }
 
-.graph__container {
-  overflow: hidden;
-  height: 400px;
+.project__card-header {
+  text-align: center;
 }
 
 .mat-radio-button ~ .mat-radio-button {

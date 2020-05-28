@@ -3,28 +3,33 @@ import { ActionReducerMap } from '@ngrx/store';
 
 import { RouterStateUrl } from '@core/store/routes/route.serializer';
 
-import * as projectReducers from '@core/store/projects/projects.reducers';
-import * as datasetReducers from '@core/store/datasets/datasets.reducers';
-import * as resultsReducers from '@core/store/results/results.reducers';
-import { ProjectCollectionState } from '@core/store/projects/projects.interfaces';
-import { DataSetCollectionState } from '@core/store/datasets/datasets.interfaces';
-import {
-  BenchmarkResultsState,
-  OptimizationResultsState,
-} from '@core/store/results/results.interfaces';
+import * as projectsReducers from '@core/store/projects/projects.reducers';
+import * as projectReducers from '@core/store/project/project.reducers';
+import * as studyDetailsReducers from '@core/store/study-details/study-details.reducers';
+
+import { ProjectsState } from '@core/store/projects/projects.interfaces';
+import { ProjectState } from '@core/store/project/project.interfaces';
+import { StudyDetailsState } from '@core/store/study-details/study-details.interfaces';
 
 export interface State {
-  projects: ProjectCollectionState;
-  datasets: DataSetCollectionState;
-  benchmarks: BenchmarkResultsState;
-  optimizations: OptimizationResultsState;
+  projects: ProjectsState;
+  project: ProjectState;
+
+  studyDetails: StudyDetailsState;
+
+  // datasets: DataSetCollectionState;
+  // dataset: DataSetState
+
   router: RouterReducerState<RouterStateUrl>;
 }
 
 export const reducers: ActionReducerMap<State> = {
-  projects: projectReducers.reducer,
-  datasets: datasetReducers.reducer,
-  benchmarks: resultsReducers.benchmarksReducer,
-  optimizations: resultsReducers.optimizationsReducer,
+  projects: projectsReducers.reducer,
+  project: projectReducers.reducer,
+
+  studyDetails: studyDetailsReducers.reducer,
+
+  // datasets: datasetReducers.reducer,
+
   router: routerReducer,
 };

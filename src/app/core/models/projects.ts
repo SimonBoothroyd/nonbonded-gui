@@ -6,21 +6,21 @@
  */
 
 /**
- * The unique id assigned to the project. This must be a valid file name and url fragment.
+ * The unique id assigned to the project.
  */
-export type Identifier = string;
+export type Id = string;
 /**
- * The title of the project.
+ * The name of the project.
  */
-export type Title = string;
+export type Name = string;
 /**
- * The project's abstract.
+ * A description of the project.
  */
-export type Abstract = string;
+export type Description = string;
 /**
  * The full name of the author.
  */
-export type Name = string;
+export type Name1 = string;
 /**
  * The author's email address.
  */
@@ -34,271 +34,53 @@ export type Institute = string;
  */
 export type Authors = Author[];
 /**
- * The unique id assigned to the study. This must be a valid file name and url fragment.
+ * The unique id assigned to this study.
  */
-export type IdentifierType = string;
+export type Id1 = string;
 /**
- * The title of the study.
+ * The id of the parent project.
  */
-export type TitleType = string;
+export type ProjectId = string;
+/**
+ * The name of the study.
+ */
+export type Name2 = string;
 /**
  * A description of this study.
  */
-export type Description = string;
+export type Description1 = string;
 /**
- * The unique id assigned to the optimization. This must be a valid file name.
+ * The unique id assigned to this optimization.
  */
-export type Identifier2 = string;
+export type Id2 = string;
 /**
- * The title of the optimization.
+ * The id of the parent study.
  */
-export type Title2 = string;
+export type StudyId = string;
+/**
+ * The id of the parent project.
+ */
+export type ProjectId1 = string;
+/**
+ * The name of the optimization.
+ */
+export type Name3 = string;
 /**
  * A description of this optimization.
  */
-export type DescriptionType = string;
+export type Description2 = string;
 /**
- * A description of target composition of the optimization training set.
+ * The unique identifiers of the data sets to use as part of the optimization.
  */
-export type TargetTrainingSet = TargetDataSet;
+export type TrainingSetIds = string[];
 /**
- * The type of property being targeted.
+ * The file name of the force field which will be used as the starting point for all optimizations.
  */
-export type PropertyType = string;
+export type InitialForceField = ForceField;
 /**
- * The number of components that the property should have been collected for (e.g. a pure or binary system)
+ * The xml representation of a force field in the SMIRNOFF force field format
  */
-export type NComponents = number;
-/**
- * The temperature of the state (K).
- */
-export type Temperature = number;
-/**
- * The pressure of the state (kPa).
- */
-export type Pressure = number;
-/**
- * The composition of the state.
- */
-export type MoleFractions = number[];
-/**
- * The target states to include in the data set for this class of property.
- */
-export type TargetStates = StatePoint[];
-/**
- * The types of properties incorporated into this data set.
- */
-export type TargetProperties = TargetProperty[];
-/**
- * The chemical environments incorporated into this data set.
- */
-export type ChemicalEnvironments = (
-  | 'Alkane'
-  | 'Cation'
-  | 'Anion'
-  | 'Carbonyl'
-  | 'Aldehyde'
-  | 'Ketone'
-  | 'Thiocarbonyl'
-  | 'Thioaldehyde'
-  | 'Thioketone'
-  | 'Imine'
-  | 'Hydrazone'
-  | 'Semicarbazone'
-  | 'Thiosemicarbazone'
-  | 'Oxime'
-  | 'Oxime Ether'
-  | 'Ketene'
-  | 'Ketene Acetal Derivative'
-  | 'Carbonyl Hydrate'
-  | 'Hemiacetal'
-  | 'Acetal'
-  | 'Hemiaminal'
-  | 'Aminal'
-  | 'Thiohemiaminal'
-  | 'Thioacetal'
-  | 'Enamine'
-  | 'Enol'
-  | 'Enolether'
-  | 'Hydroxy'
-  | 'Alcohol'
-  | 'Primary Alcohol'
-  | 'Secondary Alcohol'
-  | 'Tertiary Alcohol'
-  | '1,2 Diol'
-  | '1,2 Aminoalcohol'
-  | 'Phenol'
-  | '1,2 Diphenol'
-  | 'Enediol'
-  | 'Ether'
-  | 'Dialkylether'
-  | 'Alkylarylether'
-  | 'Diarylether'
-  | 'Thioether'
-  | 'Disulfide'
-  | 'Peroxide'
-  | 'Hydroperoxide'
-  | 'Hydrazine'
-  | 'Hydroxylamine'
-  | 'Amine'
-  | 'Primary Amine'
-  | 'Primary Aliphatic Amine'
-  | 'Primary Aromatic Amine'
-  | 'Secondary Amine'
-  | 'Secondary Aliphatic Amine'
-  | 'Secondary Mixed Amine'
-  | 'Secondary Aromatic Amine'
-  | 'Tertiary Amine'
-  | 'Tertiary Aliphatic Amine'
-  | 'Tertiary Mixed Amine'
-  | 'Tertiary Aromatic Amine'
-  | 'Quart Ammonium'
-  | 'NOxide'
-  | 'Halogen Derivative'
-  | 'Alkyl Halide'
-  | 'Alkyl Fluoride'
-  | 'Alkyl Chloride'
-  | 'Alkyl Bromide'
-  | 'Alkyl Iodide'
-  | 'Aryl Halide'
-  | 'Aryl Fluoride'
-  | 'Aryl Chloride'
-  | 'Aryl Bromide'
-  | 'Aryl Iodide'
-  | 'Organometallic'
-  | 'Organolithium'
-  | 'Organomagnesium'
-  | 'Carboxylic Acid Derivative'
-  | 'Carboxylic Acid'
-  | 'Carboxylic Acid Salt'
-  | 'Carboxylic Acid Ester'
-  | 'Lactone'
-  | 'Carboxylic Acid Amide'
-  | 'Carboxylic Acid Primary Amide'
-  | 'Carboxylic Acid Secondary Amide'
-  | 'Carboxylic Acid Tertiary Amide'
-  | 'Lactam'
-  | 'Carboxylic Acid Hydrazide'
-  | 'Carboxylic Acid Azide'
-  | 'Hydroxamic Acid'
-  | 'Carboxylic Acid Amidine'
-  | 'Carboxylic Acid Amidrazone'
-  | 'Nitrile'
-  | 'Acyl Halide'
-  | 'Acyl Fluoride'
-  | 'Acyl Chloride'
-  | 'Acyl Bromide'
-  | 'Acyl Iodide'
-  | 'Acyl Cyanide'
-  | 'Imido Ester'
-  | 'Imidoyl Halide'
-  | 'Thiocarboxylic Acid Derivative'
-  | 'Thiocarboxylic Acid'
-  | 'Thiocarboxylic Acid Ester'
-  | 'Thiolactone'
-  | 'Thiocarboxylic Acid Amide'
-  | 'Thiolactam'
-  | 'Imido Thioester'
-  | 'Oxohetarene'
-  | 'Thioxohetarene'
-  | 'Iminohetarene'
-  | 'Orthocarboxylic Acid Derivative'
-  | 'Carboxylic Acid Orthoester'
-  | 'Carboxylic Acid Amide Acetal'
-  | 'Carboxylic Acid Anhydride'
-  | 'Carboxylic Acid Imide'
-  | 'Carboxylic Acid Unsubst Imide'
-  | 'Carboxylic Acid Subst Imide'
-  | 'CO2 Derivative'
-  | 'Carbonic Acid Derivative'
-  | 'Carbonic Acid Monoester'
-  | 'Carbonic Acid Diester'
-  | 'Carbonic Acid Ester Halide'
-  | 'Thiocarbonic Acid Derivative'
-  | 'Thiocarbonic Acid Monoester'
-  | 'Thiocarbonic Acid Diester'
-  | 'Thiocarbonic Acid Ester Halide'
-  | 'Carbamic Acid Derivative'
-  | 'Carbamic Acid'
-  | 'Carbamic Acid Ester'
-  | 'Carbamic Acid Halide'
-  | 'Thiocarbamic Acid Derivative'
-  | 'Thiocarbamic Acid'
-  | 'Thiocarbamic Acid Ester'
-  | 'Thiocarbamic Acid Halide'
-  | 'Urea'
-  | 'Isourea'
-  | 'Thiourea'
-  | 'Isothiourea'
-  | 'Guanidine'
-  | 'Semicarbazide'
-  | 'Thiosemicarbazide'
-  | 'Azide'
-  | 'Azo Compound'
-  | 'Diazonium Salt'
-  | 'Isonitrile'
-  | 'Cyanate'
-  | 'Isocyanate'
-  | 'Thiocyanate'
-  | 'Isothiocyanate'
-  | 'Carbodiimide'
-  | 'Nitroso Compound'
-  | 'Nitro Compound'
-  | 'Nitrite'
-  | 'Nitrate'
-  | 'Sulfuric Acid Derivative'
-  | 'Sulfuric Acid'
-  | 'Sulfuric Acid Monoester'
-  | 'Sulfuric Acid Diester'
-  | 'Sulfuric Acid Amide Ester'
-  | 'Sulfuric Acid Amide'
-  | 'Sulfuric Acid Diamide'
-  | 'Sulfuryl Halide'
-  | 'Sulfonic Acid Derivative'
-  | 'Sulfonic Acid'
-  | 'Sulfonic Acid Ester'
-  | 'Sulfonamide'
-  | 'Sulfonyl Halide'
-  | 'Sulfone'
-  | 'Sulfoxide'
-  | 'Sulfinic Acid Derivative'
-  | 'Sulfinic Acid'
-  | 'Sulfinic Acid Ester'
-  | 'Sulfinic Acid Halide'
-  | 'Sulfinic Acid Amide'
-  | 'Sulfenic Acid Derivative'
-  | 'Sulfenic Acid'
-  | 'Sulfenic Acid Ester'
-  | 'Sulfenic Acid Halide'
-  | 'Sulfenic Acid Amide'
-  | 'Thiol'
-  | 'Alkylthiol'
-  | 'Arylthiol'
-  | 'Phosphoric Acid Derivative'
-  | 'Phosphoric Acid'
-  | 'Phosphoric Acid Ester'
-  | 'Phosphoric Acid Halide'
-  | 'Phosphoric Acid Amide'
-  | 'Thiophosphoric Acid Derivative'
-  | 'Thiophosphoric Acid'
-  | 'Thiophosphoric Acid Ester'
-  | 'Thiophosphoric Acid Halide'
-  | 'Thiophosphoric Acid Amide'
-  | 'Phosphonic Acid Derivative'
-  | 'Phosphonic Acid'
-  | 'Phosphonic Acid Ester'
-  | 'Phosphine'
-  | 'Phosphinoxide'
-  | 'Boronic Acid Derivative'
-  | 'Boronic Acid'
-  | 'Boronic Acid Ester'
-  | 'Alkene'
-  | 'Alkyne'
-  | 'Aromaticatic'
-  | 'Heterocycle'
-  | 'Alpha Aminoacid'
-  | 'Alpha Hydroxyacid'
-)[];
+export type InnerXml = string;
 /**
  * The type of the parameter handler associated with this parameter.
  */
@@ -314,15 +96,11 @@ export type AttributeName = string;
 /**
  * The force field parameters to be optimized.
  */
-export type ParametersToTrain = SmirnoffParameter[];
+export type ParametersToTrain = Parameter[];
 /**
- * The optimizations to perform as part of this study.
+ * The inputs to use for the optimization.
  */
-export type Optimizations = Optimization[];
-/**
- * The inputs to provide to ForceBalance.
- */
-export type OptimizationInputs = ForceBalanceOptions;
+export type ForceBalanceInput = ForceBalanceOptions;
 /**
  * The maximum number of optimization iterations to perform.
  */
@@ -348,13 +126,465 @@ export type NCriteria = number;
  */
 export type TargetName = string;
 /**
- * A description of target composition of the benchmarking test set.
+ * The chemical environments to consider when analysing the results of the optimization.
  */
-export type TargetTestSet = TargetDataSet;
+export type AnalysisEnvironments = (
+  | "Alkane"
+  | "Cation"
+  | "Anion"
+  | "Carbonyl"
+  | "Aldehyde"
+  | "Ketone"
+  | "Thiocarbonyl"
+  | "Thioaldehyde"
+  | "Thioketone"
+  | "Imine"
+  | "Hydrazone"
+  | "Semicarbazone"
+  | "Thiosemicarbazone"
+  | "Oxime"
+  | "Oxime Ether"
+  | "Ketene"
+  | "Ketene Acetal Derivative"
+  | "Carbonyl Hydrate"
+  | "Hemiacetal"
+  | "Acetal"
+  | "Hemiaminal"
+  | "Aminal"
+  | "Thiohemiaminal"
+  | "Thioacetal"
+  | "Enamine"
+  | "Enol"
+  | "Enolether"
+  | "Hydroxy"
+  | "Alcohol"
+  | "Primary Alcohol"
+  | "Secondary Alcohol"
+  | "Tertiary Alcohol"
+  | "1,2 Diol"
+  | "1,2 Aminoalcohol"
+  | "Phenol"
+  | "1,2 Diphenol"
+  | "Enediol"
+  | "Ether"
+  | "Dialkylether"
+  | "Alkylarylether"
+  | "Diarylether"
+  | "Thioether"
+  | "Disulfide"
+  | "Peroxide"
+  | "Hydroperoxide"
+  | "Hydrazine"
+  | "Hydroxylamine"
+  | "Amine"
+  | "Primary Amine"
+  | "Primary Aliphatic Amine"
+  | "Primary Aromatic Amine"
+  | "Secondary Amine"
+  | "Secondary Aliphatic Amine"
+  | "Secondary Mixed Amine"
+  | "Secondary Aromatic Amine"
+  | "Tertiary Amine"
+  | "Tertiary Aliphatic Amine"
+  | "Tertiary Mixed Amine"
+  | "Tertiary Aromatic Amine"
+  | "Quart Ammonium"
+  | "NOxide"
+  | "Halogen Derivative"
+  | "Alkyl Halide"
+  | "Alkyl Fluoride"
+  | "Alkyl Chloride"
+  | "Alkyl Bromide"
+  | "Alkyl Iodide"
+  | "Aryl Halide"
+  | "Aryl Fluoride"
+  | "Aryl Chloride"
+  | "Aryl Bromide"
+  | "Aryl Iodide"
+  | "Organometallic"
+  | "Organolithium"
+  | "Organomagnesium"
+  | "Carboxylic Acid Derivative"
+  | "Carboxylic Acid"
+  | "Carboxylic Acid Salt"
+  | "Carboxylic Acid Ester"
+  | "Lactone"
+  | "Carboxylic Acid Amide"
+  | "Carboxylic Acid Primary Amide"
+  | "Carboxylic Acid Secondary Amide"
+  | "Carboxylic Acid Tertiary Amide"
+  | "Lactam"
+  | "Carboxylic Acid Hydrazide"
+  | "Carboxylic Acid Azide"
+  | "Hydroxamic Acid"
+  | "Carboxylic Acid Amidine"
+  | "Carboxylic Acid Amidrazone"
+  | "Nitrile"
+  | "Acyl Halide"
+  | "Acyl Fluoride"
+  | "Acyl Chloride"
+  | "Acyl Bromide"
+  | "Acyl Iodide"
+  | "Acyl Cyanide"
+  | "Imido Ester"
+  | "Imidoyl Halide"
+  | "Thiocarboxylic Acid Derivative"
+  | "Thiocarboxylic Acid"
+  | "Thiocarboxylic Acid Ester"
+  | "Thiolactone"
+  | "Thiocarboxylic Acid Amide"
+  | "Thiolactam"
+  | "Imido Thioester"
+  | "Oxohetarene"
+  | "Thioxohetarene"
+  | "Iminohetarene"
+  | "Orthocarboxylic Acid Derivative"
+  | "Carboxylic Acid Orthoester"
+  | "Carboxylic Acid Amide Acetal"
+  | "Carboxylic Acid Anhydride"
+  | "Carboxylic Acid Imide"
+  | "Carboxylic Acid Unsubst Imide"
+  | "Carboxylic Acid Subst Imide"
+  | "CO2 Derivative"
+  | "Carbonic Acid Derivative"
+  | "Carbonic Acid Monoester"
+  | "Carbonic Acid Diester"
+  | "Carbonic Acid Ester Halide"
+  | "Thiocarbonic Acid Derivative"
+  | "Thiocarbonic Acid Monoester"
+  | "Thiocarbonic Acid Diester"
+  | "Thiocarbonic Acid Ester Halide"
+  | "Carbamic Acid Derivative"
+  | "Carbamic Acid"
+  | "Carbamic Acid Ester"
+  | "Carbamic Acid Halide"
+  | "Thiocarbamic Acid Derivative"
+  | "Thiocarbamic Acid"
+  | "Thiocarbamic Acid Ester"
+  | "Thiocarbamic Acid Halide"
+  | "Urea"
+  | "Isourea"
+  | "Thiourea"
+  | "Isothiourea"
+  | "Guanidine"
+  | "Semicarbazide"
+  | "Thiosemicarbazide"
+  | "Azide"
+  | "Azo Compound"
+  | "Diazonium Salt"
+  | "Isonitrile"
+  | "Cyanate"
+  | "Isocyanate"
+  | "Thiocyanate"
+  | "Isothiocyanate"
+  | "Carbodiimide"
+  | "Nitroso Compound"
+  | "Nitro Compound"
+  | "Nitrite"
+  | "Nitrate"
+  | "Sulfuric Acid Derivative"
+  | "Sulfuric Acid"
+  | "Sulfuric Acid Monoester"
+  | "Sulfuric Acid Diester"
+  | "Sulfuric Acid Amide Ester"
+  | "Sulfuric Acid Amide"
+  | "Sulfuric Acid Diamide"
+  | "Sulfuryl Halide"
+  | "Sulfonic Acid Derivative"
+  | "Sulfonic Acid"
+  | "Sulfonic Acid Ester"
+  | "Sulfonamide"
+  | "Sulfonyl Halide"
+  | "Sulfone"
+  | "Sulfoxide"
+  | "Sulfinic Acid Derivative"
+  | "Sulfinic Acid"
+  | "Sulfinic Acid Ester"
+  | "Sulfinic Acid Halide"
+  | "Sulfinic Acid Amide"
+  | "Sulfenic Acid Derivative"
+  | "Sulfenic Acid"
+  | "Sulfenic Acid Ester"
+  | "Sulfenic Acid Halide"
+  | "Sulfenic Acid Amide"
+  | "Thiol"
+  | "Alkylthiol"
+  | "Arylthiol"
+  | "Phosphoric Acid Derivative"
+  | "Phosphoric Acid"
+  | "Phosphoric Acid Ester"
+  | "Phosphoric Acid Halide"
+  | "Phosphoric Acid Amide"
+  | "Thiophosphoric Acid Derivative"
+  | "Thiophosphoric Acid"
+  | "Thiophosphoric Acid Ester"
+  | "Thiophosphoric Acid Halide"
+  | "Thiophosphoric Acid Amide"
+  | "Phosphonic Acid Derivative"
+  | "Phosphonic Acid"
+  | "Phosphonic Acid Ester"
+  | "Phosphine"
+  | "Phosphinoxide"
+  | "Boronic Acid Derivative"
+  | "Boronic Acid"
+  | "Boronic Acid Ester"
+  | "Alkene"
+  | "Alkyne"
+  | "Aromaticatic"
+  | "Heterocycle"
+  | "Alpha Aminoacid"
+  | "Alpha Hydroxyacid"
+)[];
 /**
- * The file name of the force field which will be used as the starting point for all optimizations. Currently this must be the name of a force field in the `openforcefields` GitHub repository.
+ * The optimizations to perform as part of this study.
  */
-export type InitialForceField = string;
+export type Optimizations = Optimization[];
+/**
+ * The unique id assigned to this benchmark.
+ */
+export type Id3 = string;
+/**
+ * The id of the parent study.
+ */
+export type StudyId1 = string;
+/**
+ * The id of the parent project.
+ */
+export type ProjectId2 = string;
+/**
+ * The name of the benchmark.
+ */
+export type Name4 = string;
+/**
+ * A description of this benchmark.
+ */
+export type Description3 = string;
+/**
+ * The unique identifiers of the data sets to use as part of the benchmarking.
+ */
+export type TestSetIds = string[];
+/**
+ * The id of the optimization that should be benchmarked. This must be the id of an optimization which is part of the same study and project. This option is mutually exclusive with `force_field_name`.
+ */
+export type OptimizationId = string;
+/**
+ * The file name of the force field to use in the benchmark. This must be the name of a force field in the `openforcefields` GitHub repository. This option is mutually exclusive with `optimized_id`.
+ */
+export type ForceFieldName = string;
+/**
+ * The chemical environments to consider when analysing the results of the benchmark.
+ */
+export type AnalysisEnvironments1 = (
+  | "Alkane"
+  | "Cation"
+  | "Anion"
+  | "Carbonyl"
+  | "Aldehyde"
+  | "Ketone"
+  | "Thiocarbonyl"
+  | "Thioaldehyde"
+  | "Thioketone"
+  | "Imine"
+  | "Hydrazone"
+  | "Semicarbazone"
+  | "Thiosemicarbazone"
+  | "Oxime"
+  | "Oxime Ether"
+  | "Ketene"
+  | "Ketene Acetal Derivative"
+  | "Carbonyl Hydrate"
+  | "Hemiacetal"
+  | "Acetal"
+  | "Hemiaminal"
+  | "Aminal"
+  | "Thiohemiaminal"
+  | "Thioacetal"
+  | "Enamine"
+  | "Enol"
+  | "Enolether"
+  | "Hydroxy"
+  | "Alcohol"
+  | "Primary Alcohol"
+  | "Secondary Alcohol"
+  | "Tertiary Alcohol"
+  | "1,2 Diol"
+  | "1,2 Aminoalcohol"
+  | "Phenol"
+  | "1,2 Diphenol"
+  | "Enediol"
+  | "Ether"
+  | "Dialkylether"
+  | "Alkylarylether"
+  | "Diarylether"
+  | "Thioether"
+  | "Disulfide"
+  | "Peroxide"
+  | "Hydroperoxide"
+  | "Hydrazine"
+  | "Hydroxylamine"
+  | "Amine"
+  | "Primary Amine"
+  | "Primary Aliphatic Amine"
+  | "Primary Aromatic Amine"
+  | "Secondary Amine"
+  | "Secondary Aliphatic Amine"
+  | "Secondary Mixed Amine"
+  | "Secondary Aromatic Amine"
+  | "Tertiary Amine"
+  | "Tertiary Aliphatic Amine"
+  | "Tertiary Mixed Amine"
+  | "Tertiary Aromatic Amine"
+  | "Quart Ammonium"
+  | "NOxide"
+  | "Halogen Derivative"
+  | "Alkyl Halide"
+  | "Alkyl Fluoride"
+  | "Alkyl Chloride"
+  | "Alkyl Bromide"
+  | "Alkyl Iodide"
+  | "Aryl Halide"
+  | "Aryl Fluoride"
+  | "Aryl Chloride"
+  | "Aryl Bromide"
+  | "Aryl Iodide"
+  | "Organometallic"
+  | "Organolithium"
+  | "Organomagnesium"
+  | "Carboxylic Acid Derivative"
+  | "Carboxylic Acid"
+  | "Carboxylic Acid Salt"
+  | "Carboxylic Acid Ester"
+  | "Lactone"
+  | "Carboxylic Acid Amide"
+  | "Carboxylic Acid Primary Amide"
+  | "Carboxylic Acid Secondary Amide"
+  | "Carboxylic Acid Tertiary Amide"
+  | "Lactam"
+  | "Carboxylic Acid Hydrazide"
+  | "Carboxylic Acid Azide"
+  | "Hydroxamic Acid"
+  | "Carboxylic Acid Amidine"
+  | "Carboxylic Acid Amidrazone"
+  | "Nitrile"
+  | "Acyl Halide"
+  | "Acyl Fluoride"
+  | "Acyl Chloride"
+  | "Acyl Bromide"
+  | "Acyl Iodide"
+  | "Acyl Cyanide"
+  | "Imido Ester"
+  | "Imidoyl Halide"
+  | "Thiocarboxylic Acid Derivative"
+  | "Thiocarboxylic Acid"
+  | "Thiocarboxylic Acid Ester"
+  | "Thiolactone"
+  | "Thiocarboxylic Acid Amide"
+  | "Thiolactam"
+  | "Imido Thioester"
+  | "Oxohetarene"
+  | "Thioxohetarene"
+  | "Iminohetarene"
+  | "Orthocarboxylic Acid Derivative"
+  | "Carboxylic Acid Orthoester"
+  | "Carboxylic Acid Amide Acetal"
+  | "Carboxylic Acid Anhydride"
+  | "Carboxylic Acid Imide"
+  | "Carboxylic Acid Unsubst Imide"
+  | "Carboxylic Acid Subst Imide"
+  | "CO2 Derivative"
+  | "Carbonic Acid Derivative"
+  | "Carbonic Acid Monoester"
+  | "Carbonic Acid Diester"
+  | "Carbonic Acid Ester Halide"
+  | "Thiocarbonic Acid Derivative"
+  | "Thiocarbonic Acid Monoester"
+  | "Thiocarbonic Acid Diester"
+  | "Thiocarbonic Acid Ester Halide"
+  | "Carbamic Acid Derivative"
+  | "Carbamic Acid"
+  | "Carbamic Acid Ester"
+  | "Carbamic Acid Halide"
+  | "Thiocarbamic Acid Derivative"
+  | "Thiocarbamic Acid"
+  | "Thiocarbamic Acid Ester"
+  | "Thiocarbamic Acid Halide"
+  | "Urea"
+  | "Isourea"
+  | "Thiourea"
+  | "Isothiourea"
+  | "Guanidine"
+  | "Semicarbazide"
+  | "Thiosemicarbazide"
+  | "Azide"
+  | "Azo Compound"
+  | "Diazonium Salt"
+  | "Isonitrile"
+  | "Cyanate"
+  | "Isocyanate"
+  | "Thiocyanate"
+  | "Isothiocyanate"
+  | "Carbodiimide"
+  | "Nitroso Compound"
+  | "Nitro Compound"
+  | "Nitrite"
+  | "Nitrate"
+  | "Sulfuric Acid Derivative"
+  | "Sulfuric Acid"
+  | "Sulfuric Acid Monoester"
+  | "Sulfuric Acid Diester"
+  | "Sulfuric Acid Amide Ester"
+  | "Sulfuric Acid Amide"
+  | "Sulfuric Acid Diamide"
+  | "Sulfuryl Halide"
+  | "Sulfonic Acid Derivative"
+  | "Sulfonic Acid"
+  | "Sulfonic Acid Ester"
+  | "Sulfonamide"
+  | "Sulfonyl Halide"
+  | "Sulfone"
+  | "Sulfoxide"
+  | "Sulfinic Acid Derivative"
+  | "Sulfinic Acid"
+  | "Sulfinic Acid Ester"
+  | "Sulfinic Acid Halide"
+  | "Sulfinic Acid Amide"
+  | "Sulfenic Acid Derivative"
+  | "Sulfenic Acid"
+  | "Sulfenic Acid Ester"
+  | "Sulfenic Acid Halide"
+  | "Sulfenic Acid Amide"
+  | "Thiol"
+  | "Alkylthiol"
+  | "Arylthiol"
+  | "Phosphoric Acid Derivative"
+  | "Phosphoric Acid"
+  | "Phosphoric Acid Ester"
+  | "Phosphoric Acid Halide"
+  | "Phosphoric Acid Amide"
+  | "Thiophosphoric Acid Derivative"
+  | "Thiophosphoric Acid"
+  | "Thiophosphoric Acid Ester"
+  | "Thiophosphoric Acid Halide"
+  | "Thiophosphoric Acid Amide"
+  | "Phosphonic Acid Derivative"
+  | "Phosphonic Acid"
+  | "Phosphonic Acid Ester"
+  | "Phosphine"
+  | "Phosphinoxide"
+  | "Boronic Acid Derivative"
+  | "Boronic Acid"
+  | "Boronic Acid Ester"
+  | "Alkene"
+  | "Alkyne"
+  | "Aromaticatic"
+  | "Heterocycle"
+  | "Alpha Aminoacid"
+  | "Alpha Hydroxyacid"
+)[];
+/**
+ * The benchmarks to perform as part of this study.
+ */
+export type Benchmarks = Benchmark[];
 /**
  * The studies conducted as part of the project.
  */
@@ -366,53 +596,55 @@ export type Projects = Project[];
 
 export interface ProjectCollection {
   projects?: Projects;
+  [k: string]: unknown;
 }
 export interface Project {
-  identifier: Identifier;
-  title: Title;
-  abstract: Abstract;
+  id: Id;
+  name: Name;
+  description: Description;
   authors: Authors;
-  studies: Studies;
+  studies?: Studies;
+  [k: string]: unknown;
 }
 export interface Author {
-  name: Name;
+  name: Name1;
   email: Email;
   institute: Institute;
+  [k: string]: unknown;
 }
 export interface Study {
-  identifier: IdentifierType;
-  title: TitleType;
-  description: Description;
-  optimizations: Optimizations;
-  optimization_inputs?: OptimizationInputs;
-  target_test_set: TargetTestSet;
-  initial_force_field: InitialForceField;
+  id: Id1;
+  project_id: ProjectId;
+  name: Name2;
+  description: Description1;
+  optimizations?: Optimizations;
+  benchmarks?: Benchmarks;
+  [k: string]: unknown;
 }
 export interface Optimization {
-  identifier: Identifier2;
-  title: Title2;
-  description: DescriptionType;
-  target_training_set: TargetTrainingSet;
+  id: Id2;
+  study_id: StudyId;
+  project_id: ProjectId1;
+  name: Name3;
+  description: Description2;
+  training_set_ids: TrainingSetIds;
+  initial_force_field: InitialForceField;
   parameters_to_train: ParametersToTrain;
+  force_balance_input?: ForceBalanceInput;
+  denominators: Denominators;
+  priors: Priors;
+  analysis_environments: AnalysisEnvironments;
+  [k: string]: unknown;
 }
-export interface TargetDataSet {
-  target_properties: TargetProperties;
-  chemical_environments: ChemicalEnvironments;
+export interface ForceField {
+  inner_xml: InnerXml;
+  [k: string]: unknown;
 }
-export interface TargetProperty {
-  property_type: PropertyType;
-  n_components?: NComponents;
-  target_states: TargetStates;
-}
-export interface StatePoint {
-  temperature: Temperature;
-  pressure: Pressure;
-  mole_fractions: MoleFractions;
-}
-export interface SmirnoffParameter {
+export interface Parameter {
   handler_type: HandlerType;
   smirks: Smirks;
   attribute_name: AttributeName;
+  [k: string]: unknown;
 }
 export interface ForceBalanceOptions {
   max_iterations?: MaxIterations;
@@ -421,4 +653,29 @@ export interface ForceBalanceOptions {
   convergence_gradient_criteria?: ConvergenceGradientCriteria;
   n_criteria?: NCriteria;
   target_name?: TargetName;
+  [k: string]: unknown;
+}
+/**
+ * The denominators to scale each class of properties contribution to the objective function by.
+ */
+export interface Denominators {
+  [k: string]: string;
+}
+/**
+ * The priors to place on each class of parameter.
+ */
+export interface Priors {
+  [k: string]: number;
+}
+export interface Benchmark {
+  id: Id3;
+  study_id: StudyId1;
+  project_id: ProjectId2;
+  name: Name4;
+  description: Description3;
+  test_set_ids: TestSetIds;
+  optimization_id: OptimizationId;
+  force_field_name: ForceFieldName;
+  analysis_environments: AnalysisEnvironments1;
+  [k: string]: unknown;
 }
