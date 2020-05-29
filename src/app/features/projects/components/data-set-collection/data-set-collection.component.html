@@ -1,0 +1,5 @@
+<app-data-set
+  *ngFor="let pair of _dataSet.dataEntries | keyvalue"
+  [title]="pair.key"
+  [value]="pair.value"
+></app-data-set>

@@ -1,27 +1,27 @@
 <app-loadable [loadable]="study$ | async" class="root__container">
-  <div fxLayout="column" fxFill class="dataset__container" fxLayoutGap="20px">
-    <div>
-      <mat-card>
-        <h3>Optimization Training Set</h3>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="2rem"
+    class="page__container"
+  >
+    <h1>Training Set</h1>
 
-        <mat-form-field>
-          <mat-select
-            placeholder="Select an optimization"
-            (selectionChange)="onOptimizationChanged($event)"
-            [value]="(routerInfo$ | async).params.optimizationId"
-          >
-            <mat-option
-              *ngFor="let optimization of (study$ | async).optimizations"
-              [value]="optimization.id"
-            >
-              {{ optimization.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </mat-card>
-    </div>
-    <div class="inner__container">
-      <router-outlet></router-outlet>
-    </div>
+    <mat-form-field>
+      <mat-select
+        placeholder="Select an optimization"
+        (selectionChange)="onOptimizationChanged($event)"
+        [value]="(routerInfo$ | async).params.optimizationId"
+      >
+        <mat-option
+          *ngFor="let optimization of (study$ | async).optimizations"
+          [value]="optimization.id"
+        >
+          {{ optimization.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <router-outlet></router-outlet>
   </div>
 </app-loadable>

@@ -1,51 +1,29 @@
-<div fxFill fxLayout="row" fxLayoutGap="20px" class="root__container">
-  <mat-card fxFlex="75" class="dataset__card_container">
-    <mat-grid-list [cols]="nColumns" rowHeight="1:1" gutterSize="20px">
-      <mat-grid-tile
-        *ngFor="let pair of _perSubstanceDataSet.dataPoints | keyvalue"
-        [colspan]="pair.key.split(' + ').length"
-        [class]="selectedEntry && pair.key == selectedEntry.substance ? 'tile__selected' : 'tile__container'"
-        (click)="selectedEntry = {substance: pair.key, indices: pair.value}"
-      >
-        <img
-          [alt]="pair.key"
-          *ngFor="let smiles of pair.key.split(' + ')"
-          [src]="'http://127.0.0.1:5000/api/v1/molecules/' + smiles + '/image/'"
-          height="100%"
-        />
-      </mat-grid-tile>
-    </mat-grid-list>
-  </mat-card>
+<div
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="2rem"
+  class="page__container"
+>
+  <h2>{{ title }}</h2>
 
-  <mat-card fxFlex="25" class="selected__card_container">
-    <div *ngIf="!selectedEntry">
-      No entry has been selected.
-    </div>
-    <div *ngIf="selectedEntry">
-      <h3 class="selected__card-header">
-        {{ selectedEntry.substance }}
-      </h3>
-      <br />
-      <div>
-        {{ selectedEntry.indices.length }} values are included in the data set for this
-        substance.
-      </div>
-      <br />
-      <h3>Values</h3>
-      <ul>
-        <li *ngFor="let index of selectedEntry.indices">
-          <h4>{{ _dataSet.entries[index].property_type }}</h4>
-          <div>
-            T={{ _dataSet.entries[index].temperature.toFixed(3) }} K, P={{
-            _dataSet.entries[index].pressure.toFixed(3)
-            }}
-            kPa, x=[{{ componentsToComposition(_dataSet.entries[index].components) }}] Value={{
-            _dataSet.entries[index].value.toFixed(3)
-            }}, Std={{ _dataSet.entries[index].std_error.toFixed(3) }}
-          </div>
-          <br />
-        </li>
-      </ul>
-    </div>
-  </mat-card>
+  <div fxFill fxLayout="columns" fxLayoutGap="20px" class="root__container">
+    <mat-card fxFlex="100" class="dataset__card_container">
+      <mat-grid-list [cols]="nColumns" rowHeight="1:1" gutterSize="20px">
+        <mat-grid-tile
+          matRipple
+          *ngFor="let pair of _dataSet | keyvalue"
+          [colspan]="pair.key.split(' + ').length"
+          class="tile__container"
+          (click)="openEntryDialog(pair.key, pair.value)"
+        >
+          <img
+            [alt]="pair.key"
+            *ngFor="let smiles of pair.key.split(' + ')"
+            [src]="'http://127.0.0.1:5000/api/v1/molecules/' + smiles + '/image/'"
+            height="100%"
+          />
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card>
+  </div>
 </div>

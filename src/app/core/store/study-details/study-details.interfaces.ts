@@ -6,6 +6,9 @@ import { OptimizationResult } from '@core/models/optimization';
 import { DataSet } from '@core/models/datasets';
 
 export interface StudyDetails {
+  projectId: string;
+  studyId: string;
+
   optimizationResults: OptimizationResult[];
   benchmarkResults: BenchmarkResult[];
 
@@ -13,6 +16,9 @@ export interface StudyDetails {
 }
 
 export const initialStudyDetails: StudyDetails = {
+  projectId: undefined,
+  studyId: undefined,
+
   optimizationResults: [],
   benchmarkResults: [],
   dataSets: [],
@@ -119,10 +125,10 @@ export const initialScatterTrace: ScatterTrace = {
   showlegend: false,
 
   // hoverinfo: 'none'
-}
+};
 
 export interface TestResults {
-  traces: {[propertyName: string]: ScatterTrace[]};
+  traces: { [propertyName: string]: ScatterTrace[] };
   benchmarkNames: string[];
 }
 

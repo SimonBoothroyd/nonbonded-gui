@@ -22,7 +22,10 @@ export class StudyDetailsStoreGuard implements CanActivate {
 
   getFromStoreOrAPI(next: ActivatedRouteSnapshot): Observable<boolean> {
     return this.store.pipe(
-      select(getHasStudyDetailsLoaded),
+      select(getHasStudyDetailsLoaded, {
+        projectId: next.params.projectId,
+        studyId: next.params.studyId,
+      }),
       tap((loaded) => {
         if (!loaded) {
           this.store.dispatch(

@@ -11,12 +11,12 @@
 .tile__container {
   border: 1px solid lightgrey;
 }
-.tile__selected {
+.tile__container:hover {
   border: 2px solid mediumseagreen;
 }
 
-.root__container {
-  padding: 2px;
+.page__container {
+  margin: 20px;
 }
 .dataset__card_container {
   overflow: auto;
@@ -27,4 +27,7 @@
 }
 .selected__card-header {
   text-align: center;
+}
+
+.substance__tile {
 }

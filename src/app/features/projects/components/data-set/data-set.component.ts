@@ -1,32 +1,24 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnInit,
   Output,
 } from '@angular/core';
-import { DataSet } from '@core/models/datasets';
+import { DataSetEntry } from '@core/models/datasets';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DataEntryDialogComponent } from '@app/features/projects/components/data-entry-dialog/data-entry-dialog.component';
+import { strict } from 'assert';
 
-export class PerSubstanceDataSet {
-  public readonly dataPoints: { [substance: string]: number[] };
-
-  constructor(public dataSet: DataSet) {
-    this.dataPoints = {};
-
-    dataSet.entries.forEach((dataPoint, index) => {
-      const smiles = dataPoint.components.map((component) => component.smiles);
-      const substance = smiles.join(' + ');
-
-      if (this.dataPoints[substance] === undefined) this.dataPoints[substance] = [];
-
-      this.dataPoints[substance].push(index);
-    });
-  }
+export interface SubstanceDataSet {
+  [substance: string]: DataSetEntry[];
 }
 
 export interface SelectedDataEntry {
   substance: string;
-  indices: number[];
+  entries: DataSetEntry[];
 }
 
 @Component({
@@ -36,26 +28,58 @@ export interface SelectedDataEntry {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataSetComponent implements OnInit {
-  _dataSet: DataSet = undefined;
-  _perSubstanceDataSet: PerSubstanceDataSet = undefined;
+  _dataSet: SubstanceDataSet = undefined;
 
   @Input()
-  set value(value: DataSet) {
-    this.selectedEntry = undefined;
+  public title: string;
 
+  @Input()
+  public set value(value: SubstanceDataSet) {
+    this.selectedEntry = undefined;
     this._dataSet = value;
-    this._perSubstanceDataSet = new PerSubstanceDataSet(value);
   }
 
-  @Input() nColumns: number = 6;
+  @Input() nColumns: number = 10;
 
   @Output() selectedEntry: SelectedDataEntry = undefined;
 
-  constructor() {}
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private ref: ChangeDetectorRef,
+    private dialog: MatDialog
+  ) {}
 
-  ngOnInit(): void {}
+  openEntryDialog(substance: string, dataEntries: DataSetEntry[]) {
+    const dialogConfig = new MatDialogConfig();
 
-  componentsToComposition(components) {
-    return components.map((c) => c.mole_fraction).join(', ');
+    dialogConfig.data = {
+      dataEntries: dataEntries,
+      substance: substance,
+    };
+
+    this.dialog.open(DataEntryDialogComponent, dialogConfig);
+  }
+
+  ngOnInit(): void {
+    this.breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ])
+      .subscribe((state: BreakpointState) => this.updateColumns(state));
+  }
+
+  updateColumns(state: BreakpointState) {
+    if (state.breakpoints[Breakpoints.XSmall]) this.nColumns = 2;
+    else if (state.breakpoints[Breakpoints.Small]) this.nColumns = 4;
+    else if (state.breakpoints[Breakpoints.Medium]) this.nColumns = 8;
+    else if (state.breakpoints[Breakpoints.Large]) this.nColumns = 10;
+    else if (state.breakpoints[Breakpoints.XLarge]) this.nColumns = 12;
+    else this.nColumns = 1;
+
+    this.ref.detectChanges();
   }
 }

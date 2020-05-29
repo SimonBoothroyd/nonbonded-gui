@@ -5,14 +5,9 @@
     fxLayoutGap="2rem"
     class="page__container"
   >
-    <div
-      *ngFor="let project of (projects$ | async).summaries"
-      class="project__card"
-    >
+    <div *ngFor="let project of (projects$ | async).summaries" class="project__card">
       <mat-card>
-        <mat-card-title class="project__card-header">{{
-          project.name
-        }}</mat-card-title>
+        <mat-card-title class="project__card-header">{{ project.name }}</mat-card-title>
         <br />
         <div class="project__card-text">{{ project.description.split('\n')[0] }}</div>
         <mat-card-actions>

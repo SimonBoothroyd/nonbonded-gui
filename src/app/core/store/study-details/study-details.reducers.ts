@@ -13,6 +13,12 @@ function baseReducer(
   action: StudyDetailsActions
 ): StudyDetailsState {
   switch (action.type) {
+    case StudyDetailsActionsTypes.Load:
+      return {
+        ...state,
+        projectId: action.projectId,
+        studyId: action.studyId,
+      };
     case StudyDetailsActionsTypes.LoadSuccess:
       return {
         ...state,

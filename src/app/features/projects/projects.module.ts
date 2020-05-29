@@ -17,6 +17,9 @@ import { TrainingDataSetChildComponent } from '@app/features/projects/pages/trai
 import { TrainingResultsComponent } from './pages/training-results/training-results.component';
 import { TestResultsComponent } from './pages/test-results/test-results.component';
 import { TestDataSetChildComponent } from '@app/features/projects/pages/test-data-set-child/test-data-set-child.component';
+import { DataSetCollectionComponent } from './components/data-set-collection/data-set-collection.component';
+import { DataEntryDialogComponent } from './components/data-entry-dialog/data-entry-dialog.component';
+import { StudyListComponent } from './pages/study-list/study-list.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,11 @@ import { TestDataSetChildComponent } from '@app/features/projects/pages/test-dat
     TrainingDataSetChildComponent,
     TrainingResultsComponent,
     TestResultsComponent,
+    DataSetCollectionComponent,
+    DataEntryDialogComponent,
+    StudyListComponent,
   ],
   imports: [CommonModule, ProjectsRoutes, SharedModule],
+  entryComponents: [DataEntryDialogComponent],
 })
 export class ProjectsModule {}

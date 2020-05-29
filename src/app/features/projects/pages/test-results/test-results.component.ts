@@ -1,9 +1,10 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { PlotComponent } from 'angular-plotly.js';
 
@@ -13,10 +14,15 @@ import { Store } from '@ngrx/store';
 
 import { State } from '@core/store';
 
-import { TestResultsState, TestSummaryStatisticsState } from '@core/store/study-details/study-details.interfaces';
-import { getTestResults, getTestSummaryStatistics } from '@core/store/study-details/study-details.selectors';
-import { BreakpointObserver, Breakpoints, BreakpointState, MediaMatcher } from '@angular/cdk/layout';
-import { BreakPoint } from '@angular/flex-layout';
+import {
+  TestResultsState,
+  TestSummaryStatisticsState,
+} from '@core/store/study-details/study-details.interfaces';
+import {
+  getTestResults,
+  getTestSummaryStatistics,
+} from '@core/store/study-details/study-details.selectors';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-test-results',
@@ -25,7 +31,6 @@ import { BreakPoint } from '@angular/flex-layout';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TestResultsComponent implements OnInit, OnDestroy {
-
   @ViewChild(PlotComponent)
   summaryStatisticsComponent: PlotComponent;
 
@@ -45,17 +50,19 @@ export class TestResultsComponent implements OnInit, OnDestroy {
   public resultsGraphData;
   public resultsGraphLayout;
 
-  private mediaMatchers: string;
+  private nColumns: number;
 
-  private nColumns: number
-
-  constructor(private store: Store<State>, private breakpointObserver: BreakpointObserver, private ref: ChangeDetectorRef) {}
+  constructor(
+    private store: Store<State>,
+    private breakpointObserver: BreakpointObserver,
+    private ref: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.initializeSummaryStatistics()
-    this.initializeResults()
+    this.initializeSummaryStatistics();
+    this.initializeResults();
 
-    this.nColumns = 1
+    this.nColumns = 1;
 
     this.breakpointObserver
       .observe([
@@ -68,7 +75,8 @@ export class TestResultsComponent implements OnInit, OnDestroy {
       .subscribe((state: BreakpointState) => this.updateColumns(state));
   }
   ngOnDestroy() {
-    if (this.summaryStatisticsSubscription) this.summaryStatisticsSubscription.unsubscribe();
+    if (this.summaryStatisticsSubscription)
+      this.summaryStatisticsSubscription.unsubscribe();
     if (this.resultsSubscription) this.resultsSubscription.unsubscribe();
   }
 
@@ -109,12 +117,9 @@ export class TestResultsComponent implements OnInit, OnDestroy {
       if (!state.success) return;
 
       this._results = state;
-      this.resultsPropertyType = Object.keys(state.traces)[0]
+      this.resultsPropertyType = Object.keys(state.traces)[0];
 
-      if (
-        !this.resultsComponent ||
-        !this.resultsComponent.plotlyInstance
-      ) {
+      if (!this.resultsComponent || !this.resultsComponent.plotlyInstance) {
         return;
       }
 
@@ -123,35 +128,30 @@ export class TestResultsComponent implements OnInit, OnDestroy {
   }
 
   updateColumns(state: BreakpointState) {
-    if (state.breakpoints[Breakpoints.XSmall]) this.nColumns = 1
-    else if (state.breakpoints[Breakpoints.Small]) this.nColumns = 1
-    else if (state.breakpoints[Breakpoints.Medium]) this.nColumns = 2
-    else if (state.breakpoints[Breakpoints.Large]) this.nColumns = 3
-    else this.nColumns = 4
+    if (state.breakpoints[Breakpoints.XSmall]) this.nColumns = 1;
+    else if (state.breakpoints[Breakpoints.Small]) this.nColumns = 1;
+    else if (state.breakpoints[Breakpoints.Medium]) this.nColumns = 2;
+    else if (state.breakpoints[Breakpoints.Large]) this.nColumns = 3;
+    else this.nColumns = 4;
 
-    console.log(state, this.nColumns)
-
-    this.updateResults()
-    this.updateSummaryStatistics()
+    this.updateResults();
+    this.updateSummaryStatistics();
 
     this.ref.detectChanges();
   }
 
   updateSummaryStatistics() {
-
-    if (!this._summaryStatistics) return
+    if (!this._summaryStatistics) return;
 
     const nProperties = this._summaryStatistics.propertyTitles.length;
 
     this.summaryStatisticsGraphData = this._summaryStatistics.traces;
 
-    const nColumns = Math.min(this.nColumns + 2, nProperties)
-    const nRows = Math.ceil(nProperties / nColumns)
-
-    console.log(nColumns, nRows)
+    const nColumns = Math.min(this.nColumns + 2, nProperties);
+    const nRows = Math.ceil(nProperties / nColumns);
 
     this.summaryStatisticsGraphLayout = {
-      grid: { rows: nRows, columns: nColumns, pattern: 'independent'  },
+      grid: { rows: nRows, columns: nColumns, pattern: 'independent' },
       width: 250 * nColumns,
       height: 320 * nRows,
       margin: {
@@ -162,32 +162,34 @@ export class TestResultsComponent implements OnInit, OnDestroy {
     };
 
     for (let trace of this.summaryStatisticsGraphData) {
+      let xIndex = trace.index % nColumns;
+      let yIndex = Math.floor(trace.index / nColumns);
 
-      let xIndex = trace.index % nColumns
-      let yIndex = Math.floor(trace.index / nColumns)
-
-      trace.xaxis = `x${trace.index + 1}`
-      trace.yaxis = `y${trace.index + 1}`
+      trace.xaxis = `x${trace.index + 1}`;
+      trace.yaxis = `y${trace.index + 1}`;
 
       this.summaryStatisticsGraphLayout[`xaxis${trace.index + 1}`] = {
-        showticklabels: false, title: this._summaryStatistics.propertyTitles[trace.index]
-      }
-      if (xIndex == 0) this.summaryStatisticsGraphLayout[`yaxis${trace.index + 1}`] = { title: 'RMSE' }
+        showticklabels: false,
+        title: this._summaryStatistics.propertyTitles[trace.index],
+      };
+      if (xIndex == 0)
+        this.summaryStatisticsGraphLayout[`yaxis${trace.index + 1}`] = {
+          title: 'RMSE',
+        };
     }
   }
   updateResults() {
-
-    if (!this._results) return
+    if (!this._results) return;
 
     const nBenchmarks = this._results.benchmarkNames.length;
 
     this.resultsGraphData = this._results.traces[this.resultsPropertyType];
 
-    const nColumns = Math.min(this.nColumns, nBenchmarks)
-    const nRows = Math.ceil(nBenchmarks / nColumns)
+    const nColumns = Math.min(this.nColumns, nBenchmarks);
+    const nRows = Math.ceil(nBenchmarks / nColumns);
 
     this.resultsGraphLayout = {
-      grid: { rows: nRows, columns: nColumns, pattern: 'independent'  },
+      grid: { rows: nRows, columns: nColumns, pattern: 'independent' },
       width: 320 * nColumns + 300,
       height: 320 * nRows,
       margin: {
@@ -197,15 +199,19 @@ export class TestResultsComponent implements OnInit, OnDestroy {
     };
 
     for (let trace of this.resultsGraphData) {
+      let xIndex = trace.index % nColumns;
+      let yIndex = Math.floor(trace.index / nColumns);
 
-      let xIndex = trace.index % nColumns
-      let yIndex = Math.floor(trace.index / nColumns)
+      trace.xaxis = `x${trace.index + 1}`;
+      trace.yaxis = `y${trace.index + 1}`;
 
-      trace.xaxis = `x${trace.index + 1}`
-      trace.yaxis = `y${trace.index + 1}`
-
-      this.resultsGraphLayout[`xaxis${trace.index + 1}`] = { title: this._results.benchmarkNames[trace.index] }
-      if (xIndex == 0) this.resultsGraphLayout[`yaxis${trace.index + 1}`] = { title: 'Reference Value' }
+      this.resultsGraphLayout[`xaxis${trace.index + 1}`] = {
+        title: this._results.benchmarkNames[trace.index],
+      };
+      if (xIndex == 0)
+        this.resultsGraphLayout[`yaxis${trace.index + 1}`] = {
+          title: 'Reference Value',
+        };
     }
   }
 

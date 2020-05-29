@@ -17,8 +17,10 @@ import {
 export const selectProjectState = createFeatureSelector<ProjectState>('project');
 export const getHasProjectLoaded = createSelector(
   selectProjectState,
-  (state: ProjectState): boolean =>
-    state.loading || state.success || state.error != null
+  (state: ProjectState, props): boolean => {
+    if (state.id != props.projectId) return false;
+    return state.loading || state.success || state.error != null;
+  }
 );
 
 export const getCurrentStudyState = createSelector(
@@ -57,6 +59,7 @@ export const getCurrentOptimizationState = createSelector(
   getRouterInfo,
   (state: StudyState, routerInfo): OptimizationState => {
     if (!routerInfo) return null;
+    if (!state) return null;
 
     let optimization = { ...initialOptimization };
 

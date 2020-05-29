@@ -16,6 +16,7 @@ import { TrainingDataSetChildComponent } from '@app/features/projects/pages/trai
 import { TrainingResultsComponent } from '@app/features/projects/pages/training-results/training-results.component';
 import { StudyDetailsStoreGuard } from '@app/features/projects/guards/study-details-store.guard';
 import { ProjectStoreGuard } from '@app/features/projects/guards/project-store.guard';
+import { StudyListComponent } from '@app/features/projects/pages/study-list/study-list.component';
 
 const routes: Routes = [
   {
@@ -40,8 +41,9 @@ const routes: Routes = [
             children: [
               {
                 path: '',
-                redirectTo: '..',
-                pathMatch: 'full',
+                // redirectTo: '..',
+                // pathMatch: 'full',
+                component: StudyListComponent,
               },
               {
                 path: ':studyId',
@@ -50,11 +52,6 @@ const routes: Routes = [
                 children: [
                   {
                     path: '',
-                    redirectTo: 'summary',
-                    pathMatch: 'full',
-                  },
-                  {
-                    path: 'summary',
                     component: SummaryComponent,
                   },
                   {

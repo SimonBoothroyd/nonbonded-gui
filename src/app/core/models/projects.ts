@@ -129,211 +129,211 @@ export type TargetName = string;
  * The chemical environments to consider when analysing the results of the optimization.
  */
 export type AnalysisEnvironments = (
-  | "Alkane"
-  | "Cation"
-  | "Anion"
-  | "Carbonyl"
-  | "Aldehyde"
-  | "Ketone"
-  | "Thiocarbonyl"
-  | "Thioaldehyde"
-  | "Thioketone"
-  | "Imine"
-  | "Hydrazone"
-  | "Semicarbazone"
-  | "Thiosemicarbazone"
-  | "Oxime"
-  | "Oxime Ether"
-  | "Ketene"
-  | "Ketene Acetal Derivative"
-  | "Carbonyl Hydrate"
-  | "Hemiacetal"
-  | "Acetal"
-  | "Hemiaminal"
-  | "Aminal"
-  | "Thiohemiaminal"
-  | "Thioacetal"
-  | "Enamine"
-  | "Enol"
-  | "Enolether"
-  | "Hydroxy"
-  | "Alcohol"
-  | "Primary Alcohol"
-  | "Secondary Alcohol"
-  | "Tertiary Alcohol"
-  | "1,2 Diol"
-  | "1,2 Aminoalcohol"
-  | "Phenol"
-  | "1,2 Diphenol"
-  | "Enediol"
-  | "Ether"
-  | "Dialkylether"
-  | "Alkylarylether"
-  | "Diarylether"
-  | "Thioether"
-  | "Disulfide"
-  | "Peroxide"
-  | "Hydroperoxide"
-  | "Hydrazine"
-  | "Hydroxylamine"
-  | "Amine"
-  | "Primary Amine"
-  | "Primary Aliphatic Amine"
-  | "Primary Aromatic Amine"
-  | "Secondary Amine"
-  | "Secondary Aliphatic Amine"
-  | "Secondary Mixed Amine"
-  | "Secondary Aromatic Amine"
-  | "Tertiary Amine"
-  | "Tertiary Aliphatic Amine"
-  | "Tertiary Mixed Amine"
-  | "Tertiary Aromatic Amine"
-  | "Quart Ammonium"
-  | "NOxide"
-  | "Halogen Derivative"
-  | "Alkyl Halide"
-  | "Alkyl Fluoride"
-  | "Alkyl Chloride"
-  | "Alkyl Bromide"
-  | "Alkyl Iodide"
-  | "Aryl Halide"
-  | "Aryl Fluoride"
-  | "Aryl Chloride"
-  | "Aryl Bromide"
-  | "Aryl Iodide"
-  | "Organometallic"
-  | "Organolithium"
-  | "Organomagnesium"
-  | "Carboxylic Acid Derivative"
-  | "Carboxylic Acid"
-  | "Carboxylic Acid Salt"
-  | "Carboxylic Acid Ester"
-  | "Lactone"
-  | "Carboxylic Acid Amide"
-  | "Carboxylic Acid Primary Amide"
-  | "Carboxylic Acid Secondary Amide"
-  | "Carboxylic Acid Tertiary Amide"
-  | "Lactam"
-  | "Carboxylic Acid Hydrazide"
-  | "Carboxylic Acid Azide"
-  | "Hydroxamic Acid"
-  | "Carboxylic Acid Amidine"
-  | "Carboxylic Acid Amidrazone"
-  | "Nitrile"
-  | "Acyl Halide"
-  | "Acyl Fluoride"
-  | "Acyl Chloride"
-  | "Acyl Bromide"
-  | "Acyl Iodide"
-  | "Acyl Cyanide"
-  | "Imido Ester"
-  | "Imidoyl Halide"
-  | "Thiocarboxylic Acid Derivative"
-  | "Thiocarboxylic Acid"
-  | "Thiocarboxylic Acid Ester"
-  | "Thiolactone"
-  | "Thiocarboxylic Acid Amide"
-  | "Thiolactam"
-  | "Imido Thioester"
-  | "Oxohetarene"
-  | "Thioxohetarene"
-  | "Iminohetarene"
-  | "Orthocarboxylic Acid Derivative"
-  | "Carboxylic Acid Orthoester"
-  | "Carboxylic Acid Amide Acetal"
-  | "Carboxylic Acid Anhydride"
-  | "Carboxylic Acid Imide"
-  | "Carboxylic Acid Unsubst Imide"
-  | "Carboxylic Acid Subst Imide"
-  | "CO2 Derivative"
-  | "Carbonic Acid Derivative"
-  | "Carbonic Acid Monoester"
-  | "Carbonic Acid Diester"
-  | "Carbonic Acid Ester Halide"
-  | "Thiocarbonic Acid Derivative"
-  | "Thiocarbonic Acid Monoester"
-  | "Thiocarbonic Acid Diester"
-  | "Thiocarbonic Acid Ester Halide"
-  | "Carbamic Acid Derivative"
-  | "Carbamic Acid"
-  | "Carbamic Acid Ester"
-  | "Carbamic Acid Halide"
-  | "Thiocarbamic Acid Derivative"
-  | "Thiocarbamic Acid"
-  | "Thiocarbamic Acid Ester"
-  | "Thiocarbamic Acid Halide"
-  | "Urea"
-  | "Isourea"
-  | "Thiourea"
-  | "Isothiourea"
-  | "Guanidine"
-  | "Semicarbazide"
-  | "Thiosemicarbazide"
-  | "Azide"
-  | "Azo Compound"
-  | "Diazonium Salt"
-  | "Isonitrile"
-  | "Cyanate"
-  | "Isocyanate"
-  | "Thiocyanate"
-  | "Isothiocyanate"
-  | "Carbodiimide"
-  | "Nitroso Compound"
-  | "Nitro Compound"
-  | "Nitrite"
-  | "Nitrate"
-  | "Sulfuric Acid Derivative"
-  | "Sulfuric Acid"
-  | "Sulfuric Acid Monoester"
-  | "Sulfuric Acid Diester"
-  | "Sulfuric Acid Amide Ester"
-  | "Sulfuric Acid Amide"
-  | "Sulfuric Acid Diamide"
-  | "Sulfuryl Halide"
-  | "Sulfonic Acid Derivative"
-  | "Sulfonic Acid"
-  | "Sulfonic Acid Ester"
-  | "Sulfonamide"
-  | "Sulfonyl Halide"
-  | "Sulfone"
-  | "Sulfoxide"
-  | "Sulfinic Acid Derivative"
-  | "Sulfinic Acid"
-  | "Sulfinic Acid Ester"
-  | "Sulfinic Acid Halide"
-  | "Sulfinic Acid Amide"
-  | "Sulfenic Acid Derivative"
-  | "Sulfenic Acid"
-  | "Sulfenic Acid Ester"
-  | "Sulfenic Acid Halide"
-  | "Sulfenic Acid Amide"
-  | "Thiol"
-  | "Alkylthiol"
-  | "Arylthiol"
-  | "Phosphoric Acid Derivative"
-  | "Phosphoric Acid"
-  | "Phosphoric Acid Ester"
-  | "Phosphoric Acid Halide"
-  | "Phosphoric Acid Amide"
-  | "Thiophosphoric Acid Derivative"
-  | "Thiophosphoric Acid"
-  | "Thiophosphoric Acid Ester"
-  | "Thiophosphoric Acid Halide"
-  | "Thiophosphoric Acid Amide"
-  | "Phosphonic Acid Derivative"
-  | "Phosphonic Acid"
-  | "Phosphonic Acid Ester"
-  | "Phosphine"
-  | "Phosphinoxide"
-  | "Boronic Acid Derivative"
-  | "Boronic Acid"
-  | "Boronic Acid Ester"
-  | "Alkene"
-  | "Alkyne"
-  | "Aromaticatic"
-  | "Heterocycle"
-  | "Alpha Aminoacid"
-  | "Alpha Hydroxyacid"
+  | 'Alkane'
+  | 'Cation'
+  | 'Anion'
+  | 'Carbonyl'
+  | 'Aldehyde'
+  | 'Ketone'
+  | 'Thiocarbonyl'
+  | 'Thioaldehyde'
+  | 'Thioketone'
+  | 'Imine'
+  | 'Hydrazone'
+  | 'Semicarbazone'
+  | 'Thiosemicarbazone'
+  | 'Oxime'
+  | 'Oxime Ether'
+  | 'Ketene'
+  | 'Ketene Acetal Derivative'
+  | 'Carbonyl Hydrate'
+  | 'Hemiacetal'
+  | 'Acetal'
+  | 'Hemiaminal'
+  | 'Aminal'
+  | 'Thiohemiaminal'
+  | 'Thioacetal'
+  | 'Enamine'
+  | 'Enol'
+  | 'Enolether'
+  | 'Hydroxy'
+  | 'Alcohol'
+  | 'Primary Alcohol'
+  | 'Secondary Alcohol'
+  | 'Tertiary Alcohol'
+  | '1,2 Diol'
+  | '1,2 Aminoalcohol'
+  | 'Phenol'
+  | '1,2 Diphenol'
+  | 'Enediol'
+  | 'Ether'
+  | 'Dialkylether'
+  | 'Alkylarylether'
+  | 'Diarylether'
+  | 'Thioether'
+  | 'Disulfide'
+  | 'Peroxide'
+  | 'Hydroperoxide'
+  | 'Hydrazine'
+  | 'Hydroxylamine'
+  | 'Amine'
+  | 'Primary Amine'
+  | 'Primary Aliphatic Amine'
+  | 'Primary Aromatic Amine'
+  | 'Secondary Amine'
+  | 'Secondary Aliphatic Amine'
+  | 'Secondary Mixed Amine'
+  | 'Secondary Aromatic Amine'
+  | 'Tertiary Amine'
+  | 'Tertiary Aliphatic Amine'
+  | 'Tertiary Mixed Amine'
+  | 'Tertiary Aromatic Amine'
+  | 'Quart Ammonium'
+  | 'NOxide'
+  | 'Halogen Derivative'
+  | 'Alkyl Halide'
+  | 'Alkyl Fluoride'
+  | 'Alkyl Chloride'
+  | 'Alkyl Bromide'
+  | 'Alkyl Iodide'
+  | 'Aryl Halide'
+  | 'Aryl Fluoride'
+  | 'Aryl Chloride'
+  | 'Aryl Bromide'
+  | 'Aryl Iodide'
+  | 'Organometallic'
+  | 'Organolithium'
+  | 'Organomagnesium'
+  | 'Carboxylic Acid Derivative'
+  | 'Carboxylic Acid'
+  | 'Carboxylic Acid Salt'
+  | 'Carboxylic Acid Ester'
+  | 'Lactone'
+  | 'Carboxylic Acid Amide'
+  | 'Carboxylic Acid Primary Amide'
+  | 'Carboxylic Acid Secondary Amide'
+  | 'Carboxylic Acid Tertiary Amide'
+  | 'Lactam'
+  | 'Carboxylic Acid Hydrazide'
+  | 'Carboxylic Acid Azide'
+  | 'Hydroxamic Acid'
+  | 'Carboxylic Acid Amidine'
+  | 'Carboxylic Acid Amidrazone'
+  | 'Nitrile'
+  | 'Acyl Halide'
+  | 'Acyl Fluoride'
+  | 'Acyl Chloride'
+  | 'Acyl Bromide'
+  | 'Acyl Iodide'
+  | 'Acyl Cyanide'
+  | 'Imido Ester'
+  | 'Imidoyl Halide'
+  | 'Thiocarboxylic Acid Derivative'
+  | 'Thiocarboxylic Acid'
+  | 'Thiocarboxylic Acid Ester'
+  | 'Thiolactone'
+  | 'Thiocarboxylic Acid Amide'
+  | 'Thiolactam'
+  | 'Imido Thioester'
+  | 'Oxohetarene'
+  | 'Thioxohetarene'
+  | 'Iminohetarene'
+  | 'Orthocarboxylic Acid Derivative'
+  | 'Carboxylic Acid Orthoester'
+  | 'Carboxylic Acid Amide Acetal'
+  | 'Carboxylic Acid Anhydride'
+  | 'Carboxylic Acid Imide'
+  | 'Carboxylic Acid Unsubst Imide'
+  | 'Carboxylic Acid Subst Imide'
+  | 'CO2 Derivative'
+  | 'Carbonic Acid Derivative'
+  | 'Carbonic Acid Monoester'
+  | 'Carbonic Acid Diester'
+  | 'Carbonic Acid Ester Halide'
+  | 'Thiocarbonic Acid Derivative'
+  | 'Thiocarbonic Acid Monoester'
+  | 'Thiocarbonic Acid Diester'
+  | 'Thiocarbonic Acid Ester Halide'
+  | 'Carbamic Acid Derivative'
+  | 'Carbamic Acid'
+  | 'Carbamic Acid Ester'
+  | 'Carbamic Acid Halide'
+  | 'Thiocarbamic Acid Derivative'
+  | 'Thiocarbamic Acid'
+  | 'Thiocarbamic Acid Ester'
+  | 'Thiocarbamic Acid Halide'
+  | 'Urea'
+  | 'Isourea'
+  | 'Thiourea'
+  | 'Isothiourea'
+  | 'Guanidine'
+  | 'Semicarbazide'
+  | 'Thiosemicarbazide'
+  | 'Azide'
+  | 'Azo Compound'
+  | 'Diazonium Salt'
+  | 'Isonitrile'
+  | 'Cyanate'
+  | 'Isocyanate'
+  | 'Thiocyanate'
+  | 'Isothiocyanate'
+  | 'Carbodiimide'
+  | 'Nitroso Compound'
+  | 'Nitro Compound'
+  | 'Nitrite'
+  | 'Nitrate'
+  | 'Sulfuric Acid Derivative'
+  | 'Sulfuric Acid'
+  | 'Sulfuric Acid Monoester'
+  | 'Sulfuric Acid Diester'
+  | 'Sulfuric Acid Amide Ester'
+  | 'Sulfuric Acid Amide'
+  | 'Sulfuric Acid Diamide'
+  | 'Sulfuryl Halide'
+  | 'Sulfonic Acid Derivative'
+  | 'Sulfonic Acid'
+  | 'Sulfonic Acid Ester'
+  | 'Sulfonamide'
+  | 'Sulfonyl Halide'
+  | 'Sulfone'
+  | 'Sulfoxide'
+  | 'Sulfinic Acid Derivative'
+  | 'Sulfinic Acid'
+  | 'Sulfinic Acid Ester'
+  | 'Sulfinic Acid Halide'
+  | 'Sulfinic Acid Amide'
+  | 'Sulfenic Acid Derivative'
+  | 'Sulfenic Acid'
+  | 'Sulfenic Acid Ester'
+  | 'Sulfenic Acid Halide'
+  | 'Sulfenic Acid Amide'
+  | 'Thiol'
+  | 'Alkylthiol'
+  | 'Arylthiol'
+  | 'Phosphoric Acid Derivative'
+  | 'Phosphoric Acid'
+  | 'Phosphoric Acid Ester'
+  | 'Phosphoric Acid Halide'
+  | 'Phosphoric Acid Amide'
+  | 'Thiophosphoric Acid Derivative'
+  | 'Thiophosphoric Acid'
+  | 'Thiophosphoric Acid Ester'
+  | 'Thiophosphoric Acid Halide'
+  | 'Thiophosphoric Acid Amide'
+  | 'Phosphonic Acid Derivative'
+  | 'Phosphonic Acid'
+  | 'Phosphonic Acid Ester'
+  | 'Phosphine'
+  | 'Phosphinoxide'
+  | 'Boronic Acid Derivative'
+  | 'Boronic Acid'
+  | 'Boronic Acid Ester'
+  | 'Alkene'
+  | 'Alkyne'
+  | 'Aromaticatic'
+  | 'Heterocycle'
+  | 'Alpha Aminoacid'
+  | 'Alpha Hydroxyacid'
 )[];
 /**
  * The optimizations to perform as part of this study.
@@ -375,211 +375,211 @@ export type ForceFieldName = string;
  * The chemical environments to consider when analysing the results of the benchmark.
  */
 export type AnalysisEnvironments1 = (
-  | "Alkane"
-  | "Cation"
-  | "Anion"
-  | "Carbonyl"
-  | "Aldehyde"
-  | "Ketone"
-  | "Thiocarbonyl"
-  | "Thioaldehyde"
-  | "Thioketone"
-  | "Imine"
-  | "Hydrazone"
-  | "Semicarbazone"
-  | "Thiosemicarbazone"
-  | "Oxime"
-  | "Oxime Ether"
-  | "Ketene"
-  | "Ketene Acetal Derivative"
-  | "Carbonyl Hydrate"
-  | "Hemiacetal"
-  | "Acetal"
-  | "Hemiaminal"
-  | "Aminal"
-  | "Thiohemiaminal"
-  | "Thioacetal"
-  | "Enamine"
-  | "Enol"
-  | "Enolether"
-  | "Hydroxy"
-  | "Alcohol"
-  | "Primary Alcohol"
-  | "Secondary Alcohol"
-  | "Tertiary Alcohol"
-  | "1,2 Diol"
-  | "1,2 Aminoalcohol"
-  | "Phenol"
-  | "1,2 Diphenol"
-  | "Enediol"
-  | "Ether"
-  | "Dialkylether"
-  | "Alkylarylether"
-  | "Diarylether"
-  | "Thioether"
-  | "Disulfide"
-  | "Peroxide"
-  | "Hydroperoxide"
-  | "Hydrazine"
-  | "Hydroxylamine"
-  | "Amine"
-  | "Primary Amine"
-  | "Primary Aliphatic Amine"
-  | "Primary Aromatic Amine"
-  | "Secondary Amine"
-  | "Secondary Aliphatic Amine"
-  | "Secondary Mixed Amine"
-  | "Secondary Aromatic Amine"
-  | "Tertiary Amine"
-  | "Tertiary Aliphatic Amine"
-  | "Tertiary Mixed Amine"
-  | "Tertiary Aromatic Amine"
-  | "Quart Ammonium"
-  | "NOxide"
-  | "Halogen Derivative"
-  | "Alkyl Halide"
-  | "Alkyl Fluoride"
-  | "Alkyl Chloride"
-  | "Alkyl Bromide"
-  | "Alkyl Iodide"
-  | "Aryl Halide"
-  | "Aryl Fluoride"
-  | "Aryl Chloride"
-  | "Aryl Bromide"
-  | "Aryl Iodide"
-  | "Organometallic"
-  | "Organolithium"
-  | "Organomagnesium"
-  | "Carboxylic Acid Derivative"
-  | "Carboxylic Acid"
-  | "Carboxylic Acid Salt"
-  | "Carboxylic Acid Ester"
-  | "Lactone"
-  | "Carboxylic Acid Amide"
-  | "Carboxylic Acid Primary Amide"
-  | "Carboxylic Acid Secondary Amide"
-  | "Carboxylic Acid Tertiary Amide"
-  | "Lactam"
-  | "Carboxylic Acid Hydrazide"
-  | "Carboxylic Acid Azide"
-  | "Hydroxamic Acid"
-  | "Carboxylic Acid Amidine"
-  | "Carboxylic Acid Amidrazone"
-  | "Nitrile"
-  | "Acyl Halide"
-  | "Acyl Fluoride"
-  | "Acyl Chloride"
-  | "Acyl Bromide"
-  | "Acyl Iodide"
-  | "Acyl Cyanide"
-  | "Imido Ester"
-  | "Imidoyl Halide"
-  | "Thiocarboxylic Acid Derivative"
-  | "Thiocarboxylic Acid"
-  | "Thiocarboxylic Acid Ester"
-  | "Thiolactone"
-  | "Thiocarboxylic Acid Amide"
-  | "Thiolactam"
-  | "Imido Thioester"
-  | "Oxohetarene"
-  | "Thioxohetarene"
-  | "Iminohetarene"
-  | "Orthocarboxylic Acid Derivative"
-  | "Carboxylic Acid Orthoester"
-  | "Carboxylic Acid Amide Acetal"
-  | "Carboxylic Acid Anhydride"
-  | "Carboxylic Acid Imide"
-  | "Carboxylic Acid Unsubst Imide"
-  | "Carboxylic Acid Subst Imide"
-  | "CO2 Derivative"
-  | "Carbonic Acid Derivative"
-  | "Carbonic Acid Monoester"
-  | "Carbonic Acid Diester"
-  | "Carbonic Acid Ester Halide"
-  | "Thiocarbonic Acid Derivative"
-  | "Thiocarbonic Acid Monoester"
-  | "Thiocarbonic Acid Diester"
-  | "Thiocarbonic Acid Ester Halide"
-  | "Carbamic Acid Derivative"
-  | "Carbamic Acid"
-  | "Carbamic Acid Ester"
-  | "Carbamic Acid Halide"
-  | "Thiocarbamic Acid Derivative"
-  | "Thiocarbamic Acid"
-  | "Thiocarbamic Acid Ester"
-  | "Thiocarbamic Acid Halide"
-  | "Urea"
-  | "Isourea"
-  | "Thiourea"
-  | "Isothiourea"
-  | "Guanidine"
-  | "Semicarbazide"
-  | "Thiosemicarbazide"
-  | "Azide"
-  | "Azo Compound"
-  | "Diazonium Salt"
-  | "Isonitrile"
-  | "Cyanate"
-  | "Isocyanate"
-  | "Thiocyanate"
-  | "Isothiocyanate"
-  | "Carbodiimide"
-  | "Nitroso Compound"
-  | "Nitro Compound"
-  | "Nitrite"
-  | "Nitrate"
-  | "Sulfuric Acid Derivative"
-  | "Sulfuric Acid"
-  | "Sulfuric Acid Monoester"
-  | "Sulfuric Acid Diester"
-  | "Sulfuric Acid Amide Ester"
-  | "Sulfuric Acid Amide"
-  | "Sulfuric Acid Diamide"
-  | "Sulfuryl Halide"
-  | "Sulfonic Acid Derivative"
-  | "Sulfonic Acid"
-  | "Sulfonic Acid Ester"
-  | "Sulfonamide"
-  | "Sulfonyl Halide"
-  | "Sulfone"
-  | "Sulfoxide"
-  | "Sulfinic Acid Derivative"
-  | "Sulfinic Acid"
-  | "Sulfinic Acid Ester"
-  | "Sulfinic Acid Halide"
-  | "Sulfinic Acid Amide"
-  | "Sulfenic Acid Derivative"
-  | "Sulfenic Acid"
-  | "Sulfenic Acid Ester"
-  | "Sulfenic Acid Halide"
-  | "Sulfenic Acid Amide"
-  | "Thiol"
-  | "Alkylthiol"
-  | "Arylthiol"
-  | "Phosphoric Acid Derivative"
-  | "Phosphoric Acid"
-  | "Phosphoric Acid Ester"
-  | "Phosphoric Acid Halide"
-  | "Phosphoric Acid Amide"
-  | "Thiophosphoric Acid Derivative"
-  | "Thiophosphoric Acid"
-  | "Thiophosphoric Acid Ester"
-  | "Thiophosphoric Acid Halide"
-  | "Thiophosphoric Acid Amide"
-  | "Phosphonic Acid Derivative"
-  | "Phosphonic Acid"
-  | "Phosphonic Acid Ester"
-  | "Phosphine"
-  | "Phosphinoxide"
-  | "Boronic Acid Derivative"
-  | "Boronic Acid"
-  | "Boronic Acid Ester"
-  | "Alkene"
-  | "Alkyne"
-  | "Aromaticatic"
-  | "Heterocycle"
-  | "Alpha Aminoacid"
-  | "Alpha Hydroxyacid"
+  | 'Alkane'
+  | 'Cation'
+  | 'Anion'
+  | 'Carbonyl'
+  | 'Aldehyde'
+  | 'Ketone'
+  | 'Thiocarbonyl'
+  | 'Thioaldehyde'
+  | 'Thioketone'
+  | 'Imine'
+  | 'Hydrazone'
+  | 'Semicarbazone'
+  | 'Thiosemicarbazone'
+  | 'Oxime'
+  | 'Oxime Ether'
+  | 'Ketene'
+  | 'Ketene Acetal Derivative'
+  | 'Carbonyl Hydrate'
+  | 'Hemiacetal'
+  | 'Acetal'
+  | 'Hemiaminal'
+  | 'Aminal'
+  | 'Thiohemiaminal'
+  | 'Thioacetal'
+  | 'Enamine'
+  | 'Enol'
+  | 'Enolether'
+  | 'Hydroxy'
+  | 'Alcohol'
+  | 'Primary Alcohol'
+  | 'Secondary Alcohol'
+  | 'Tertiary Alcohol'
+  | '1,2 Diol'
+  | '1,2 Aminoalcohol'
+  | 'Phenol'
+  | '1,2 Diphenol'
+  | 'Enediol'
+  | 'Ether'
+  | 'Dialkylether'
+  | 'Alkylarylether'
+  | 'Diarylether'
+  | 'Thioether'
+  | 'Disulfide'
+  | 'Peroxide'
+  | 'Hydroperoxide'
+  | 'Hydrazine'
+  | 'Hydroxylamine'
+  | 'Amine'
+  | 'Primary Amine'
+  | 'Primary Aliphatic Amine'
+  | 'Primary Aromatic Amine'
+  | 'Secondary Amine'
+  | 'Secondary Aliphatic Amine'
+  | 'Secondary Mixed Amine'
+  | 'Secondary Aromatic Amine'
+  | 'Tertiary Amine'
+  | 'Tertiary Aliphatic Amine'
+  | 'Tertiary Mixed Amine'
+  | 'Tertiary Aromatic Amine'
+  | 'Quart Ammonium'
+  | 'NOxide'
+  | 'Halogen Derivative'
+  | 'Alkyl Halide'
+  | 'Alkyl Fluoride'
+  | 'Alkyl Chloride'
+  | 'Alkyl Bromide'
+  | 'Alkyl Iodide'
+  | 'Aryl Halide'
+  | 'Aryl Fluoride'
+  | 'Aryl Chloride'
+  | 'Aryl Bromide'
+  | 'Aryl Iodide'
+  | 'Organometallic'
+  | 'Organolithium'
+  | 'Organomagnesium'
+  | 'Carboxylic Acid Derivative'
+  | 'Carboxylic Acid'
+  | 'Carboxylic Acid Salt'
+  | 'Carboxylic Acid Ester'
+  | 'Lactone'
+  | 'Carboxylic Acid Amide'
+  | 'Carboxylic Acid Primary Amide'
+  | 'Carboxylic Acid Secondary Amide'
+  | 'Carboxylic Acid Tertiary Amide'
+  | 'Lactam'
+  | 'Carboxylic Acid Hydrazide'
+  | 'Carboxylic Acid Azide'
+  | 'Hydroxamic Acid'
+  | 'Carboxylic Acid Amidine'
+  | 'Carboxylic Acid Amidrazone'
+  | 'Nitrile'
+  | 'Acyl Halide'
+  | 'Acyl Fluoride'
+  | 'Acyl Chloride'
+  | 'Acyl Bromide'
+  | 'Acyl Iodide'
+  | 'Acyl Cyanide'
+  | 'Imido Ester'
+  | 'Imidoyl Halide'
+  | 'Thiocarboxylic Acid Derivative'
+  | 'Thiocarboxylic Acid'
+  | 'Thiocarboxylic Acid Ester'
+  | 'Thiolactone'
+  | 'Thiocarboxylic Acid Amide'
+  | 'Thiolactam'
+  | 'Imido Thioester'
+  | 'Oxohetarene'
+  | 'Thioxohetarene'
+  | 'Iminohetarene'
+  | 'Orthocarboxylic Acid Derivative'
+  | 'Carboxylic Acid Orthoester'
+  | 'Carboxylic Acid Amide Acetal'
+  | 'Carboxylic Acid Anhydride'
+  | 'Carboxylic Acid Imide'
+  | 'Carboxylic Acid Unsubst Imide'
+  | 'Carboxylic Acid Subst Imide'
+  | 'CO2 Derivative'
+  | 'Carbonic Acid Derivative'
+  | 'Carbonic Acid Monoester'
+  | 'Carbonic Acid Diester'
+  | 'Carbonic Acid Ester Halide'
+  | 'Thiocarbonic Acid Derivative'
+  | 'Thiocarbonic Acid Monoester'
+  | 'Thiocarbonic Acid Diester'
+  | 'Thiocarbonic Acid Ester Halide'
+  | 'Carbamic Acid Derivative'
+  | 'Carbamic Acid'
+  | 'Carbamic Acid Ester'
+  | 'Carbamic Acid Halide'
+  | 'Thiocarbamic Acid Derivative'
+  | 'Thiocarbamic Acid'
+  | 'Thiocarbamic Acid Ester'
+  | 'Thiocarbamic Acid Halide'
+  | 'Urea'
+  | 'Isourea'
+  | 'Thiourea'
+  | 'Isothiourea'
+  | 'Guanidine'
+  | 'Semicarbazide'
+  | 'Thiosemicarbazide'
+  | 'Azide'
+  | 'Azo Compound'
+  | 'Diazonium Salt'
+  | 'Isonitrile'
+  | 'Cyanate'
+  | 'Isocyanate'
+  | 'Thiocyanate'
+  | 'Isothiocyanate'
+  | 'Carbodiimide'
+  | 'Nitroso Compound'
+  | 'Nitro Compound'
+  | 'Nitrite'
+  | 'Nitrate'
+  | 'Sulfuric Acid Derivative'
+  | 'Sulfuric Acid'
+  | 'Sulfuric Acid Monoester'
+  | 'Sulfuric Acid Diester'
+  | 'Sulfuric Acid Amide Ester'
+  | 'Sulfuric Acid Amide'
+  | 'Sulfuric Acid Diamide'
+  | 'Sulfuryl Halide'
+  | 'Sulfonic Acid Derivative'
+  | 'Sulfonic Acid'
+  | 'Sulfonic Acid Ester'
+  | 'Sulfonamide'
+  | 'Sulfonyl Halide'
+  | 'Sulfone'
+  | 'Sulfoxide'
+  | 'Sulfinic Acid Derivative'
+  | 'Sulfinic Acid'
+  | 'Sulfinic Acid Ester'
+  | 'Sulfinic Acid Halide'
+  | 'Sulfinic Acid Amide'
+  | 'Sulfenic Acid Derivative'
+  | 'Sulfenic Acid'
+  | 'Sulfenic Acid Ester'
+  | 'Sulfenic Acid Halide'
+  | 'Sulfenic Acid Amide'
+  | 'Thiol'
+  | 'Alkylthiol'
+  | 'Arylthiol'
+  | 'Phosphoric Acid Derivative'
+  | 'Phosphoric Acid'
+  | 'Phosphoric Acid Ester'
+  | 'Phosphoric Acid Halide'
+  | 'Phosphoric Acid Amide'
+  | 'Thiophosphoric Acid Derivative'
+  | 'Thiophosphoric Acid'
+  | 'Thiophosphoric Acid Ester'
+  | 'Thiophosphoric Acid Halide'
+  | 'Thiophosphoric Acid Amide'
+  | 'Phosphonic Acid Derivative'
+  | 'Phosphonic Acid'
+  | 'Phosphonic Acid Ester'
+  | 'Phosphine'
+  | 'Phosphinoxide'
+  | 'Boronic Acid Derivative'
+  | 'Boronic Acid'
+  | 'Boronic Acid Ester'
+  | 'Alkene'
+  | 'Alkyne'
+  | 'Aromaticatic'
+  | 'Heterocycle'
+  | 'Alpha Aminoacid'
+  | 'Alpha Hydroxyacid'
 )[];
 /**
  * The benchmarks to perform as part of this study.

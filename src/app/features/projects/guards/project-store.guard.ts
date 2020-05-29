@@ -22,7 +22,7 @@ export class ProjectStoreGuard implements CanActivate {
 
   getFromStoreOrAPI(next: ActivatedRouteSnapshot): Observable<boolean> {
     return this.store.pipe(
-      select(getHasProjectLoaded),
+      select(getHasProjectLoaded, { projectId: next.params.projectId }),
       tap((loaded) => {
         if (!loaded) {
           this.store.dispatch(new LoadProject(next.params.projectId));
