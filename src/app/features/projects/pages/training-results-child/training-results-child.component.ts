@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
 import { Store } from '@ngrx/store';
@@ -7,7 +13,10 @@ import { State } from '@core/store';
 
 import { PlotData } from '@shared/components/plotly/plotly.interfaces';
 
-import { getIterationRMSE, getObjectiveFunction } from '@core/store/study-details/study-details.selectors';
+import {
+  getIterationRMSE,
+  getObjectiveFunction,
+} from '@core/store/study-details/study-details.selectors';
 import { getCurrentOptimizationState } from '@core/store/project/project.selectors';
 
 import { TrainingResultsState } from '@core/store/study-details/study-details.interfaces';
@@ -21,13 +30,12 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrainingResultsChildComponent implements OnInit, OnDestroy {
-
-  public optimization$: Observable<OptimizationState>
+  public optimization$: Observable<OptimizationState>;
 
   public objectiveFunction$: Observable<PlotData>;
 
   public iterationRMSE$: Observable<TrainingResultsState>;
-  private iterationRMSESubscription: Subscription
+  private iterationRMSESubscription: Subscription;
 
   public propertyType: string;
 
@@ -37,32 +45,31 @@ export class TrainingResultsChildComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<State>,
     private breakpointObserver: BreakpointObserver,
-    private ref: ChangeDetectorRef,
+    private ref: ChangeDetectorRef
   ) {
-    this.layoutType = "row"
+    this.layoutType = 'row';
   }
 
   ngOnInit(): void {
-    this.optimization$ = this.store.select(getCurrentOptimizationState)
+    this.optimization$ = this.store.select(getCurrentOptimizationState);
     this.objectiveFunction$ = this.store.select(getObjectiveFunction);
     this.iterationRMSE$ = this.store.select(getIterationRMSE);
 
     this.iterationRMSESubscription = this.iterationRMSE$.subscribe(
       (state: TrainingResultsState) => {
-
         if (!state) return;
 
-        const propertyNames = Object.keys(state.plotData)
+        const propertyNames = Object.keys(state.plotData);
 
         if (propertyNames.length == 0) {
           this.propertyType = undefined;
-          return
+          return;
         }
 
-        if (propertyNames.includes(this.propertyType)) return
-        this.propertyType = propertyNames[0]
+        if (propertyNames.includes(this.propertyType)) return;
+        this.propertyType = propertyNames[0];
       }
-    )
+    );
 
     this.breakpointObserver
       .observe(['(max-width: 1420px)'])
@@ -70,11 +77,11 @@ export class TrainingResultsChildComponent implements OnInit, OnDestroy {
   }
 
   updateLayout(state: BreakpointState) {
-    this.layoutType = state.breakpoints['(max-width: 1420px)'] ? "column" : "row";
+    this.layoutType = state.breakpoints['(max-width: 1420px)'] ? 'column' : 'row';
     this.ref.detectChanges();
   }
 
   ngOnDestroy() {
-    if (this.iterationRMSESubscription) this.iterationRMSESubscription.unsubscribe()
+    if (this.iterationRMSESubscription) this.iterationRMSESubscription.unsubscribe();
   }
 }

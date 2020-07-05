@@ -1,23 +1,30 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import {
-  BarTrace, initialBarTrace,
+  BarTrace,
+  initialBarTrace,
   initialScatterTrace,
-  initialTestResultsState, initialTrainingResultsState,
+  initialTestResultsState,
+  initialTrainingResultsState,
   ScatterTrace,
   StudyDetailsState,
-  TestResultsState, TrainingResultsState
+  TestResultsState,
+  TrainingResultsState,
 } from '@core/store/study-details/study-details.interfaces';
-import { BenchmarkState, OptimizationState, StudyState } from '@core/store/project/project.interfaces';
+import {
+  BenchmarkState,
+  OptimizationState,
+  StudyState,
+} from '@core/store/project/project.interfaces';
 import {
   getCurrentBenchmarkState,
   getCurrentOptimizationState,
-  getCurrentStudyState
+  getCurrentStudyState,
 } from '@core/store/project/project.selectors';
 import {
   DataSetCollectionState,
   initialDataSet,
   initialDataSetCollection,
-  initialDataSetCollectionState
+  initialDataSetCollectionState,
 } from '@core/store/datasets/datasets.interfaces';
 import { Benchmark } from '@core/models/projects';
 import { createDefaultLoadable } from '@core/loadable/loadable';
@@ -43,8 +50,7 @@ export const getCurrentTrainingSets = createSelector(
     optimizationState: OptimizationState,
     studyDetailsState: StudyDetailsState
   ): DataSetCollectionState => {
-
-    if (!optimizationState || ! studyDetailsState) return null;
+    if (!optimizationState || !studyDetailsState) return null;
 
     if (
       (optimizationState && optimizationState.loading) ||
@@ -94,8 +100,7 @@ export const getCurrentTestSets = createSelector(
     benchmarkState: BenchmarkState,
     studyDetailsState: StudyDetailsState
   ): DataSetCollectionState => {
-
-    if (!benchmarkState || ! studyDetailsState) return null;
+    if (!benchmarkState || !studyDetailsState) return null;
 
     if (
       (benchmarkState && benchmarkState.loading) ||
@@ -159,13 +164,8 @@ const toPropertyName = (propertyType: string, nComponents: number) => {
 export const getTestSummaryPlot = createSelector(
   getCurrentStudyState,
   selectStudyDetailsState,
-  (
-    studyState: StudyState,
-    studyDetailsState: StudyDetailsState,
-    props
-  ): PlotData => {
-
-    if (!studyState || ! studyDetailsState) return null;
+  (studyState: StudyState, studyDetailsState: StudyDetailsState, props): PlotData => {
+    if (!studyState || !studyDetailsState) return null;
 
     // Check if both required states are still loading.
     if (studyState.loading || studyDetailsState.loading) {
@@ -193,8 +193,7 @@ export const getTestSummaryPlot = createSelector(
     let traces = [];
 
     for (let benchmarkResult of studyDetailsState.benchmarkResults) {
-
-      if (benchmarkResult == undefined) continue
+      if (benchmarkResult == undefined) continue;
 
       const benchmark = benchmarks[benchmarkResult.id];
 
@@ -260,13 +259,8 @@ export const getTestSummaryPlot = createSelector(
 export const getTestScatterPlot = createSelector(
   getCurrentStudyState,
   selectStudyDetailsState,
-  (
-    studyState: StudyState,
-    studyDetailsState: StudyDetailsState,
-  ): TestResultsState =>
-  {
-
-    if (!studyState || ! studyDetailsState) return null;
+  (studyState: StudyState, studyDetailsState: StudyDetailsState): TestResultsState => {
+    if (!studyState || !studyDetailsState) return null;
 
     // Check if both required states are still loading.
     if (studyState.loading || studyDetailsState.loading) {
@@ -285,46 +279,54 @@ export const getTestScatterPlot = createSelector(
     }
 
     const benchmarks: { [key: string]: Benchmark } = {};
-    const dataSetIds: string[] = []
+    const dataSetIds: string[] = [];
 
     studyState.benchmarks.forEach((value) => {
-      benchmarks[value.id] = value
+      benchmarks[value.id] = value;
 
       value.test_set_ids.forEach((x) => {
-        if (dataSetIds.includes(x)) return
-        dataSetIds.push(x)
-      })
+        if (dataSetIds.includes(x)) return;
+        dataSetIds.push(x);
+      });
     });
 
     // Find all of the reference data points and store them in a dictionary by their id.
-    const dataSets = studyDetailsState.dataSets.filter((x) => dataSetIds.includes(x.id))
+    const dataSets = studyDetailsState.dataSets.filter((x) =>
+      dataSetIds.includes(x.id)
+    );
 
-    let dataEntries: { [key: string]: DataSetEntry } = {}
-    dataSets.forEach((dataSet) => dataSet.entries.forEach((x) => dataEntries[x.id] = x))
+    let dataEntries: { [key: string]: DataSetEntry } = {};
+    dataSets.forEach((dataSet) =>
+      dataSet.entries.forEach((x) => (dataEntries[x.id] = x))
+    );
 
     let benchmarkNames = [];
     let traces: { [propertyName: string]: ScatterTrace[] } = {};
 
     for (const benchmarkResult of studyDetailsState.benchmarkResults) {
-
       const benchmark = benchmarks[benchmarkResult.id];
       benchmarkNames.push(benchmark.name);
 
       const benchmarkTraces = {};
 
       for (const resultEntry of benchmarkResult.analysed_result.results_entries) {
+        const referenceEntry = dataEntries[resultEntry.reference_id];
+        const category = resultEntry.category
+          .replace('<', '+')
+          .replace('>', '+')
+          .replace('~', '+');
 
-        const referenceEntry = dataEntries[resultEntry.reference_id]
-        const category = resultEntry.category.replace("<", "+").replace(">", "+").replace("~", "+")
+        const propertyName = toPropertyName(
+          referenceEntry.property_type,
+          referenceEntry.components.length
+        );
+        if (benchmarkTraces[propertyName] == undefined)
+          benchmarkTraces[propertyName] = {};
 
-        const propertyName = toPropertyName(referenceEntry.property_type, referenceEntry.components.length)
-        if (benchmarkTraces[propertyName] == undefined) benchmarkTraces[propertyName] = {}
-
-        let tracesByCategory = benchmarkTraces[propertyName]
+        let tracesByCategory = benchmarkTraces[propertyName];
 
         if (tracesByCategory[category] == undefined) {
-
-          const traceIndex = Object.keys(tracesByCategory).length
+          const traceIndex = Object.keys(tracesByCategory).length;
 
           tracesByCategory[category] = {
             ...initialScatterTrace,
@@ -336,14 +338,16 @@ export const getTestScatterPlot = createSelector(
             index: benchmarkNames.length - 1,
             showlegend: benchmarkNames.length == 1,
             hoverinfo: 'none',
-          }
+          };
 
-          if (tracesByCategory[category].xaxis == 'x0') tracesByCategory[category].xaxis = 'x'
-          if (tracesByCategory[category].yaxis == 'y0') tracesByCategory[category].yaxis = 'y'
+          if (tracesByCategory[category].xaxis == 'x0')
+            tracesByCategory[category].xaxis = 'x';
+          if (tracesByCategory[category].yaxis == 'y0')
+            tracesByCategory[category].yaxis = 'y';
         }
 
-        tracesByCategory[category].x.push(resultEntry.estimated_value)
-        tracesByCategory[category].y.push(referenceEntry.value)
+        tracesByCategory[category].x.push(resultEntry.estimated_value);
+        tracesByCategory[category].y.push(referenceEntry.value);
       }
 
       for (const propertyName in benchmarkTraces) {
@@ -357,21 +361,19 @@ export const getTestScatterPlot = createSelector(
     const plotData: TestResultsState = {
       ...createDefaultLoadable(),
       ...initialTestResultsState,
-      success: true
-    }
+      success: true,
+    };
 
     for (const propertyName in traces) {
-
       plotData.plotData[propertyName] = {
         ...createDefaultLoadable(),
         traces: traces[propertyName],
         subplotTitles: benchmarkNames,
         success: true,
       };
-
     }
 
-    return plotData
+    return plotData;
   }
 );
 
@@ -381,10 +383,8 @@ export const getObjectiveFunction = createSelector(
   (
     optimizationState: OptimizationState,
     studyDetailsState: StudyDetailsState
-  ): PlotData =>
-  {
-
-    if (!optimizationState || ! studyDetailsState) return null;
+  ): PlotData => {
+    if (!optimizationState || !studyDetailsState) return null;
 
     // Check if both required states are still loading.
     if (optimizationState.loading || studyDetailsState.loading) {
@@ -398,11 +398,15 @@ export const getObjectiveFunction = createSelector(
     if (optimizationState.error || studyDetailsState.error) {
       return {
         ...initialPlotData,
-        error: optimizationState.error ? optimizationState.error : studyDetailsState.error,
+        error: optimizationState.error
+          ? optimizationState.error
+          : studyDetailsState.error,
       };
     }
 
-    const optimizationResult  = studyDetailsState.optimizationResults.find((x) => x.id == optimizationState.id)
+    const optimizationResult = studyDetailsState.optimizationResults.find(
+      (x) => x.id == optimizationState.id
+    );
 
     const trace = {
       ...initialScatterTrace,
@@ -413,26 +417,27 @@ export const getObjectiveFunction = createSelector(
       showlegend: false,
       marker: { color: defaultColors[0] },
       mode: 'lines+markers',
-    }
+    };
 
     const iterations = Object.keys(optimizationResult.objective_function).sort(
-      (a, b) => {return (+a) - (+b)}
-    )
+      (a, b) => {
+        return +a - +b;
+      }
+    );
 
     for (let iteration of iterations) {
+      const value = optimizationResult.objective_function[iteration];
 
-      const value = optimizationResult.objective_function[iteration]
-
-      trace.x.push(+iteration)
-      trace.y.push(value)
+      trace.x.push(+iteration);
+      trace.y.push(value);
     }
 
     return {
       ...createDefaultLoadable(),
       traces: [trace],
-      subplotTitles: ["Iteration"],
+      subplotTitles: ['Iteration'],
       success: true,
-    }
+    };
   }
 );
 
@@ -442,10 +447,8 @@ export const getIterationRMSE = createSelector(
   (
     optimizationState: OptimizationState,
     studyDetailsState: StudyDetailsState
-  ): TrainingResultsState =>
-  {
-
-    if (!optimizationState || !studyDetailsState) return null
+  ): TrainingResultsState => {
+    if (!optimizationState || !studyDetailsState) return null;
 
     // Check if both required states are still loading.
     if (optimizationState.loading || studyDetailsState.loading) {
@@ -459,42 +462,43 @@ export const getIterationRMSE = createSelector(
     if (optimizationState.error || studyDetailsState.error) {
       return {
         ...initialTrainingResultsState,
-        error: optimizationState.error ? optimizationState.error : studyDetailsState.error,
+        error: optimizationState.error
+          ? optimizationState.error
+          : studyDetailsState.error,
       };
     }
 
-    const optimizationResult  = studyDetailsState.optimizationResults.find(
+    const optimizationResult = studyDetailsState.optimizationResults.find(
       (x) => x.id == optimizationState.id
-    )
+    );
 
-    let traces: { [propertyName: string]: {[category: string]: BarTrace} } = {};
-    const categoryColors = {}
+    let traces: { [propertyName: string]: { [category: string]: BarTrace } } = {};
+    const categoryColors = {};
 
-    const iterations = Object.keys(optimizationResult.statistics).sort(
-      (a, b) => {return (+a) - (+b)}
-    )
+    const iterations = Object.keys(optimizationResult.statistics).sort((a, b) => {
+      return +a - +b;
+    });
 
     for (const iteration of iterations) {
-
-      const statisticEntries = optimizationResult.statistics[iteration]
+      const statisticEntries = optimizationResult.statistics[iteration];
 
       for (const statisticEntry of statisticEntries) {
+        if (!statisticEntry.category) continue;
 
-        if (!statisticEntry.category) continue
+        const propertyName = toPropertyName(
+          statisticEntry.property_type,
+          statisticEntry.n_components
+        );
 
-        const propertyName = toPropertyName(statisticEntry.property_type, statisticEntry.n_components)
-
-        if (!traces[propertyName]) traces[propertyName] = {}
+        if (!traces[propertyName]) traces[propertyName] = {};
 
         if (!categoryColors[statisticEntry.category]) {
-          const categoryIndex = Object.keys(categoryColors).length
-          categoryColors[statisticEntry.category] = defaultColors[
-            categoryIndex % defaultColors.length
-          ]
+          const categoryIndex = Object.keys(categoryColors).length;
+          categoryColors[statisticEntry.category] =
+            defaultColors[categoryIndex % defaultColors.length];
         }
 
         if (traces[propertyName][statisticEntry.category] == undefined) {
-
           traces[propertyName][statisticEntry.category] = {
             ...initialBarTrace,
             x: [],
@@ -504,7 +508,7 @@ export const getIterationRMSE = createSelector(
               symmetric: false,
 
               array: [],
-              arrayminus: []
+              arrayminus: [],
             },
             name: statisticEntry.category,
             legendgroup: statisticEntry.category,
@@ -513,31 +517,33 @@ export const getIterationRMSE = createSelector(
           };
         }
 
-        let trace = traces[propertyName][statisticEntry.category]
+        let trace = traces[propertyName][statisticEntry.category];
 
-        trace.x.push(iteration)
-        trace.y.push(statisticEntry.value)
+        trace.x.push(iteration);
+        trace.y.push(statisticEntry.value);
 
-        trace.error_y.array.push(Math.abs(statisticEntry.value - statisticEntry.upper_95_ci))
-        trace.error_y.arrayminus.push(Math.abs(statisticEntry.value - statisticEntry.lower_95_ci))
+        trace.error_y.array.push(
+          Math.abs(statisticEntry.value - statisticEntry.upper_95_ci)
+        );
+        trace.error_y.arrayminus.push(
+          Math.abs(statisticEntry.value - statisticEntry.lower_95_ci)
+        );
       }
     }
 
     let return_data = {
       ...initialTrainingResultsState,
       success: true,
-      plotData: {}
-    }
+      plotData: {},
+    };
 
     for (const propertyName in traces) {
-
       return_data.plotData[propertyName] = {
         traces: Object.values(traces[propertyName]),
-        subplotTitles: ["Iteration"],
-      }
-
+        subplotTitles: ['Iteration'],
+      };
     }
 
-    return return_data
+    return return_data;
   }
 );

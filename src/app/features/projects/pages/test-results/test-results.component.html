@@ -28,10 +28,7 @@
       <mat-card fxFlex>
         <app-loadable [loadable]="results$ | async">
           <mat-form-field>
-            <mat-select
-              placeholder="Select a property type"
-              [(value)]="propertyType"
-            >
+            <mat-select placeholder="Select a property type" [(value)]="propertyType">
               <mat-option
                 *ngFor="let pair of (results$ | async).plotData | keyvalue"
                 [value]="pair.key"

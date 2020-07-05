@@ -5,7 +5,8 @@
 //
 
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -15,7 +16,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
@@ -29,7 +30,7 @@ import { PlotData } from '@shared/components/plotly/plotly.interfaces';
   selector: 'app-plotly',
   templateUrl: './plotly.component.html',
   styleUrls: ['./plotly.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
   public readonly defaultClassName = 'js-plotly-plot';
@@ -62,8 +63,8 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
   @Output() update = new EventEmitter<Plotly.Figure>();
   @Output() error = new EventEmitter<Error>();
 
-  @Input() breakpointQueries: string[]
-  @Input() breakpointColumns: {[query: string]: number}
+  @Input() breakpointQueries: string[];
+  @Input() breakpointColumns: { [query: string]: number };
 
   constructor(
     public plotly: PlotlyService,
@@ -72,10 +73,10 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
   ) {
     this.nColumns = 1;
 
-    this.legendOrientation = 'h'
+    this.legendOrientation = 'h';
 
-    this.subplotWidth = 350
-    this.subplotHeight = 350
+    this.subplotWidth = 350;
+    this.subplotHeight = 350;
 
     this.showLegend = true;
 
@@ -103,7 +104,6 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-
     this.createPlot().then(() => {
       const figure = this.createFigure();
       this.initialized.emit(figure);
@@ -124,13 +124,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
 
   createPlot(): Promise<void> {
     return this.plotly
-      .newPlot(
-        this.plotEl.nativeElement,
-        [],
-        this.layout,
-        this.config,
-        undefined
-      )
+      .newPlot(this.plotEl.nativeElement, [], this.layout, this.config, undefined)
       .then(
         (plotlyInstance) => {
           this.plotlyInstance = plotlyInstance;
@@ -150,12 +144,11 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
     return {
       data: instance.data,
       layout: instance.layout,
-      frames: null
+      frames: null,
     };
   }
 
   updatePlot() {
-
     if (!this.plotlyInstance) {
       const error = new Error(`Plotly component wasn't initialized`);
       this.error.emit(error);
@@ -186,51 +179,60 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
   resizePlot() {
     if (!this.plotly || !this.plotlyInstance) return;
 
-    if (this.plotlyInstance.offsetWidth <= 0 || this.plotlyInstance.offsetHeight <= 0) return;
+    if (this.plotlyInstance.offsetWidth <= 0 || this.plotlyInstance.offsetHeight <= 0)
+      return;
 
     this.plotly.resize(this.plotlyInstance);
   }
 
   updateColumns(state: BreakpointState) {
-
     for (const breakpointQuery of this.breakpointQueries) {
-      if (!state.breakpoints[breakpointQuery]) continue
+      if (!state.breakpoints[breakpointQuery]) continue;
 
-      this.nColumns = this.breakpointColumns[breakpointQuery]
-      break
+      this.nColumns = this.breakpointColumns[breakpointQuery];
+      break;
     }
 
-    if (this.plotly && this.plotlyInstance && this.data && this.data.success){
-      this.updatePlot().then(() => this.resizePlot()).then(() => this.ref.detectChanges())
+    if (this.plotly && this.plotlyInstance && this.data && this.data.success) {
+      this.updatePlot()
+        .then(() => this.resizePlot())
+        .then(() => this.ref.detectChanges());
     }
   }
 
   updateSubplots() {
-    if (!this.data || this.data.loading || this.data.error || !this.plotly || !this.plotlyInstance) return;
+    if (
+      !this.data ||
+      this.data.loading ||
+      this.data.error ||
+      !this.plotly ||
+      !this.plotlyInstance
+    )
+      return;
 
     const nSubplots = this.data.subplotTitles.length;
 
     const nColumns = Math.max(1, Math.min(this.nColumns, nSubplots));
     const nRows = Math.max(1, Math.ceil(nSubplots / nColumns));
 
-    const legendHeight = this.showLegend && this.legendOrientation == "h" ? 150 : 0
-    const legendWidth = this.showLegend && this.legendOrientation == "v" ? 150 : 0
+    const legendHeight = this.showLegend && this.legendOrientation == 'h' ? 150 : 0;
+    const legendWidth = this.showLegend && this.legendOrientation == 'v' ? 150 : 0;
 
     this.layout = {
       grid: { rows: nRows, columns: nColumns, pattern: 'independent' },
       width: this.subplotWidth * nColumns + legendWidth,
       height: this.subplotHeight * nRows + legendHeight,
       margin: {
-        t: 50, b: 50
+        t: 50,
+        b: 50,
       },
       title: false,
     };
 
-    if (this.showLegend) this.layout.legend = { orientation: this.legendOrientation }
-    else this.layout.showlegend = false
+    if (this.showLegend) this.layout.legend = { orientation: this.legendOrientation };
+    else this.layout.showlegend = false;
 
     for (let trace of this.data.traces) {
-
       // let xIndex = trace.index % nColumns;
       // let yIndex = Math.floor(trace.index / nColumns);
 
@@ -239,7 +241,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
 
       this.layout[`xaxis${trace.index + 1}`] = {
         showticklabels: this.showXTicks,
-        title: this.data.subplotTitles[trace.index]
+        title: this.data.subplotTitles[trace.index],
       };
       this.layout[`yaxis${trace.index + 1}`] = {
         showticklabels: this.showYTicks,

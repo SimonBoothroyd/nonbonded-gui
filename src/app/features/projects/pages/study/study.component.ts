@@ -12,19 +12,19 @@ import { filter, withLatestFrom } from 'rxjs/operators';
 export class StudyComponent implements OnInit, OnDestroy {
   public navbarOpen: boolean;
 
-  private readonly routerSubscription: Subscription
+  private readonly routerSubscription: Subscription;
 
   constructor(private router: Router) {
     this.navbarOpen = false;
 
-    this.routerSubscription = router.events.pipe(
-      filter((a) => a instanceof NavigationEnd)
-    ).subscribe(_ => this.navbarOpen = false);
+    this.routerSubscription = router.events
+      .pipe(filter((a) => a instanceof NavigationEnd))
+      .subscribe((_) => (this.navbarOpen = false));
   }
 
   ngOnInit(): void {}
 
   ngOnDestroy() {
-    if (this.routerSubscription) this.routerSubscription.unsubscribe()
+    if (this.routerSubscription) this.routerSubscription.unsubscribe();
   }
 }

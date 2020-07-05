@@ -1,14 +1,15 @@
-<app-loadable [loadable]="optimization$ | async" class="root__container" fxLayout="column" fxLayoutGap="2rem">
-  <mat-card fxFlex>{{(optimization$ | async).description}}</mat-card>
-  <div
-    fxFlex
-    [fxLayout]="layoutType"
-    fxLayoutGap="2rem"
-  >
+<app-loadable
+  [loadable]="optimization$ | async"
+  class="root__container"
+  fxLayout="column"
+  fxLayoutGap="2rem"
+>
+  <mat-card fxFlex>{{ (optimization$ | async).description }}</mat-card>
+  <div fxFlex [fxLayout]="layoutType" fxLayoutGap="2rem">
     <mat-card fxFlex>
       <app-loadable [loadable]="objectiveFunction$ | async">
         <app-plotly
-          [data]="(objectiveFunction$ | async)"
+          [data]="objectiveFunction$ | async"
           [showLegend]="false"
           [subplotWidth]="475"
           [subplotHeight]="400"
@@ -21,10 +22,7 @@
     <mat-card fxFlex>
       <app-loadable [loadable]="iterationRMSE$ | async">
         <mat-form-field>
-          <mat-select
-            placeholder="Select a property type"
-            [(value)]="propertyType"
-          >
+          <mat-select placeholder="Select a property type" [(value)]="propertyType">
             <mat-option
               *ngFor="let pair of (iterationRMSE$ | async).plotData | keyvalue"
               [value]="pair.key"

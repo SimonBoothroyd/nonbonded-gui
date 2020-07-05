@@ -26,17 +26,14 @@ export class TrainingResultsComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private store: Store<State>
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-
     this.study$ = this.store.select(getCurrentStudyState);
     this.routerInfo$ = this.store.select(getRouterInfo);
   }
 
-  ngOnDestroy() {
-  }
+  ngOnDestroy() {}
 
   onOptimizationChanged(event: MatSelectChange): void {
     this.router.navigate([event.value], { relativeTo: this.activatedRoute });

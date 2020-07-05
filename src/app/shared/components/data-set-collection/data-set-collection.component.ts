@@ -52,7 +52,7 @@ export class DataSetCollectionComponent implements OnInit {
 
   @Input()
   set value(value: DataSetCollectionState) {
-    if (!value.success) return
+    if (!value.success) return;
     this._dataSet = new PerPropertyDataSet(value);
   }
 

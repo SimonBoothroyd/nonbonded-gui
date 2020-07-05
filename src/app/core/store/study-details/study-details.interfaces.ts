@@ -87,8 +87,8 @@ export const initialBarTrace: BarTrace = {
   legendgroup: '',
   showlegend: false,
 
-  hoverinfo: 'none'
-}
+  hoverinfo: 'none',
+};
 
 export interface ScatterTrace {
   type: 'scatter';

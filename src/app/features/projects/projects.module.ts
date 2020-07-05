@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {BREAKPOINT, DEFAULT_BREAKPOINTS} from '@angular/flex-layout';
+import { BREAKPOINT, DEFAULT_BREAKPOINTS } from '@angular/flex-layout';
 
 import { SharedModule } from '@shared/shared.module';
 
@@ -28,21 +28,21 @@ const RESULTS_BREAKPOINTS = [
     suffix: 'MdTrain',
     mediaQuery: '(max-width: 1420)',
     overlapping: false,
-    priority: 1001 // Needed if overriding the default print breakpoint
+    priority: 1001, // Needed if overriding the default print breakpoint
   },
   {
     alias: 'gt-md.train',
     suffix: 'GtMdTrain',
     mediaQuery: '(min-width: 1421)',
     overlapping: false,
-    priority: 1001 // Needed if overriding the default print breakpoint
-  }
+    priority: 1001, // Needed if overriding the default print breakpoint
+  },
 ];
 
 export const CustomBreakPointsProvider = {
   provide: BREAKPOINT,
   useValue: RESULTS_BREAKPOINTS,
-  multi: true
+  multi: true,
 };
 
 @NgModule({

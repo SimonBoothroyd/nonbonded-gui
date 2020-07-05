@@ -25,7 +25,7 @@ PlotlyViaCDNModule.plotlyVersion = 'latest';
     PlotlyComponent,
     DataSetComponent,
     DataSetCollectionComponent,
-    DataEntryDialogComponent
+    DataEntryDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -45,7 +45,7 @@ PlotlyViaCDNModule.plotlyVersion = 'latest';
     AngularResizedEventModule,
     DataSetComponent,
     DataSetCollectionComponent,
-    DataEntryDialogComponent
+    DataEntryDialogComponent,
   ],
   entryComponents: [DataEntryDialogComponent],
 })
