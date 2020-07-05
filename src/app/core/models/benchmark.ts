@@ -24,7 +24,7 @@ export type AnalysedResult1 = AnalysedResult;
 /**
  * The type of statistic recorded by this entry.
  */
-export type StatisticsType = string;
+export type StatisticsType = 'R^2' | 'RMSE' | 'MSE';
 /**
  * The type of property which the statistic was calculated for.
  */

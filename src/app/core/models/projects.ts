@@ -18,6 +18,10 @@ export type Name = string;
  */
 export type Description = string;
 /**
+ * The authors of the project.
+ */
+export type Authors = [Author, ...Author[]];
+/**
  * The full name of the author.
  */
 export type Name1 = string;
@@ -29,10 +33,6 @@ export type Email = string;
  * The author's host institute.
  */
 export type Institute = string;
-/**
- * The authors of the project.
- */
-export type Authors = Author[];
 /**
  * The unique id assigned to this study.
  */
@@ -72,15 +72,19 @@ export type Description2 = string;
 /**
  * The unique identifiers of the data sets to use as part of the optimization.
  */
-export type TrainingSetIds = string[];
+export type TrainingSetIds = [string, ...string[]];
 /**
  * The file name of the force field which will be used as the starting point for all optimizations.
  */
 export type InitialForceField = ForceField;
 /**
- * The xml representation of a force field in the SMIRNOFF force field format
+ * The string representation of a set of force field parameters.This should either be an OpenFF SMIRNOFF representation, or an OpenFF Evaluator JSON serialized `ForceFieldSource`.
  */
-export type InnerXml = string;
+export type InnerContent = string;
+/**
+ * The force field parameters to be optimized.
+ */
+export type ParametersToTrain = [Parameter, ...Parameter[]];
 /**
  * The type of the parameter handler associated with this parameter.
  */
@@ -93,10 +97,6 @@ export type Smirks = string;
  * The attribute name associated with the parameter.
  */
 export type AttributeName = string;
-/**
- * The force field parameters to be optimized.
- */
-export type ParametersToTrain = Parameter[];
 /**
  * The inputs to use for the optimization.
  */
@@ -122,9 +122,33 @@ export type ConvergenceGradientCriteria = number;
  */
 export type NCriteria = number;
 /**
- * The name of the fitting target.
+ * The initial trust radius.
  */
-export type TargetName = string;
+export type InitialTrustRadius = number;
+/**
+ * The minimum trust radius.
+ */
+export type MinimumTrustRadius = number;
+/**
+ * The name of the evaluator fitting target.
+ */
+export type EvaluatorTargetName = string;
+/**
+ * This option controls whether the OpenFF Evaluator should be allowed to attempt to estimate the physical property training set using the direct simulation calculation layer.
+ */
+export type AllowDirectSimulation = boolean;
+/**
+ * This field controls the number of molecules to use in the simulations of physical properties. This value is only used when simulating properties whose default simulation schema (see the OpenFF Evaluator documentation for details) accept this option. If no value is provided the schema default will be used.
+ */
+export type NMolecules = number;
+/**
+ * This option controls whether the OpenFF Evaluator should be allowed to attempt to estimate the physical property training set using the cached simulation data reweighting calculation layer.
+ */
+export type AllowReweighting = boolean;
+/**
+ * This field controls the minimum number of effective samples which are required in order to estimate a physical property be reweighting cached simulation data. This value is only used when reweighting properties whose default reweighting schema (see the OpenFF Evaluator documentation for details) accept this option. If no value is provided the schema default will be used.
+ */
+export type NEffectiveSamples = number;
 /**
  * The chemical environments to consider when analysing the results of the optimization.
  */
@@ -334,6 +358,7 @@ export type AnalysisEnvironments = (
   | 'Heterocycle'
   | 'Alpha Aminoacid'
   | 'Alpha Hydroxyacid'
+  | 'Aqueous'
 )[];
 /**
  * The optimizations to perform as part of this study.
@@ -362,15 +387,15 @@ export type Description3 = string;
 /**
  * The unique identifiers of the data sets to use as part of the benchmarking.
  */
-export type TestSetIds = string[];
+export type TestSetIds = [string, ...string[]];
 /**
- * The id of the optimization that should be benchmarked. This must be the id of an optimization which is part of the same study and project. This option is mutually exclusive with `force_field_name`.
+ * The id of the optimization that should be benchmarked. This must be the id of an optimization which is part of the same study and project. This option is mutually exclusive with `force_field`.
  */
 export type OptimizationId = string;
 /**
- * The file name of the force field to use in the benchmark. This must be the name of a force field in the `openforcefields` GitHub repository. This option is mutually exclusive with `optimized_id`.
+ * The force field to use in the benchmark. If this is a force field produced as part of the same study by one of the optimizations, the `optimization_id` input should be used instead of this. This option is mutually exclusive with `optimized_id`.
  */
-export type ForceFieldName = string;
+export type ForceField1 = ForceField;
 /**
  * The chemical environments to consider when analysing the results of the benchmark.
  */
@@ -580,6 +605,7 @@ export type AnalysisEnvironments1 = (
   | 'Heterocycle'
   | 'Alpha Aminoacid'
   | 'Alpha Hydroxyacid'
+  | 'Aqueous'
 )[];
 /**
  * The benchmarks to perform as part of this study.
@@ -606,6 +632,10 @@ export interface Project {
   studies?: Studies;
   [k: string]: unknown;
 }
+/**
+ * A representation an author. This may be the author of a project
+ * or a data set for example.
+ */
 export interface Author {
   name: Name1;
   email: Email;
@@ -637,7 +667,7 @@ export interface Optimization {
   [k: string]: unknown;
 }
 export interface ForceField {
-  inner_xml: InnerXml;
+  inner_content: InnerContent;
   [k: string]: unknown;
 }
 export interface Parameter {
@@ -652,7 +682,13 @@ export interface ForceBalanceOptions {
   convergence_objective_criteria?: ConvergenceObjectiveCriteria;
   convergence_gradient_criteria?: ConvergenceGradientCriteria;
   n_criteria?: NCriteria;
-  target_name?: TargetName;
+  initial_trust_radius?: InitialTrustRadius;
+  minimum_trust_radius?: MinimumTrustRadius;
+  evaluator_target_name?: EvaluatorTargetName;
+  allow_direct_simulation?: AllowDirectSimulation;
+  n_molecules?: NMolecules;
+  allow_reweighting?: AllowReweighting;
+  n_effective_samples?: NEffectiveSamples;
   [k: string]: unknown;
 }
 /**
@@ -675,7 +711,7 @@ export interface Benchmark {
   description: Description3;
   test_set_ids: TestSetIds;
   optimization_id: OptimizationId;
-  force_field_name: ForceFieldName;
+  force_field: ForceField1;
   analysis_environments: AnalysisEnvironments1;
   [k: string]: unknown;
 }

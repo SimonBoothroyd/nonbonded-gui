@@ -20,7 +20,7 @@ export type Id = string;
 /**
  * The type of statistic recorded by this entry.
  */
-export type StatisticsType = string;
+export type StatisticsType = 'R^2' | 'RMSE' | 'MSE';
 /**
  * The type of property which the statistic was calculated for.
  */
@@ -50,9 +50,9 @@ export type Upper95Ci = number;
  */
 export type RefitForceField = ForceField;
 /**
- * The xml representation of a force field in the SMIRNOFF force field format
+ * The string representation of a set of force field parameters.This should either be an OpenFF SMIRNOFF representation, or an OpenFF Evaluator JSON serialized `ForceFieldSource`.
  */
-export type InnerXml = string;
+export type InnerContent = string;
 
 export interface OptimizationResult {
   project_id: ProjectId;
@@ -86,6 +86,6 @@ export interface StatisticsEntry {
   [k: string]: unknown;
 }
 export interface ForceField {
-  inner_xml: InnerXml;
+  inner_content: InnerContent;
   [k: string]: unknown;
 }

@@ -62,6 +62,10 @@ export type StdError = number;
  */
 export type Doi = string;
 /**
+ * The components in the systems for which the measurement was made.
+ */
+export type Components = [Component, ...Component[]];
+/**
  * The smiles representation of the component.
  */
 export type Smiles = string;
@@ -77,10 +81,6 @@ export type ExactAmount = number;
  * The role of this component in the system (e.g solvent, solute, ligand, etc.)
  */
 export type Role = string;
-/**
- * The components in the systems for which the measurement was made.
- */
-export type Components = Component[];
 /**
  * The entries in the data set.
  */
@@ -101,6 +101,10 @@ export interface DataSet {
   entries: Entries;
   [k: string]: unknown;
 }
+/**
+ * A representation an author. This may be the author of a project
+ * or a data set for example.
+ */
 export interface Author {
   name: Name;
   email: Email;
