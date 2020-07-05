@@ -20,7 +20,7 @@ export type Description = string;
 /**
  * The authors of the project.
  */
-export type Authors = [Author, ...Author[]];
+export type Authors = Author[];
 /**
  * The full name of the author.
  */
@@ -72,7 +72,7 @@ export type Description2 = string;
 /**
  * The unique identifiers of the data sets to use as part of the optimization.
  */
-export type TrainingSetIds = [string, ...string[]];
+export type TrainingSetIds = string[];
 /**
  * The file name of the force field which will be used as the starting point for all optimizations.
  */
@@ -84,7 +84,7 @@ export type InnerContent = string;
 /**
  * The force field parameters to be optimized.
  */
-export type ParametersToTrain = [Parameter, ...Parameter[]];
+export type ParametersToTrain = Parameter[];
 /**
  * The type of the parameter handler associated with this parameter.
  */
@@ -387,7 +387,7 @@ export type Description3 = string;
 /**
  * The unique identifiers of the data sets to use as part of the benchmarking.
  */
-export type TestSetIds = [string, ...string[]];
+export type TestSetIds = string[];
 /**
  * The id of the optimization that should be benchmarked. This must be the id of an optimization which is part of the same study and project. This option is mutually exclusive with `force_field`.
  */

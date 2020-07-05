@@ -64,7 +64,7 @@ export type Doi = string;
 /**
  * The components in the systems for which the measurement was made.
  */
-export type Components = [Component, ...Component[]];
+export type Components = Component[];
 /**
  * The smiles representation of the component.
  */

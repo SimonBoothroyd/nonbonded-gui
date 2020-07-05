@@ -41,7 +41,7 @@ export const initialBenchmark: Benchmark = {
   description: '',
   test_set_ids: [],
   optimization_id: null,
-  force_field_name: null,
+  force_field: null,
   analysis_environments: [],
 };
 

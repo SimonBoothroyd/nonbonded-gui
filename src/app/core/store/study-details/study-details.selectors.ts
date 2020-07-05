@@ -217,7 +217,7 @@ export const getTestSummaryPlot = createSelector(
 
         const forceFieldName = benchmark.optimization_id
           ? benchmark.optimization_id
-          : benchmark.force_field_name;
+          : benchmark.id;
 
         if (!forceFieldNames.includes(forceFieldName))
           forceFieldNames.push(forceFieldName);
