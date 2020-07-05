@@ -21,17 +21,10 @@
   margin: 0 auto 2rem;
   width: 60%;
 }
+.project__card .mat-card-title {
+  font-size: 1rem;
+}
 .project__card-header {
   text-align: center;
-}
-
-mat-list.list-horizontal {
-  padding: 1rem;
-  text-align: center;
-  .mat-list-item {
-    display: inline-block;
-    height: auto;
-    width: auto;
-    margin: auto;
-  }
+  font-size: 1rem;
 }

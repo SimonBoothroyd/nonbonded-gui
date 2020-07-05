@@ -1,0 +1,6 @@
+<div *ngFor="let textElement of text | formatText">
+  <p *ngIf="!isTextElement(textElement)">{{ textElement.text }}</p>
+  <ol *ngIf="!isListElement(textElement)" type="i">
+    <li *ngFor="let listItem of textElement.items">{{ listItem }}</li>
+  </ol>
+</div>

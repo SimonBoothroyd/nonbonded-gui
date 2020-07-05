@@ -17,30 +17,14 @@
   margin-bottom: 3rem;
 }
 
-.project__card {
+.study__card {
   margin: 0 auto 2rem;
   width: 60%;
 }
-.project__card-text {
-  white-space: pre-wrap;
-  font-size: 15px;
+.study__card .mat-card-title {
+  font-size: 1rem;
 }
-.project__card-header {
-  text-align: center;
-}
-
 .study__card-header {
   text-align: center;
   font-size: 1rem;
-}
-
-mat-list.list-horizontal {
-  padding: 1rem;
-  text-align: center;
-  .mat-list-item {
-    display: inline-block;
-    height: auto;
-    width: auto;
-    margin: auto;
-  }
 }

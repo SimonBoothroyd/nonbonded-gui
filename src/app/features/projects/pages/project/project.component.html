@@ -17,19 +17,14 @@
         </mat-list-item>
       </mat-list>
 
-      <div class="project__card-text">{{ (project$ | async).description }}</div>
+      <app-text-description
+        text="{{ (project$ | async).description }}"
+      ></app-text-description>
     </mat-card>
-
     <h2>Studies</h2>
-
-    <mat-card class="project__card" *ngFor="let study of (project$ | async).studies">
-      <mat-card-title class="study__card-header">{{ study.name }}</mat-card-title>
-      <br />
-      <div class="project__card-text">{{ study.description.split('\n')[0] }}</div>
-      <mat-card-actions>
-        <div fxFlex></div>
-        <a [routerLink]="['studies', study.id]"><button mat-button>MORE</button></a>
-      </mat-card-actions>
-    </mat-card>
+    <app-study-list
+      [baseRouteUrl]="'studies'"
+      [studies]="(project$ | async).studies"
+    ></app-study-list>
   </div>
 </app-loadable>

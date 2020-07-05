@@ -1,0 +1,11 @@
+<app-loadable [loadable]="project$ | async" class="root__container">
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="2rem"
+    class="page__container"
+  >
+    <h2>Studies</h2>
+    <app-study-list [studies]="(project$ | async).studies"></app-study-list>
+  </div>
+</app-loadable>

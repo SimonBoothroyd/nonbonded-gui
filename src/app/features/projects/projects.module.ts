@@ -5,14 +5,14 @@ import { BREAKPOINT, DEFAULT_BREAKPOINTS } from '@angular/flex-layout';
 
 import { SharedModule } from '@shared/shared.module';
 
-import { ProjectsComponent } from '@app/features/projects/projects.component';
-import { ProjectsListComponent } from '@app/features/projects/pages/projects-list/projects-list.component';
+import { ProjectsRootComponent } from '@app/features/projects/projects-root.component';
+import { ProjectsComponent } from '@app/features/projects/pages/projects/projects.component';
 import { ProjectComponent } from '@app/features/projects/pages/project/project.component';
 import { StudyComponent } from '@app/features/projects/pages/study/study.component';
 
 import { ProjectsRoutes } from '@app/features/projects/projects.routes';
 
-import { SummaryComponent } from './pages/summary/summary.component';
+import { StudySummaryComponent } from './pages/study-summary/study-summary.component';
 import { TestDataSetComponent } from './pages/test-data-set/test-data-set.component';
 import { TrainingDataSetComponent } from './pages/training-data-set/training-data-set.component';
 import { TrainingDataSetChildComponent } from './pages/training-data-set-child/training-data-set-child.component';
@@ -20,7 +20,8 @@ import { TrainingResultsComponent } from './pages/training-results/training-resu
 import { TrainingResultsChildComponent } from './pages/training-results-child/training-results-child.component';
 import { TestResultsComponent } from './pages/test-results/test-results.component';
 import { TestDataSetChildComponent } from './pages/test-data-set-child/test-data-set-child.component';
-import { StudyListComponent } from './pages/study-list/study-list.component';
+import { StudiesComponent } from './pages/studies/studies.component';
+import { StudyListComponent } from '@app/features/projects/components/study-list/study-list.component';
 
 const RESULTS_BREAKPOINTS = [
   {
@@ -47,11 +48,13 @@ export const CustomBreakPointsProvider = {
 
 @NgModule({
   declarations: [
+    ProjectsRootComponent,
     ProjectsComponent,
-    ProjectsListComponent,
     ProjectComponent,
     StudyComponent,
-    SummaryComponent,
+    StudiesComponent,
+    StudyListComponent,
+    StudySummaryComponent,
     TestDataSetComponent,
     TestDataSetChildComponent,
     TrainingDataSetComponent,
@@ -59,7 +62,6 @@ export const CustomBreakPointsProvider = {
     TrainingResultsComponent,
     TrainingResultsChildComponent,
     TestResultsComponent,
-    StudyListComponent,
   ],
   imports: [CommonModule, ProjectsRoutes, SharedModule],
   // providers: [CustomBreakPointsProvider]

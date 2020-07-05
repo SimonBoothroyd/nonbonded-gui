@@ -16,6 +16,8 @@ import { PlotlyViaCDNModule } from 'angular-plotly.js';
 import { DataSetComponent } from '@shared/components/data-set/data-set.component';
 import { DataSetCollectionComponent } from '@shared/components/data-set-collection/data-set-collection.component';
 import { DataEntryDialogComponent } from '@shared/components/data-entry-dialog/data-entry-dialog.component';
+import { FormatTextPipe } from '@shared/pipes/format-text.pipe';
+import { TextDescriptionComponent } from '@shared/components/text-description/text-description.component';
 
 PlotlyViaCDNModule.plotlyVersion = 'latest';
 
@@ -26,6 +28,8 @@ PlotlyViaCDNModule.plotlyVersion = 'latest';
     DataSetComponent,
     DataSetCollectionComponent,
     DataEntryDialogComponent,
+    FormatTextPipe,
+    TextDescriptionComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +50,8 @@ PlotlyViaCDNModule.plotlyVersion = 'latest';
     DataSetComponent,
     DataSetCollectionComponent,
     DataEntryDialogComponent,
+    FormatTextPipe,
+    TextDescriptionComponent,
   ],
   entryComponents: [DataEntryDialogComponent],
 })

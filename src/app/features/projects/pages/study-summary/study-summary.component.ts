@@ -11,11 +11,11 @@ import { getCurrentStudyState } from '@core/store/project/project.selectors';
 
 @Component({
   selector: 'app-summary',
-  templateUrl: './summary.component.html',
-  styleUrls: ['./summary.component.scss'],
+  templateUrl: './study-summary.component.html',
+  styleUrls: ['./study-summary.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SummaryComponent implements OnInit {
+export class StudySummaryComponent implements OnInit {
   study$: Observable<StudyState>;
 
   constructor(private store: Store<State>) {}

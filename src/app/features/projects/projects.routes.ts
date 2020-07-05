@@ -3,11 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ProjectsStoreGuard } from '@app/features/projects/guards/projects-store.guard';
 
-import { ProjectsComponent } from '@app/features/projects/projects.component';
-import { ProjectsListComponent } from './pages/projects-list/projects-list.component';
+import { ProjectsRootComponent } from '@app/features/projects/projects-root.component';
+import { ProjectsComponent } from './pages/projects/projects.component';
 import { ProjectComponent } from '@app/features/projects/pages/project/project.component';
 import { StudyComponent } from '@app/features/projects/pages/study/study.component';
-import { SummaryComponent } from '@app/features/projects/pages/summary/summary.component';
+import { StudySummaryComponent } from '@app/features/projects/pages/study-summary/study-summary.component';
 import { TestDataSetComponent } from '@app/features/projects/pages/test-data-set/test-data-set.component';
 import { TestDataSetChildComponent } from '@app/features/projects/pages/test-data-set-child/test-data-set-child.component';
 import { TestResultsComponent } from '@app/features/projects/pages/test-results/test-results.component';
@@ -17,17 +17,17 @@ import { TrainingResultsComponent } from '@app/features/projects/pages/training-
 import { TrainingResultsChildComponent } from '@app/features/projects/pages/training-results-child/training-results-child.component';
 import { StudyDetailsStoreGuard } from '@app/features/projects/guards/study-details-store.guard';
 import { ProjectStoreGuard } from '@app/features/projects/guards/project-store.guard';
-import { StudyListComponent } from '@app/features/projects/pages/study-list/study-list.component';
+import { StudiesComponent } from '@app/features/projects/pages/studies/studies.component';
 
 const routes: Routes = [
   {
     path: 'projects',
     canActivate: [ProjectsStoreGuard],
-    component: ProjectsComponent,
+    component: ProjectsRootComponent,
     children: [
       {
         path: '',
-        component: ProjectsListComponent,
+        component: ProjectsComponent,
       },
       {
         path: ':projectId',
@@ -42,9 +42,7 @@ const routes: Routes = [
             children: [
               {
                 path: '',
-                // redirectTo: '..',
-                // pathMatch: 'full',
-                component: StudyListComponent,
+                component: StudiesComponent,
               },
               {
                 path: ':studyId',
@@ -53,7 +51,7 @@ const routes: Routes = [
                 children: [
                   {
                     path: '',
-                    component: SummaryComponent,
+                    component: StudySummaryComponent,
                   },
                   {
                     path: 'test-set',
