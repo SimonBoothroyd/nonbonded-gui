@@ -27,9 +27,7 @@ export class ProjectsStoreGuard implements CanActivate {
         if (!loaded) {
           this.store.dispatch(new LoadProjects());
         }
-      }),
-      filter((loaded) => loaded),
-      first()
+      })
     );
   }
 

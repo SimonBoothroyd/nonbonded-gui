@@ -32,9 +32,7 @@ export class StudyDetailsStoreGuard implements CanActivate {
             new LoadStudyDetails(next.params.projectId, next.params.studyId)
           );
         }
-      }),
-      filter((loaded) => loaded),
-      first()
+      })
     );
   }
 
