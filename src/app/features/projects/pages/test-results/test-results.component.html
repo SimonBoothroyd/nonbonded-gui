@@ -1,4 +1,4 @@
-<div fxLayout="column" fxFill class="dataset__container" fxLayoutGap="20px">
+<div fxLayout="column" fxFill class="root__container" fxLayoutGap="20px">
   <h1 class="project__card-header">Benchmarking Results</h1>
   <div class="inner__container">
     <div fxLayout="column" fxLayoutGap="2rem">
@@ -14,16 +14,14 @@
           <!--        </mat-radio-group>-->
           <!--        <div *ngIf="statisticsType" class="graph__container" (resized)="onStatisticGraphResized()">-->
           <div class="graph__container">
-            <plotly-plot
-              [data]="summaryStatisticsGraphData"
-              [layout]="summaryStatisticsGraphLayout"
+            <app-plotly
+              [data]="summaryStatistics$ | async"
               [config]="{ displayModeBar: false }"
-              (initialized)="updateSummaryStatistics()"
-              [useResizeHandler]="false"
               [style]="{ position: 'relative', width: '100%', height: '100%' }"
+              [showXTicks]="false"
+              #summaryStatisticsComponent
             >
-              #summaryStatisticsComponent ></plotly-plot
-            >
+            </app-plotly>
           </div>
         </app-loadable>
       </mat-card>
@@ -32,26 +30,22 @@
           <mat-form-field>
             <mat-select
               placeholder="Select a property type"
-              (selectionChange)="onResultPropertyChanged()"
-              [(value)]="resultsPropertyType"
+              [(value)]="propertyType"
             >
               <mat-option
-                *ngFor="let pair of (results$ | async).traces | keyvalue"
+                *ngFor="let pair of (results$ | async).plotData | keyvalue"
                 [value]="pair.key"
               >
                 {{ pair.key }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <div class="graph__container">
-            <plotly-plot
-              [data]="resultsGraphData"
-              [layout]="resultsGraphLayout"
-              (initialized)="updateResults()"
+          <div *ngIf="propertyType" class="graph__container">
+            <app-plotly
+              [data]="(results$ | async).plotData[propertyType]"
               [style]="{ position: 'relative', width: '100%', height: '100%' }"
-            >
-              #resultsComponent ></plotly-plot
-            >
+              #resultsComponent
+            ></app-plotly>
           </div>
         </app-loadable>
       </mat-card>

@@ -14,6 +14,7 @@ import { TestResultsComponent } from '@app/features/projects/pages/test-results/
 import { TrainingDataSetComponent } from '@app/features/projects/pages/training-data-set/training-data-set.component';
 import { TrainingDataSetChildComponent } from '@app/features/projects/pages/training-data-set-child/training-data-set-child.component';
 import { TrainingResultsComponent } from '@app/features/projects/pages/training-results/training-results.component';
+import { TrainingResultsChildComponent } from '@app/features/projects/pages/training-results-child/training-results-child.component';
 import { StudyDetailsStoreGuard } from '@app/features/projects/guards/study-details-store.guard';
 import { ProjectStoreGuard } from '@app/features/projects/guards/project-store.guard';
 import { StudyListComponent } from '@app/features/projects/pages/study-list/study-list.component';
@@ -85,6 +86,12 @@ const routes: Routes = [
                   {
                     path: 'training-results',
                     component: TrainingResultsComponent,
+                    children: [
+                      {
+                        path: ':optimizationId',
+                        component: TrainingResultsChildComponent,
+                      },
+                    ],
                   },
                 ],
               },

@@ -10,13 +10,23 @@ import { throwIfAlreadyLoaded } from '@core/guards/module-import.guard';
 import { FormsModule } from '@angular/forms';
 
 import { AngularResizedEventModule } from 'angular-resize-event';
+import { PlotlyComponent } from '@shared/components/plotly/plotly.component';
 
 import { PlotlyViaCDNModule } from 'angular-plotly.js';
+import { DataSetComponent } from '@shared/components/data-set/data-set.component';
+import { DataSetCollectionComponent } from '@shared/components/data-set-collection/data-set-collection.component';
+import { DataEntryDialogComponent } from '@shared/components/data-entry-dialog/data-entry-dialog.component';
 
 PlotlyViaCDNModule.plotlyVersion = 'latest';
 
 @NgModule({
-  declarations: [LoadableComponent],
+  declarations: [
+    LoadableComponent,
+    PlotlyComponent,
+    DataSetComponent,
+    DataSetCollectionComponent,
+    DataEntryDialogComponent
+  ],
   imports: [
     CommonModule,
     MaterialModule,
@@ -29,10 +39,15 @@ PlotlyViaCDNModule.plotlyVersion = 'latest';
     MaterialModule,
     FlexLayoutModule,
     LoadableComponent,
+    PlotlyComponent,
     FormsModule,
     PlotlyViaCDNModule,
     AngularResizedEventModule,
+    DataSetComponent,
+    DataSetCollectionComponent,
+    DataEntryDialogComponent
   ],
+  entryComponents: [DataEntryDialogComponent],
 })
 export class SharedModule {
   constructor(@Optional() @SkipSelf() parentModule: SharedModule) {

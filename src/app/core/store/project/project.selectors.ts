@@ -58,6 +58,7 @@ export const getCurrentOptimizationState = createSelector(
   getCurrentStudyState,
   getRouterInfo,
   (state: StudyState, routerInfo): OptimizationState => {
+
     if (!routerInfo) return null;
     if (!state) return null;
 

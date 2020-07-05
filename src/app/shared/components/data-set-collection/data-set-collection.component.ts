@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { DataSetCollection, DataSetEntry } from '@core/models/datasets';
+import { DataSetCollectionState } from '@core/store/datasets/datasets.interfaces';
 
 export class PerPropertyDataSet {
   public readonly dataEntries: {
@@ -50,7 +51,8 @@ export class DataSetCollectionComponent implements OnInit {
   _dataSet: PerPropertyDataSet = undefined;
 
   @Input()
-  set value(value: DataSetCollection) {
+  set value(value: DataSetCollectionState) {
+    if (!value.success) return
     this._dataSet = new PerPropertyDataSet(value);
   }
 

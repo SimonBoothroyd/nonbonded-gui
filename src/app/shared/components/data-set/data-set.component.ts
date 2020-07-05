@@ -9,7 +9,7 @@ import {
 import { DataSetEntry } from '@core/models/datasets';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { DataEntryDialogComponent } from '@app/features/projects/components/data-entry-dialog/data-entry-dialog.component';
+import { DataEntryDialogComponent } from '@shared/components/data-entry-dialog/data-entry-dialog.component';
 import { strict } from 'assert';
 
 export interface SubstanceDataSet {

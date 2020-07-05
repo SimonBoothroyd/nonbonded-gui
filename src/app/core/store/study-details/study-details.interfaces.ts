@@ -4,6 +4,7 @@ import { BenchmarkResult } from '@core/models/benchmark';
 import { OptimizationResult } from '@core/models/optimization';
 
 import { DataSet } from '@core/models/datasets';
+import { PlotData } from '@shared/components/plotly/plotly.interfaces';
 
 export interface StudyDetails {
   projectId: string;
@@ -66,22 +67,28 @@ export interface BarTrace {
   hoverinfo: 'none';
 }
 
-export interface TestSummaryStatistics {
-  traces: BarTrace[];
-  propertyTitles: string[];
+export const initialBarTrace: BarTrace = {
+  type: 'bar',
+
+  name: '',
+
+  x: [],
+  y: [],
+
+  error_y: undefined,
+
+  marker: { color: '#000000' },
+
+  xaxis: 'x',
+  yaxis: 'y',
+
+  index: 0,
+
+  legendgroup: '',
+  showlegend: false,
+
+  hoverinfo: 'none'
 }
-
-export const initialTestSummaryStatistics: TestSummaryStatistics = {
-  traces: [],
-  propertyTitles: [],
-};
-
-export interface TestSummaryStatisticsState extends Loadable, TestSummaryStatistics {}
-
-export const initialTestSummaryStatisticsState: TestSummaryStatisticsState = {
-  ...createDefaultLoadable(),
-  ...initialTestSummaryStatistics,
-};
 
 export interface ScatterTrace {
   type: 'scatter';
@@ -101,8 +108,6 @@ export interface ScatterTrace {
 
   legendgroup: string;
   showlegend: boolean;
-
-  // hoverinfo: '';
 }
 
 export const initialScatterTrace: ScatterTrace = {
@@ -114,7 +119,7 @@ export const initialScatterTrace: ScatterTrace = {
   x: [],
   y: [],
 
-  marker: { color: '#ffffff' },
+  marker: { color: '#000000' },
 
   xaxis: 'x',
   yaxis: 'y',
@@ -123,18 +128,14 @@ export const initialScatterTrace: ScatterTrace = {
 
   legendgroup: '',
   showlegend: false,
-
-  // hoverinfo: 'none'
 };
 
 export interface TestResults {
-  traces: { [propertyName: string]: ScatterTrace[] };
-  benchmarkNames: string[];
+  plotData: { [propertyName: string]: PlotData };
 }
 
 export const initialTestResults: TestResults = {
-  traces: {},
-  benchmarkNames: [],
+  plotData: {},
 };
 
 export interface TestResultsState extends Loadable, TestResults {}
@@ -142,4 +143,19 @@ export interface TestResultsState extends Loadable, TestResults {}
 export const initialTestResultsState: TestResultsState = {
   ...createDefaultLoadable(),
   ...initialTestResults,
+};
+
+export interface TrainingResults {
+  plotData: { [propertyName: string]: PlotData };
+}
+
+export const initialTrainingResults: TrainingResults = {
+  plotData: {},
+};
+
+export interface TrainingResultsState extends Loadable, TrainingResults {}
+
+export const initialTrainingResultsState: TrainingResultsState = {
+  ...createDefaultLoadable(),
+  ...initialTrainingResults,
 };
