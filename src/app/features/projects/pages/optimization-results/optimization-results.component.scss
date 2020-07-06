@@ -16,3 +16,13 @@
   margin-top: 3rem;
   margin-bottom: 3rem;
 }
+
+.inner__container {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}

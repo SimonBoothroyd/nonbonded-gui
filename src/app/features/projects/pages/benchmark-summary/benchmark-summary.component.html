@@ -1,0 +1,42 @@
+<app-loadable [loadable]="benchmark$ | async" class="root__container">
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="2rem"
+    class="page__container"
+  >
+    <h1>{{ (benchmark$ | async).name }}</h1>
+
+    <div fxLayout="column" fxFlex class="section__container">
+      <mat-card>
+        <app-text-description
+          [text]="(benchmark$ | async).description"
+        ></app-text-description>
+      </mat-card>
+    </div>
+
+    <h2>Test Set</h2>
+
+    <div fxLayout="column" fxFlex class="section__container">
+      <mat-card>
+        <mat-card-content>
+          <p>
+            The test set for this benchmark is a combination of the:
+          </p>
+          <ul>
+            <li *ngFor="let dataSetId of (benchmark$ | async).test_set_ids">
+              {{ dataSetId }}
+            </li>
+          </ul>
+          <p>data sets.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div fxLayout="column" fxFlex class="section__container">
+      <app-loadable [loadable]="testSet$ | async">
+        <app-data-set-collection [value]="testSet$ | async"></app-data-set-collection>
+      </app-loadable>
+    </div>
+  </div>
+</app-loadable>

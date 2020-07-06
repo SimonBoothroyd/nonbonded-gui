@@ -17,13 +17,25 @@
   margin-bottom: 3rem;
 }
 
-.section__container {
+.project__header {
+  text-align: center;
+}
+.project__card {
   margin: 0 auto 2rem;
   width: 60%;
 }
-.section__header {
+
+.project__card .mat-card-title {
   text-align: center;
 }
-.section__spacer {
-  margin-bottom: 1rem;
+
+mat-list.list-horizontal {
+  padding: 1rem;
+  text-align: center;
+  .mat-list-item {
+    display: inline-block;
+    height: auto;
+    width: auto;
+    margin: auto;
+  }
 }

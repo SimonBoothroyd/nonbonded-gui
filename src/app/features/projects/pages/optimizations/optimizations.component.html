@@ -1,0 +1,11 @@
+<app-loadable [loadable]="study$ | async" class="root__container">
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="2rem"
+    class="page__container"
+  >
+    <h2>Optimizations</h2>
+    <!--    <app-optimization-list [optimizations]="(study$ | async).optimizations"></app-optimization-list>-->
+  </div>
+</app-loadable>

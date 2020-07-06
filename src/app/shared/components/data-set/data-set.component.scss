@@ -1,11 +1,7 @@
 :host {
-  height: 100%;
-  min-height: 100%;
-  min-width: 100%;
-  width: 100%;
-  flex-direction: column;
-  box-sizing: border-box;
+  flex: 1 1 auto;
   display: flex;
+  flex-direction: column;
 }
 
 .tile__container {
@@ -13,10 +9,6 @@
 }
 .tile__container:hover {
   border: 2px solid mediumseagreen;
-}
-
-.page__container {
-  margin: 20px;
 }
 .dataset__card_container {
   overflow: auto;

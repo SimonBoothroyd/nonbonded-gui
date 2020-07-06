@@ -1,0 +1,30 @@
+<app-loadable [loadable]="project$ | async" class="root__container">
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="2rem"
+    class="page__container"
+  >
+    <div fxFlex>
+      <h2 class="project__header">{{ (project$ | async).name }}</h2>
+
+      <mat-list class="list-horizontal">
+        <mat-list-item *ngFor="let author of (project$ | async).authors">
+          <mat-icon matListIcon>account_circle</mat-icon>
+          <p matLine>{{ author.name }}</p>
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+    <mat-card class="project__card">
+      <app-text-description
+        text="{{ (project$ | async).description }}"
+      ></app-text-description>
+    </mat-card>
+    <h2>Studies</h2>
+    <app-study-list
+      [baseRouteUrl]="'studies'"
+      [studies]="(project$ | async).studies"
+    ></app-study-list>
+  </div>
+</app-loadable>

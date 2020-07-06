@@ -4,20 +4,65 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProjectsStoreGuard } from '@app/features/projects/guards/projects-store.guard';
 
 import { ProjectsRootComponent } from '@app/features/projects/projects-root.component';
+import { ProjectSummaryComponent } from '@app/features/projects/pages/project-summary/project-summary.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
-import { ProjectComponent } from '@app/features/projects/pages/project/project.component';
-import { StudyComponent } from '@app/features/projects/pages/study/study.component';
-import { StudySummaryComponent } from '@app/features/projects/pages/study-summary/study-summary.component';
-import { TestDataSetComponent } from '@app/features/projects/pages/test-data-set/test-data-set.component';
-import { TestDataSetChildComponent } from '@app/features/projects/pages/test-data-set-child/test-data-set-child.component';
-import { TestResultsComponent } from '@app/features/projects/pages/test-results/test-results.component';
-import { TrainingDataSetComponent } from '@app/features/projects/pages/training-data-set/training-data-set.component';
-import { TrainingDataSetChildComponent } from '@app/features/projects/pages/training-data-set-child/training-data-set-child.component';
-import { TrainingResultsComponent } from '@app/features/projects/pages/training-results/training-results.component';
-import { TrainingResultsChildComponent } from '@app/features/projects/pages/training-results-child/training-results-child.component';
-import { StudyDetailsStoreGuard } from '@app/features/projects/guards/study-details-store.guard';
 import { ProjectStoreGuard } from '@app/features/projects/guards/project-store.guard';
+import { StudyComponent } from '@app/features/projects/pages/study/study.component';
 import { StudiesComponent } from '@app/features/projects/pages/studies/studies.component';
+import { StudySummaryComponent } from '@app/features/projects/pages/study-summary/study-summary.component';
+import { StudyDetailsStoreGuard } from '@app/features/projects/guards/study-details-store.guard';
+import { OptimizationsComponent } from '@app/features/projects/pages/optimizations/optimizations.component';
+import { OptimizationSummaryComponent } from '@app/features/projects/pages/optimization-summary/optimization-summary.component';
+import { OptimizationResultsComponent } from '@app/features/projects/pages/optimization-results/optimization-results.component';
+import { BenchmarksComponent } from '@app/features/projects/pages/benchmarks/benchmarks.component';
+import { BenchmarkSummaryComponent } from '@app/features/projects/pages/benchmark-summary/benchmark-summary.component';
+import { BenchmarkResultsComponent } from '@app/features/projects/pages/benchmark-results/benchmark-results.component';
+
+const optimizationRoutes = {
+  path: 'optimizations',
+  children: [
+    {
+      path: '',
+      component: OptimizationsComponent,
+    },
+    {
+      path: ':optimizationId',
+      children: [
+        {
+          path: '',
+          component: OptimizationSummaryComponent,
+        },
+        {
+          path: 'results',
+          component: OptimizationResultsComponent,
+        },
+      ],
+    },
+  ],
+};
+
+const benchmarkRoutes = {
+  path: 'benchmarks',
+  children: [
+    {
+      path: '',
+      component: BenchmarksComponent,
+    },
+    {
+      path: ':benchmarkId',
+      children: [
+        {
+          path: '',
+          component: BenchmarkSummaryComponent,
+        },
+      ],
+    },
+    {
+      path: 'results',
+      component: BenchmarkResultsComponent,
+    },
+  ],
+};
 
 const routes: Routes = [
   {
@@ -35,7 +80,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            component: ProjectComponent,
+            component: ProjectSummaryComponent,
           },
           {
             path: 'studies',
@@ -53,44 +98,8 @@ const routes: Routes = [
                     path: '',
                     component: StudySummaryComponent,
                   },
-                  {
-                    path: 'test-set',
-                    component: TestDataSetComponent,
-                    children: [
-                      {
-                        path: ':benchmarkId',
-                        component: TestDataSetChildComponent,
-                      },
-                    ],
-                  },
-                  {
-                    path: 'test-results',
-                    component: TestResultsComponent,
-                  },
-                  {
-                    path: 'test-results',
-                    component: TestResultsComponent,
-                  },
-                  {
-                    path: 'training-set',
-                    component: TrainingDataSetComponent,
-                    children: [
-                      {
-                        path: ':optimizationId',
-                        component: TrainingDataSetChildComponent,
-                      },
-                    ],
-                  },
-                  {
-                    path: 'training-results',
-                    component: TrainingResultsComponent,
-                    children: [
-                      {
-                        path: ':optimizationId',
-                        component: TrainingResultsChildComponent,
-                      },
-                    ],
-                  },
+                  optimizationRoutes,
+                  benchmarkRoutes,
                 ],
               },
             ],

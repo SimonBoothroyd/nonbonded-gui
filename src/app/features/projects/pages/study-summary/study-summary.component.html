@@ -12,10 +12,12 @@
       fxLayout.xs="column"
       fxLayout.sm="column"
       fxFlex
-      class="project__card"
+      class="section__container"
     >
       <mat-card>
-        <div class="project__card-text">{{ (study$ | async).description }}</div>
+        <app-text-description
+          [text]="(study$ | async).description"
+        ></app-text-description>
       </mat-card>
     </div>
 
@@ -24,32 +26,26 @@
       fxLayout.xs="column"
       fxLayout.sm="column"
       fxFlex
-      class="project__card"
+      class="section__container"
       fxLayoutGap="2rem"
     >
       <div fxFlex>
-        <h2 class="project__card-header">Optimizations</h2>
-
-        <mat-card>
-          <div
-            *ngFor="let optimization of (study$ | async).optimizations; last as last"
-          >
-            <h3 class="project__card-header">{{ optimization.name }}</h3>
-            <p>{{ optimization.description }}</p>
-            <mat-divider [inset]="true" *ngIf="!last" class="card-spacer"></mat-divider>
-          </div>
-        </mat-card>
+        <h2 class="section__header">Optimizations</h2>
+        <app-optimization-card
+          *ngFor="let optimization of (study$ | async).optimizations; last as last"
+          [optimization]="optimization"
+          [className]="last ? '' : 'section__spacer'"
+        >
+        </app-optimization-card>
       </div>
       <div fxFlex>
-        <h2 class="project__card-header">Benchmarks</h2>
-
-        <mat-card>
-          <div *ngFor="let benchmark of (study$ | async).benchmarks; last as last">
-            <h3 class="project__card-header">{{ benchmark.name }}</h3>
-            <p>{{ benchmark.description }}</p>
-            <mat-divider [inset]="true" *ngIf="!last" class="card-spacer"></mat-divider>
-          </div>
-        </mat-card>
+        <h2 class="section__header">Benchmarks</h2>
+        <app-benchmark-card
+          *ngFor="let benchmark of (study$ | async).benchmarks; last as last"
+          [benchmark]="benchmark"
+          [className]="last ? '' : 'section__spacer'"
+        >
+        </app-benchmark-card>
       </div>
     </div>
   </div>

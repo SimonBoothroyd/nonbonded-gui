@@ -1,0 +1,61 @@
+<app-loadable [loadable]="optimization$ | async" class="root__container">
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="2rem"
+    class="page__container"
+  >
+    <h1>{{ (optimization$ | async).name }}</h1>
+
+    <div fxLayout="column" fxFlex class="section__container">
+      <mat-card>
+        <app-text-description
+          [text]="(optimization$ | async).description"
+        ></app-text-description>
+      </mat-card>
+    </div>
+
+    <h2>Targets</h2>
+
+    <div
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayout.sm="column"
+      fxFlex
+      class="section__container"
+    >
+      <mat-card>
+        <mat-card-title>Physical Property</mat-card-title>
+        <mat-card-subtitle
+          >Optimization against a physical property data set.</mat-card-subtitle
+        >
+      </mat-card>
+    </div>
+
+    <h2>Training Set</h2>
+
+    <div fxLayout="column" fxFlex class="section__container">
+      <mat-card>
+        <mat-card-content>
+          <p>
+            The training set for this optimization is a combination of the:
+          </p>
+          <ul>
+            <li *ngFor="let dataSetId of (optimization$ | async).training_set_ids">
+              {{ dataSetId }}
+            </li>
+          </ul>
+          <p>data sets.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div fxLayout="column" fxFlex class="section__container">
+      <app-loadable [loadable]="trainingSet$ | async">
+        <app-data-set-collection
+          [value]="trainingSet$ | async"
+        ></app-data-set-collection>
+      </app-loadable>
+    </div>
+  </div>
+</app-loadable>
