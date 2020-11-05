@@ -1,0 +1,47 @@
+<mat-card class="target__card">
+  <mat-card-content class="specification__text">
+    <span><b>Type: </b>OpenFF Evaluator</span>
+  </mat-card-content>
+  <mat-card-subtitle>Properties</mat-card-subtitle>
+  <mat-divider inset class="spaced-divider"></mat-divider>
+  <mat-card-content class="specification__text">
+    <span
+      ><b>Id: </b> <i>{{ target.id }}</i></span
+    >
+    <span
+      ><b>Weight: </b> <i>{{ target.weight }}</i></span
+    >
+  </mat-card-content>
+  <mat-card-subtitle>Simulation Layer</mat-card-subtitle>
+  <mat-divider inset class="spaced-divider"></mat-divider>
+  <mat-card-content class="specification__text">
+    <span><b>Allow direct simulation:</b> {{ target.allow_direct_simulation }}</span>
+    <span><b>Default number of molecules:</b> {{ target.n_molecules }}</span>
+  </mat-card-content>
+  <mat-card-subtitle>Re-weighting Layer</mat-card-subtitle>
+  <mat-divider inset class="spaced-divider"></mat-divider>
+  <mat-card-content class="specification__text">
+    <span><b>Allow cached data re-weighting:</b> {{ target.allow_reweighting }}</span>
+    <span
+      ><b>Default required effective samples:</b> {{ target.n_effective_samples }}</span
+    >
+  </mat-card-content>
+  <mat-card-subtitle>Training Data</mat-card-subtitle>
+  <mat-divider inset class="spaced-divider"></mat-divider>
+  <mat-card-content class="specification__text">
+    <span><b>Data sets: </b></span>
+    <ul>
+      <li *ngFor="let dataSetId of target.data_set_ids">
+        <a [routerLink]="['/datasets', dataSetId]"
+          ><i>{{ dataSetId }}</i></a
+        >
+      </li>
+    </ul>
+    <span><b>Denominators: </b></span>
+    <ul>
+      <li *ngFor="let denominator of target.denominators | keyvalue">
+        <i>{{ denominator.key }}: </i>{{ denominator.value }}
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>

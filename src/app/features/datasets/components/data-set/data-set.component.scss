@@ -1,0 +1,28 @@
+:host {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.tile__container {
+  border: 1px solid lightgrey;
+}
+
+.tile__container:hover {
+  border: 2px solid mediumseagreen;
+}
+
+.dataset__card_container {
+  overflow: auto;
+}
+
+.selected__card_container {
+  overflow: auto;
+}
+
+.selected__card-header {
+  text-align: center;
+}
+
+.substance__tile {
+}

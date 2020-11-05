@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
+  CanActivate,
   RouterStateSnapshot,
 } from '@angular/router';
 
@@ -12,7 +12,7 @@ import { State } from '@core/store';
 
 import { getHasProjectLoaded } from '@core/store/project/project.selectors';
 import { LoadProject } from '@core/store/project/project.actions';
-import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',

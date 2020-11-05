@@ -21,6 +21,38 @@
   margin: 0 auto 2rem;
   width: 60%;
 }
+
 .section__container .mat-card-title {
   font-size: 1rem;
+}
+
+.section__container .mat-card-subtitle {
+  margin: 10px 0 10px;
+}
+
+.section__container .mat-divider {
+  margin-bottom: 16px;
+}
+
+.specification__text span {
+  margin: 3px 0 3px 10px;
+  display: block;
+}
+
+ul.handler-list {
+  list-style: none;
+  padding-inline-start: 10px;
+  margin: 3px 0 3px 0;
+}
+
+ul.handler-list li ul li {
+  line-height: 26px;
+}
+
+.specification__text li span.code-style {
+  font-family: 'Roboto Mono', monospace;
+  background: #e1f5fe;
+  line-height: 20px;
+  display: inline;
+  padding: 2px 1px 2px 1px;
 }

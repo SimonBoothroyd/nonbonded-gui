@@ -16,13 +16,16 @@
       </mat-list>
     </div>
 
-    <mat-card class="project__card">
-      <app-text-description
-        text="{{ (project$ | async).description }}"
-      ></app-text-description>
-    </mat-card>
+    <div class="project__card">
+      <mat-card>
+        <app-text-description
+          text="{{ (project$ | async).description }}"
+        ></app-text-description>
+      </mat-card>
+    </div>
     <h2>Studies</h2>
     <app-study-list
+      class="project__card"
       [baseRouteUrl]="'studies'"
       [studies]="(project$ | async).studies"
     ></app-study-list>

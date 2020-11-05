@@ -1,0 +1,17 @@
+<div id="main" class="datasets__container" fxLayout="column" fxFill>
+  <mat-toolbar color="primary">
+    <button mat-icon-button [routerLink]="['/']">
+      <mat-icon>home</mat-icon>
+    </button>
+    <span class="datasets__toobar-spacer"></span>
+    <img
+      src="assets/img/logo.svg"
+      alt="Open Force Field Consortium logo"
+      height="40px"
+    />
+  </mat-toolbar>
+
+  <div class="datasets__body">
+    <router-outlet></router-outlet>
+  </div>
+</div>

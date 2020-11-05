@@ -6,11 +6,11 @@
  */
 
 /**
- * The unique identifier associated with the data set.
+ * The unique identifier associated with the set.
  */
 export type Id = string;
 /**
- * A description of why and how this data set was chosen.
+ * A description of why and how this set was chosen.
  */
 export type Description = string;
 /**
@@ -26,9 +26,17 @@ export type Email = string;
  */
 export type Institute = string;
 /**
- * The authors who prepared the data set.
+ * The authors who prepared the set.
  */
 export type Authors = Author[];
+/**
+ * The current version of this model. Models with different version numbers are incompatible.
+ */
+export type ModelVersion = number;
+/**
+ * The entries in the data set.
+ */
+export type Entries = DataSetEntry[];
 /**
  * The unique id assigned to this entry
  */
@@ -36,7 +44,7 @@ export type Id1 = number;
 /**
  * The type of property that this value corresponds to. This should correspond to an `openff.evaluator.properties` property class name.
  */
-export type PropertyType = string;
+export type PropertyType = string | string | string | string | string | string;
 /**
  * The temperature (K) at which this value was measured.
  */
@@ -64,7 +72,7 @@ export type Doi = string;
 /**
  * The components in the systems for which the measurement was made.
  */
-export type Components = Component[];
+export type Components = [Component, ...Component[]];
 /**
  * The smiles representation of the component.
  */
@@ -82,25 +90,54 @@ export type ExactAmount = number;
  */
 export type Role = string;
 /**
- * The entries in the data set.
- */
-export type Entries = DataSetEntry[];
-/**
  * A collection of data sets.
  */
 export type DataSets = DataSet[];
+/**
+ * The unique identifier associated with the set.
+ */
+export type Id2 = string;
+/**
+ * A description of why and how this set was chosen.
+ */
+export type Description1 = string;
+/**
+ * The authors who prepared the set.
+ */
+export type Authors1 = Author[];
+/**
+ * The current version of this model. Models with different version numbers are incompatible.
+ */
+export type ModelVersion1 = number;
+/**
+ * The entries in the set.
+ */
+export type Entries1 = [string, ...string[]];
+/**
+ * A collection of molecule sets.
+ */
+export type MoleculeSets = MoleculeSet[];
 
 export interface DataSetCollection {
   data_sets?: DataSets;
+
   [k: string]: unknown;
 }
+
+/**
+ * The base class for sets of measurements or molecules to train and
+ * test against.
+ */
 export interface DataSet {
   id: Id;
   description: Description;
   authors: Authors;
+  model_version?: ModelVersion;
   entries: Entries;
+
   [k: string]: unknown;
 }
+
 /**
  * A representation an author. This may be the author of a project
  * or a data set for example.
@@ -109,8 +146,10 @@ export interface Author {
   name: Name;
   email: Email;
   institute: Institute;
+
   [k: string]: unknown;
 }
+
 export interface DataSetEntry {
   id?: Id1;
   property_type: PropertyType;
@@ -121,12 +160,38 @@ export interface DataSetEntry {
   std_error: StdError;
   doi: Doi;
   components: Components;
+
   [k: string]: unknown;
 }
+
 export interface Component {
   smiles: Smiles;
   mole_fraction: MoleFraction;
   exact_amount?: ExactAmount;
   role?: Role;
+
+  [k: string]: unknown;
+}
+
+/**
+ * A collection of sets of molecules.
+ */
+export interface MoleculeSetCollection {
+  molecule_sets?: MoleculeSets;
+
+  [k: string]: unknown;
+}
+
+/**
+ * The set of molecules which forms either a train or test set for
+ * certain (predominantly QM based) targets.
+ */
+export interface MoleculeSet {
+  id: Id2;
+  description: Description1;
+  authors: Authors1;
+  model_version?: ModelVersion1;
+  entries: Entries1;
+
   [k: string]: unknown;
 }

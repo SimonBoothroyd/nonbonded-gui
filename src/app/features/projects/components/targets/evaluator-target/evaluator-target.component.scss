@@ -1,0 +1,34 @@
+:host {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.target__card {
+}
+
+.target__card .mat-card-title {
+  font-size: 1rem;
+}
+
+.target__card .mat-card-title {
+  font-size: 1rem;
+}
+
+.target__card .mat-card-subtitle {
+  margin: 10px 0 10px;
+}
+
+.target__card .mat-divider {
+  margin-bottom: 16px;
+}
+
+.specification__text span {
+  margin: 3px 0 3px 10px;
+  display: block;
+}
+
+.handler-list {
+  list-style: none;
+  padding-inline-start: 10px;
+}

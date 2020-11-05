@@ -17,6 +17,7 @@ export class TextDescriptionComponent implements OnInit {
   isTextElement(textElement: ITextElement): boolean {
     return textElement instanceof TextParagraph;
   }
+
   isListElement(textElement: ITextElement): boolean {
     return textElement instanceof TextList;
   }

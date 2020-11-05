@@ -18,6 +18,8 @@ import { RouteSerializer } from '@core/store/routes/route.serializer';
 import { ProjectsEffects } from '@core/store/projects/projects.effects';
 import { ProjectEffects } from '@core/store/project/project.effects';
 import { StudyDetailsEffects } from '@core/store/study-details/study-details.effects';
+import { DataSetsEffects } from '@core/store/datasets/datasets.effects';
+import { DataSetEffects } from '@core/store/dataset/dataset.effects';
 
 @NgModule({
   imports: [
@@ -29,7 +31,13 @@ import { StudyDetailsEffects } from '@core/store/study-details/study-details.eff
     HttpClientModule,
 
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([ProjectsEffects, ProjectEffects, StudyDetailsEffects]),
+    EffectsModule.forRoot([
+      ProjectsEffects,
+      ProjectEffects,
+      StudyDetailsEffects,
+      DataSetsEffects,
+      DataSetEffects,
+    ]),
 
     StoreRouterConnectingModule.forRoot({
       serializer: RouteSerializer,

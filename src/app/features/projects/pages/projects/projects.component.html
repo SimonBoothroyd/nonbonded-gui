@@ -1,22 +1,7 @@
 <app-loadable [loadable]="projects$ | async" class="root__container">
-  <div
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    fxLayoutGap="2rem"
-    class="page__container"
-  >
-    <h2>Projects</h2>
-    <div *ngFor="let project of (projects$ | async).summaries" class="project__card">
-      <mat-card>
-        <mat-card-title>{{ project.name }}</mat-card-title>
-        <mat-card-subtitle>{{ authorList(project) }}</mat-card-subtitle>
-        <mat-card-content>{{ project.description.split('\n')[0] }}</mat-card-content>
-        <mat-divider inset></mat-divider>
-        <mat-card-actions>
-          <div fxFlex></div>
-          <a routerLink="{{ project.id }}"><button mat-button>MORE</button></a>
-        </mat-card-actions>
-      </mat-card>
-    </div>
-  </div>
+  <app-summary-card-list
+    [summaries]="(projects$ | async).projects"
+    [baseLink]="'projects'"
+    title="Projects"
+  ></app-summary-card-list>
 </app-loadable>

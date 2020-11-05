@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
+  CanActivate,
   RouterStateSnapshot,
 } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 
 import { State } from '@core/store';
 

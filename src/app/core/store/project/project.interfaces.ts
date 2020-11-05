@@ -24,13 +24,13 @@ export const initialOptimization: Optimization = {
   project_id: '',
   name: '',
   description: '',
-  training_set_ids: [],
-  initial_force_field: null,
-  parameters_to_train: [],
-  force_balance_input: null,
-  denominators: {},
-  priors: {},
+  force_field: null,
+  optimization_id: null,
   analysis_environments: [],
+  engine: null,
+  targets: [],
+  max_iterations: -1,
+  parameters_to_train: [],
 };
 
 export const initialBenchmark: Benchmark = {

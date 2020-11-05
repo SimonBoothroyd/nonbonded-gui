@@ -1,29 +1,11 @@
-import { Authors, Description, Id, Name } from '@core/models/projects';
+import { ProjectCollection } from '@core/models/projects';
 import { createDefaultLoadable, Loadable } from '@core/loadable/loadable';
 
-export interface ProjectSummary {
-  id: Id;
-  name: Name;
-  description: Description;
-  authors: Authors;
-}
-
-export const initialProjectSummary: ProjectSummary = {
-  id: '',
-  name: '',
-  description: '',
-  authors: [],
+export const initialProjects: ProjectCollection = {
+  projects: [],
 };
 
-export interface Projects {
-  summaries: ProjectSummary[];
-}
-
-export const initialProjects: Projects = {
-  summaries: [],
-};
-
-export interface ProjectsState extends Loadable, Projects {}
+export interface ProjectsState extends Loadable, ProjectCollection {}
 
 export const initialProjectsState: ProjectsState = {
   ...createDefaultLoadable(),

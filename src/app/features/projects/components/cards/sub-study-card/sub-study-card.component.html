@@ -1,0 +1,14 @@
+<mat-card class="sub-study__card">
+  <mat-card-title>{{ subStudy.name }}</mat-card-title>
+  <mat-card-content>{{ subStudy.description.split('.')[0] }}.</mat-card-content>
+  <mat-divider inset></mat-divider>
+  <mat-card-actions>
+    <div fxFlex></div>
+    <a [routerLink]="overviewLink">
+      <button mat-button>MORE</button>
+    </a>
+    <a [routerLink]="resultsLink">
+      <button mat-button>RESULTS</button>
+    </a>
+  </mat-card-actions>
+</mat-card>

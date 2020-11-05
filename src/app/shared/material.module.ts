@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatRippleModule } from '@angular/material/core';
+import { MatTreeModule } from '@angular/material/tree';
 
 @NgModule({
   exports: [
@@ -32,6 +33,7 @@ import { MatRippleModule } from '@angular/material/core';
     MatSidenavModule,
     MatTableModule,
     MatToolbarModule,
+    MatTreeModule,
   ],
 })
 export class MaterialModule {}

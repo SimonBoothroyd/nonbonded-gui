@@ -15,47 +15,116 @@
       </mat-card>
     </div>
 
-    <h2>Targets</h2>
-
-    <div
-      fxLayout="row"
-      fxLayout.xs="column"
-      fxLayout.sm="column"
-      fxFlex
-      class="section__container"
-    >
-      <mat-card>
-        <mat-card-title>Physical Property</mat-card-title>
-        <mat-card-subtitle
-          >Optimization against a physical property data set.</mat-card-subtitle
-        >
-      </mat-card>
-    </div>
-
-    <h2>Training Set</h2>
+    <h2>Force Field</h2>
 
     <div fxLayout="column" fxFlex class="section__container">
       <mat-card>
-        <mat-card-content>
-          <p>
-            The training set for this optimization is a combination of the:
-          </p>
-          <ul>
-            <li *ngFor="let dataSetId of (optimization$ | async).training_set_ids">
-              {{ dataSetId }}
+        <mat-card-content class="specification__text">
+          <div *ngIf="(optimization$ | async).force_field != undefined">
+            <span
+              >This will be an optimization of a user specified force field which can be
+              downloaded <a [routerLink]="'.'">from here</a>.</span
+            >
+          </div>
+          <div *ngIf="(optimization$ | async).optimization_id != undefined">
+            <span
+              >This will be an optimization of the force field which was produced by the
+              {{ (optimization$ | async).optimization_id }} optimization.</span
+            >
+          </div>
+        </mat-card-content>
+        <mat-card-subtitle>Parameters to Train</mat-card-subtitle>
+        <mat-divider inset class="spaced-divider"></mat-divider>
+        <mat-card-content class="specification__text">
+          <ul class="handler-list">
+            <li
+              *ngFor="
+                let handlerGroup of groupParameters(
+                  (optimization$ | async).parameters_to_train
+                ) | keyvalue
+              "
+            >
+              <b>{{ handlerGroup.key }}: </b>
+              <ul>
+                <li *ngFor="let smirksGroup of handlerGroup.value | keyvalue">
+                  <span class="code-style">{{ smirksGroup.key }}</span
+                  >: {{ smirksGroup.value.join(', ') }}
+                </li>
+              </ul>
             </li>
           </ul>
-          <p>data sets.</p>
         </mat-card-content>
       </mat-card>
     </div>
 
+    <h2>Specification</h2>
+
     <div fxLayout="column" fxFlex class="section__container">
-      <app-loadable [loadable]="trainingSet$ | async">
-        <app-data-set-collection
-          [value]="trainingSet$ | async"
-        ></app-data-set-collection>
-      </app-loadable>
+      <mat-card>
+        <mat-card-content class="specification__text">
+          <span><b>Engine: </b>{{ (optimization$ | async).engine.type }}</span>
+          <span
+            ><b>Maximum iterations: </b
+            >{{ (optimization$ | async).max_iterations }}</span
+          >
+        </mat-card-content>
+
+        <div *ngIf="(optimization$ | async).engine.type == 'ForceBalance'">
+          <mat-card-subtitle>Trust Radius</mat-card-subtitle>
+          <mat-divider inset class="spaced-divider"></mat-divider>
+          <mat-card-content class="specification__text">
+            <span
+              ><b>Initial radius:</b>
+              {{ (optimization$ | async).engine.initial_trust_radius }}</span
+            >
+            <span
+              ><b>Minimum radius:</b>
+              {{ (optimization$ | async).engine.minimum_trust_radius }}</span
+            >
+          </mat-card-content>
+
+          <mat-card-subtitle>Priors</mat-card-subtitle>
+          <mat-divider inset class="spaced-divider"></mat-divider>
+          <mat-card-content class="specification__text">
+            <ul class="handler-list">
+              <li
+                *ngFor="
+                  let handlerGroup of groupPriors(
+                    (optimization$ | async).engine.priors
+                  ) | keyvalue
+                "
+              >
+                <b>{{ handlerGroup.key }}: </b>
+                <ul>
+                  <li *ngFor="let attributeGroup of handlerGroup.value | keyvalue">
+                    <span
+                      ><i>{{ attributeGroup.key }}:</i> {{ attributeGroup.value }}</span
+                    >
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </mat-card-content>
+        </div>
+      </mat-card>
+    </div>
+
+    <h2>Targets</h2>
+
+    <div
+      *ngFor="let target of (optimization$ | async).targets"
+      fxLayout="column"
+      fxFlex
+      class="section__container"
+    >
+      <app-evaluator-target
+        [target]="target"
+        *ngIf="target.allow_direct_simulation != undefined"
+      ></app-evaluator-target>
+      <app-recharge-target
+        [target]="target"
+        *ngIf="target.esp_settings != undefined"
+      ></app-recharge-target>
     </div>
   </div>
 </app-loadable>

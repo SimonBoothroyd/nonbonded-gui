@@ -19,7 +19,7 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 import { Plotly } from 'angular-plotly.js/src/app/shared/plotly.interface';
 import { PlotlyService } from 'angular-plotly.js';

@@ -32,5 +32,6 @@ export class BenchmarkResultsComponent implements OnInit, OnDestroy {
     });
     this.results$ = this.store.select(getTestScatterPlot);
   }
+
   ngOnDestroy() {}
 }

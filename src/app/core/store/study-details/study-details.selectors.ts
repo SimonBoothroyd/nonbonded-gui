@@ -3,33 +3,19 @@ import {
   BarTrace,
   initialBarTrace,
   initialScatterTrace,
-  initialTestResultsState,
   initialTrainingResultsState,
-  ScatterTrace,
   StudyDetailsState,
   TestResultsState,
   TrainingResultsState,
 } from '@core/store/study-details/study-details.interfaces';
+import { OptimizationState, StudyState } from '@core/store/project/project.interfaces';
 import {
-  BenchmarkState,
-  OptimizationState,
-  StudyState,
-} from '@core/store/project/project.interfaces';
-import {
-  getCurrentBenchmarkState,
   getCurrentOptimizationState,
   getCurrentStudyState,
 } from '@core/store/project/project.selectors';
-import {
-  DataSetCollectionState,
-  initialDataSet,
-  initialDataSetCollection,
-  initialDataSetCollectionState,
-} from '@core/store/datasets/datasets.interfaces';
-import { Benchmark } from '@core/models/projects';
+
 import { createDefaultLoadable } from '@core/loadable/loadable';
 import { initialPlotData, PlotData } from '@shared/components/plotly/plotly.interfaces';
-import { DataSetEntry } from '@core/models/datasets';
 
 export const selectStudyDetailsState = createFeatureSelector<StudyDetailsState>(
   'studyDetails'
@@ -43,105 +29,105 @@ export const getHasStudyDetailsLoaded = createSelector(
   }
 );
 
-export const getCurrentTrainingSets = createSelector(
-  getCurrentOptimizationState,
-  selectStudyDetailsState,
-  (
-    optimizationState: OptimizationState,
-    studyDetailsState: StudyDetailsState
-  ): DataSetCollectionState => {
-    if (!optimizationState || !studyDetailsState) return null;
+// export const getCurrentTrainingSets = createSelector(
+//   getCurrentOptimizationState,
+//   selectStudyDetailsState,
+//   (
+//     optimizationState: OptimizationState,
+//     studyDetailsState: StudyDetailsState
+//   ): DataSetCollectionState => {
+//     if (!optimizationState || !studyDetailsState) return null;
+//
+//     if (
+//       (optimizationState && optimizationState.loading) ||
+//       (studyDetailsState && studyDetailsState.loading)
+//     ) {
+//       return {
+//         ...initialDataSet,
+//         loading: true,
+//         success: false,
+//         error: optimizationState.error || studyDetailsState.error,
+//       };
+//     }
+//
+//     let dataSetCollection = { ...initialDataSetCollection };
+//
+//     // if (
+//     //   optimizationState &&
+//     //   !optimizationState.error &&
+//     //   studyDetailsState &&
+//     //   !studyDetailsState.error
+//     // ) {
+//     //   dataSetCollection.data_sets = studyDetailsState.dataSets.filter(
+//     //     (value) => optimizationState.training_set_ids.indexOf(value.id) >= 0
+//     //   );
+//     // }
+//
+//     if (dataSetCollection.data_sets.length == 0) {
+//       return {
+//         ...initialDataSetCollectionState,
+//         error: { message: 'No data sets could not be found.' },
+//       };
+//     }
+//
+//     return {
+//       ...dataSetCollection,
+//       loading: studyDetailsState.loading,
+//       success: studyDetailsState.success,
+//       error: studyDetailsState.error,
+//     };
+//   }
+// );
 
-    if (
-      (optimizationState && optimizationState.loading) ||
-      (studyDetailsState && studyDetailsState.loading)
-    ) {
-      return {
-        ...initialDataSet,
-        loading: true,
-        success: false,
-        error: optimizationState.error || studyDetailsState.error,
-      };
-    }
-
-    let dataSetCollection = { ...initialDataSetCollection };
-
-    if (
-      optimizationState &&
-      !optimizationState.error &&
-      studyDetailsState &&
-      !studyDetailsState.error
-    ) {
-      dataSetCollection.data_sets = studyDetailsState.dataSets.filter(
-        (value) => optimizationState.training_set_ids.indexOf(value.id) >= 0
-      );
-    }
-
-    if (dataSetCollection.data_sets.length == 0) {
-      return {
-        ...initialDataSetCollectionState,
-        error: { message: 'No data sets could not be found.' },
-      };
-    }
-
-    return {
-      ...dataSetCollection,
-      loading: studyDetailsState.loading,
-      success: studyDetailsState.success,
-      error: studyDetailsState.error,
-    };
-  }
-);
-
-export const getCurrentTestSets = createSelector(
-  getCurrentBenchmarkState,
-  selectStudyDetailsState,
-  (
-    benchmarkState: BenchmarkState,
-    studyDetailsState: StudyDetailsState
-  ): DataSetCollectionState => {
-    if (!benchmarkState || !studyDetailsState) return null;
-
-    if (
-      (benchmarkState && benchmarkState.loading) ||
-      (studyDetailsState && studyDetailsState.loading)
-    ) {
-      return {
-        ...initialDataSet,
-        loading: true,
-        success: false,
-        error: benchmarkState.error || studyDetailsState.error,
-      };
-    }
-
-    let dataSetCollection = { ...initialDataSetCollection };
-
-    if (
-      benchmarkState &&
-      !benchmarkState.error &&
-      studyDetailsState &&
-      !studyDetailsState.error
-    ) {
-      dataSetCollection.data_sets = studyDetailsState.dataSets.filter(
-        (value) => benchmarkState.test_set_ids.indexOf(value.id) >= 0
-      );
-    }
-
-    if (dataSetCollection.data_sets.length == 0) {
-      return {
-        ...initialDataSetCollectionState,
-        error: { message: 'No data sets could not be found.' },
-      };
-    }
-
-    return {
-      ...dataSetCollection,
-      loading: studyDetailsState.loading,
-      success: studyDetailsState.success,
-      error: studyDetailsState.error,
-    };
-  }
-);
+// export const getCurrentTestSets = createSelector(
+//   getCurrentBenchmarkState,
+//   selectStudyDetailsState,
+//   (
+//     benchmarkState: BenchmarkState,
+//     studyDetailsState: StudyDetailsState
+//   ): DataSetCollectionState => {
+//     if (!benchmarkState || !studyDetailsState) return null;
+//
+//     if (
+//       (benchmarkState && benchmarkState.loading) ||
+//       (studyDetailsState && studyDetailsState.loading)
+//     ) {
+//       return {
+//         ...initialDataSet,
+//         loading: true,
+//         success: false,
+//         error: benchmarkState.error || studyDetailsState.error,
+//       };
+//     }
+//
+//     let dataSetCollection = { ...initialDataSetCollection };
+//
+//     if (
+//       benchmarkState &&
+//       !benchmarkState.error &&
+//       studyDetailsState &&
+//       !studyDetailsState.error
+//     ) {
+//       dataSetCollection.data_sets = studyDetailsState.dataSets.filter(
+//         (value) => benchmarkState.test_set_ids.indexOf(value.id) >= 0
+//       );
+//     }
+//
+//     if (dataSetCollection.data_sets.length == 0) {
+//       return {
+//         ...initialDataSetCollectionState,
+//         error: { message: 'No data sets could not be found.' },
+//       };
+//     }
+//
+//     return {
+//       ...dataSetCollection,
+//       loading: studyDetailsState.loading,
+//       success: studyDetailsState.success,
+//       error: studyDetailsState.error,
+//     };
+//   }
+// );
 
 const defaultColors = [
   'rgb(31, 119, 180)',
@@ -166,93 +152,93 @@ export const getTestSummaryPlot = createSelector(
   selectStudyDetailsState,
   (studyState: StudyState, studyDetailsState: StudyDetailsState, props): PlotData => {
     if (!studyState || !studyDetailsState) return null;
-
-    // Check if both required states are still loading.
-    if (studyState.loading || studyDetailsState.loading) {
-      return {
-        ...initialPlotData,
-        loading: true,
-      };
-    }
-    // Check if either of the required states has errored.
-    if (studyState.error || studyDetailsState.error) {
-      return {
-        ...initialPlotData,
-        error: studyState.error ? studyState.error : studyDetailsState.error,
-      };
-    }
-
-    const statisticsType = props.statisticsType;
-
-    let benchmarks: { [key: string]: Benchmark } = {};
-    studyState.benchmarks.forEach((value) => (benchmarks[value.id] = value));
-
-    let propertyNames = [];
-    let forceFieldNames = [];
-
-    let traces = [];
-
-    for (let benchmarkResult of studyDetailsState.benchmarkResults) {
-      if (benchmarkResult == undefined) continue;
-
-      const benchmark = benchmarks[benchmarkResult.id];
-
-      const summaryStatistics = benchmarkResult.analysed_result.statistic_entries.filter(
-        (value) => {
-          const propertyName = toPropertyName(value.property_type, value.n_components);
-          if (!propertyNames.includes(propertyName)) propertyNames.push(propertyName);
-
-          return value.statistics_type == statisticsType && value.category == undefined;
-        }
-      );
-
-      propertyNames.forEach((propertyName, index) => {
-        const propertyData = summaryStatistics.filter((value) => {
-          return (
-            propertyName == toPropertyName(value.property_type, value.n_components)
-          );
-        });
-
-        if (propertyData.length == 0) return;
-
-        const forceFieldName = benchmark.optimization_id
-          ? benchmark.optimization_id
-          : benchmark.id;
-
-        if (!forceFieldNames.includes(forceFieldName))
-          forceFieldNames.push(forceFieldName);
-        const forceFieldIndex = forceFieldNames.indexOf(forceFieldName);
-
-        const trace: BarTrace = {
-          type: 'bar',
-          x: [forceFieldName],
-          y: [propertyData[0].value],
-          error_y: {
-            type: 'data',
-            symmetric: false,
-            array: [Math.abs(propertyData[0].value - propertyData[0].upper_95_ci)],
-            arrayminus: [Math.abs(propertyData[0].value - propertyData[0].lower_95_ci)],
-          },
-          legendgroup: forceFieldName,
-          marker: { color: defaultColors[forceFieldIndex % defaultColors.length] },
-          name: forceFieldName,
-          xaxis: `x${index + 1}`,
-          yaxis: `y${index + 1}`,
-          index: index,
-          showlegend: index == 0,
-          hoverinfo: 'none',
-        };
-
-        traces.push(trace);
-      });
-    }
-
-    return {
-      traces: traces,
-      subplotTitles: propertyNames,
-      ...createDefaultLoadable(),
-      success: true,
-    };
+    return null;
+    // // Check if both required states are still loading.
+    // if (studyState.loading || studyDetailsState.loading) {
+    //   return {
+    //     ...initialPlotData,
+    //     loading: true
+    //   };
+    // }
+    // // Check if either of the required states has errored.
+    // if (studyState.error || studyDetailsState.error) {
+    //   return {
+    //     ...initialPlotData,
+    //     error: studyState.error ? studyState.error : studyDetailsState.error
+    //   };
+    // }
+    //
+    // const statisticsType = props.statisticsType;
+    //
+    // let benchmarks: { [key: string]: Benchmark } = {};
+    // studyState.benchmarks.forEach((value) => (benchmarks[value.id] = value));
+    //
+    // let propertyNames = [];
+    // let forceFieldNames = [];
+    //
+    // let traces = [];
+    //
+    // for (let benchmarkResult of studyDetailsState.benchmarkResults) {
+    //   if (benchmarkResult == undefined) continue;
+    //
+    //   const benchmark = benchmarks[benchmarkResult.id];
+    //
+    //   const summaryStatistics = benchmarkResult.analysed_result.statistic_entries.filter(
+    //     (value) => {
+    //       const propertyName = toPropertyName(value.property_type, value.n_components);
+    //       if (!propertyNames.includes(propertyName)) propertyNames.push(propertyName);
+    //
+    //       return value.statistics_type == statisticsType && value.category == undefined;
+    //     }
+    //   );
+    //
+    //   propertyNames.forEach((propertyName, index) => {
+    //     const propertyData = summaryStatistics.filter((value) => {
+    //       return (
+    //         propertyName == toPropertyName(value.property_type, value.n_components)
+    //       );
+    //     });
+    //
+    //     if (propertyData.length == 0) return;
+    //
+    //     const forceFieldName = benchmark.optimization_id
+    //       ? benchmark.optimization_id
+    //       : benchmark.id;
+    //
+    //     if (!forceFieldNames.includes(forceFieldName))
+    //       forceFieldNames.push(forceFieldName);
+    //     const forceFieldIndex = forceFieldNames.indexOf(forceFieldName);
+    //
+    //     const trace: BarTrace = {
+    //       type: 'bar',
+    //       x: [forceFieldName],
+    //       y: [propertyData[0].value],
+    //       error_y: {
+    //         type: 'data',
+    //         symmetric: false,
+    //         array: [Math.abs(propertyData[0].value - propertyData[0].upper_95_ci)],
+    //         arrayminus: [Math.abs(propertyData[0].value - propertyData[0].lower_95_ci)]
+    //       },
+    //       legendgroup: forceFieldName,
+    //       marker: { color: defaultColors[forceFieldIndex % defaultColors.length] },
+    //       name: forceFieldName,
+    //       xaxis: `x${index + 1}`,
+    //       yaxis: `y${index + 1}`,
+    //       index: index,
+    //       showlegend: index == 0,
+    //       hoverinfo: 'none'
+    //     };
+    //
+    //     traces.push(trace);
+    //   });
+    // }
+    //
+    // return {
+    //   traces: traces,
+    //   subplotTitles: propertyNames,
+    //   ...createDefaultLoadable(),
+    //   success: true
+    // };
   }
 );
 
@@ -261,119 +247,120 @@ export const getTestScatterPlot = createSelector(
   selectStudyDetailsState,
   (studyState: StudyState, studyDetailsState: StudyDetailsState): TestResultsState => {
     if (!studyState || !studyDetailsState) return null;
+    return null;
 
-    // Check if both required states are still loading.
-    if (studyState.loading || studyDetailsState.loading) {
-      return {
-        ...initialTestResultsState,
-        loading: true,
-      };
-    }
-
-    // Check if either of the required states has errored.
-    if (studyState.error || studyDetailsState.error) {
-      return {
-        ...initialTestResultsState,
-        error: studyState.error ? studyState.error : studyDetailsState.error,
-      };
-    }
-
-    const benchmarks: { [key: string]: Benchmark } = {};
-    const dataSetIds: string[] = [];
-
-    studyState.benchmarks.forEach((value) => {
-      benchmarks[value.id] = value;
-
-      value.test_set_ids.forEach((x) => {
-        if (dataSetIds.includes(x)) return;
-        dataSetIds.push(x);
-      });
-    });
-
-    // Find all of the reference data points and store them in a dictionary by their id.
-    const dataSets = studyDetailsState.dataSets.filter((x) =>
-      dataSetIds.includes(x.id)
-    );
-
-    let dataEntries: { [key: string]: DataSetEntry } = {};
-    dataSets.forEach((dataSet) =>
-      dataSet.entries.forEach((x) => (dataEntries[x.id] = x))
-    );
-
-    let benchmarkNames = [];
-    let traces: { [propertyName: string]: ScatterTrace[] } = {};
-
-    for (const benchmarkResult of studyDetailsState.benchmarkResults) {
-      const benchmark = benchmarks[benchmarkResult.id];
-      benchmarkNames.push(benchmark.name);
-
-      const benchmarkTraces = {};
-
-      for (const resultEntry of benchmarkResult.analysed_result.results_entries) {
-        const referenceEntry = dataEntries[resultEntry.reference_id];
-        const category = resultEntry.category
-          .replace('<', '+')
-          .replace('>', '+')
-          .replace('~', '+');
-
-        const propertyName = toPropertyName(
-          referenceEntry.property_type,
-          referenceEntry.components.length
-        );
-        if (benchmarkTraces[propertyName] == undefined)
-          benchmarkTraces[propertyName] = {};
-
-        let tracesByCategory = benchmarkTraces[propertyName];
-
-        if (tracesByCategory[category] == undefined) {
-          const traceIndex = Object.keys(tracesByCategory).length;
-
-          tracesByCategory[category] = {
-            ...initialScatterTrace,
-            name: category,
-            legendgroup: category,
-            marker: { color: defaultColors[traceIndex % defaultColors.length] },
-            x: [],
-            y: [],
-            index: benchmarkNames.length - 1,
-            showlegend: benchmarkNames.length == 1,
-            hoverinfo: 'none',
-          };
-
-          if (tracesByCategory[category].xaxis == 'x0')
-            tracesByCategory[category].xaxis = 'x';
-          if (tracesByCategory[category].yaxis == 'y0')
-            tracesByCategory[category].yaxis = 'y';
-        }
-
-        tracesByCategory[category].x.push(resultEntry.estimated_value);
-        tracesByCategory[category].y.push(referenceEntry.value);
-      }
-
-      for (const propertyName in benchmarkTraces) {
-        if (traces[propertyName] == undefined) traces[propertyName] = [];
-        traces[propertyName] = traces[propertyName].concat(
-          Object.values(benchmarkTraces[propertyName])
-        );
-      }
-    }
-
-    const plotData: TestResultsState = {
-      ...createDefaultLoadable(),
-      ...initialTestResultsState,
-      success: true,
-    };
-
-    for (const propertyName in traces) {
-      plotData.plotData[propertyName] = {
-        ...createDefaultLoadable(),
-        traces: traces[propertyName],
-        subplotTitles: benchmarkNames,
-        success: true,
-      };
-    }
-
-    return plotData;
+    // // Check if both required states are still loading.
+    // if (studyState.loading || studyDetailsState.loading) {
+    //   return {
+    //     ...initialTestResultsState,
+    //     loading: true
+    //   };
+    // }
+    //
+    // // Check if either of the required states has errored.
+    // if (studyState.error || studyDetailsState.error) {
+    //   return {
+    //     ...initialTestResultsState,
+    //     error: studyState.error ? studyState.error : studyDetailsState.error
+    //   };
+    // }
+    //
+    // const benchmarks: { [key: string]: Benchmark } = {};
+    // const dataSetIds: string[] = [];
+    //
+    // studyState.benchmarks.forEach((value) => {
+    //   benchmarks[value.id] = value;
+    //
+    //   value.test_set_ids.forEach((x) => {
+    //     if (dataSetIds.includes(x)) return;
+    //     dataSetIds.push(x);
+    //   });
+    // });
+    //
+    // // Find all of the reference data points and store them in a dictionary by their id.
+    // const dataSets = studyDetailsState.dataSets.filter((x) =>
+    //   dataSetIds.includes(x.id)
+    // );
+    //
+    // let dataEntries: { [key: string]: DataSetEntry } = {};
+    // dataSets.forEach((dataSet) =>
+    //   dataSet.entries.forEach((x) => (dataEntries[x.id] = x))
+    // );
+    //
+    // let benchmarkNames = [];
+    // let traces: { [propertyName: string]: ScatterTrace[] } = {};
+    //
+    // for (const benchmarkResult of studyDetailsState.benchmarkResults) {
+    //   const benchmark = benchmarks[benchmarkResult.id];
+    //   benchmarkNames.push(benchmark.name);
+    //
+    //   const benchmarkTraces = {};
+    //
+    //   for (const resultEntry of benchmarkResult.analysed_result.results_entries) {
+    //     const referenceEntry = dataEntries[resultEntry.reference_id];
+    //     const category = resultEntry.category
+    //       .replace('<', '+')
+    //       .replace('>', '+')
+    //       .replace('~', '+');
+    //
+    //     const propertyName = toPropertyName(
+    //       referenceEntry.property_type,
+    //       referenceEntry.components.length
+    //     );
+    //     if (benchmarkTraces[propertyName] == undefined)
+    //       benchmarkTraces[propertyName] = {};
+    //
+    //     let tracesByCategory = benchmarkTraces[propertyName];
+    //
+    //     if (tracesByCategory[category] == undefined) {
+    //       const traceIndex = Object.keys(tracesByCategory).length;
+    //
+    //       tracesByCategory[category] = {
+    //         ...initialScatterTrace,
+    //         name: category,
+    //         legendgroup: category,
+    //         marker: { color: defaultColors[traceIndex % defaultColors.length] },
+    //         x: [],
+    //         y: [],
+    //         index: benchmarkNames.length - 1,
+    //         showlegend: benchmarkNames.length == 1,
+    //         hoverinfo: 'none'
+    //       };
+    //
+    //       if (tracesByCategory[category].xaxis == 'x0')
+    //         tracesByCategory[category].xaxis = 'x';
+    //       if (tracesByCategory[category].yaxis == 'y0')
+    //         tracesByCategory[category].yaxis = 'y';
+    //     }
+    //
+    //     tracesByCategory[category].x.push(resultEntry.estimated_value);
+    //     tracesByCategory[category].y.push(referenceEntry.value);
+    //   }
+    //
+    //   for (const propertyName in benchmarkTraces) {
+    //     if (traces[propertyName] == undefined) traces[propertyName] = [];
+    //     traces[propertyName] = traces[propertyName].concat(
+    //       Object.values(benchmarkTraces[propertyName])
+    //     );
+    //   }
+    // }
+    //
+    // const plotData: TestResultsState = {
+    //   ...createDefaultLoadable(),
+    //   ...initialTestResultsState,
+    //   success: true
+    // };
+    //
+    // for (const propertyName in traces) {
+    //   plotData.plotData[propertyName] = {
+    //     ...createDefaultLoadable(),
+    //     traces: traces[propertyName],
+    //     subplotTitles: benchmarkNames,
+    //     success: true
+    //   };
+    // }
+    //
+    // return plotData;
   }
 );
 

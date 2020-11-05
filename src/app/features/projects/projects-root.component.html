@@ -1,9 +1,8 @@
 <div id="main" class="projects__container" fxLayout="column" fxFill>
   <mat-toolbar color="primary">
-    <button mat-icon-button (click)="onBackClicked()">
-      <mat-icon>arrow_back_ios</mat-icon>
+    <button mat-icon-button [routerLink]="['/']">
+      <mat-icon>home</mat-icon>
     </button>
-    <button mat-icon-button [routerLink]="['/']"><mat-icon>home</mat-icon></button>
     <span class="projects__toobar-spacer"></span>
     <img
       src="assets/img/logo.svg"

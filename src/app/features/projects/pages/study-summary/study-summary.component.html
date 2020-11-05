@@ -7,13 +7,7 @@
   >
     <h2>{{ (study$ | async).name }}</h2>
 
-    <div
-      fxLayout="row"
-      fxLayout.xs="column"
-      fxLayout.sm="column"
-      fxFlex
-      class="section__container"
-    >
+    <div fxLayout="column" fxFlex class="section__container">
       <mat-card>
         <app-text-description
           [text]="(study$ | async).description"
@@ -31,21 +25,25 @@
     >
       <div fxFlex>
         <h2 class="section__header">Optimizations</h2>
-        <app-optimization-card
+        <app-sub-study-card
           *ngFor="let optimization of (study$ | async).optimizations; last as last"
-          [optimization]="optimization"
+          [subStudy]="optimization"
+          [overviewLink]="['optimizations', optimization.id]"
+          [resultsLink]="['optimizations', optimization.id, 'results']"
           [className]="last ? '' : 'section__spacer'"
         >
-        </app-optimization-card>
+        </app-sub-study-card>
       </div>
       <div fxFlex>
         <h2 class="section__header">Benchmarks</h2>
-        <app-benchmark-card
+        <app-sub-study-card
           *ngFor="let benchmark of (study$ | async).benchmarks; last as last"
-          [benchmark]="benchmark"
+          [subStudy]="benchmark"
+          [overviewLink]="['benchmarks', benchmark.id]"
+          [resultsLink]="['benchmarks', 'results']"
           [className]="last ? '' : 'section__spacer'"
         >
-        </app-benchmark-card>
+        </app-sub-study-card>
       </div>
     </div>
   </div>

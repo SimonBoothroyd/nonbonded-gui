@@ -18,10 +18,13 @@ export class LoadProject implements Action {
 
 export class LoadProjectSuccess implements Action {
   readonly type = ProjectActionsTypes.LoadSuccess;
+
   constructor(public payload: Project) {}
 }
+
 export class LoadProjectError implements Action {
   readonly type = ProjectActionsTypes.LoadError;
+
   constructor(public error: any) {}
 }
 

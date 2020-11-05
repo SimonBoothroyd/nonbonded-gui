@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ProjectsModule } from '@app/features/projects/projects.module';
+import { DatasetsModule } from '@app/features/datasets/datasets.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { ProjectsModule } from '@app/features/projects/projects.module';
     SharedModule,
     MaterialModule,
 
+    DatasetsModule,
     ProjectsModule,
 
     BrowserModule,

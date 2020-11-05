@@ -7,11 +7,8 @@ import { Store } from '@ngrx/store';
 import { State } from '@core/store';
 
 import { selectProjectsState } from '@core/store/projects/projects.selectors';
-import {
-  ProjectsState,
-  ProjectSummary,
-} from '@core/store/projects/projects.interfaces';
-import { ITextElement, TextList, TextParagraph } from '@shared/pipes/format-text.pipe';
+import { ProjectsState } from '@core/store/projects/projects.interfaces';
+import { LoadProjects } from '@core/store/projects/projects.actions';
 
 @Component({
   selector: 'app-projects-list',
@@ -25,10 +22,7 @@ export class ProjectsComponent implements OnInit {
   constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
+    this.store.dispatch(new LoadProjects());
     this.projects$ = this.store.select(selectProjectsState);
-  }
-
-  authorList(project: ProjectSummary): string {
-    return project.authors.map((author) => author.name).join(', ');
   }
 }

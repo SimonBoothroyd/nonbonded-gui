@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ProjectsStoreGuard } from '@app/features/projects/guards/projects-store.guard';
-
 import { ProjectsRootComponent } from '@app/features/projects/projects-root.component';
 import { ProjectSummaryComponent } from '@app/features/projects/pages/project-summary/project-summary.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { ProjectStoreGuard } from '@app/features/projects/guards/project-store.guard';
-import { StudyComponent } from '@app/features/projects/pages/study/study.component';
+import { ProjectContainerComponent } from '@app/features/projects/pages/project-container/project-container.component';
 import { StudiesComponent } from '@app/features/projects/pages/studies/studies.component';
 import { StudySummaryComponent } from '@app/features/projects/pages/study-summary/study-summary.component';
 import { StudyDetailsStoreGuard } from '@app/features/projects/guards/study-details-store.guard';
@@ -67,7 +65,6 @@ const benchmarkRoutes = {
 const routes: Routes = [
   {
     path: 'projects',
-    canActivate: [ProjectsStoreGuard],
     component: ProjectsRootComponent,
     children: [
       {
@@ -77,6 +74,7 @@ const routes: Routes = [
       {
         path: ':projectId',
         canActivate: [ProjectStoreGuard],
+        component: ProjectContainerComponent,
         children: [
           {
             path: '',
@@ -92,7 +90,6 @@ const routes: Routes = [
               {
                 path: ':studyId',
                 canActivate: [StudyDetailsStoreGuard],
-                component: StudyComponent,
                 children: [
                   {
                     path: '',

@@ -5,6 +5,7 @@ export interface ITextElement {}
 export class TextParagraph implements ITextElement {
   text: string;
 }
+
 export class TextList implements ITextElement {
   items: string[];
 }

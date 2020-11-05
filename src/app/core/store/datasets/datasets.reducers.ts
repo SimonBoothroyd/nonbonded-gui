@@ -4,14 +4,14 @@ import {
   DataSetsActionsTypes,
 } from '@core/store/datasets/datasets.actions';
 import {
-  DataSetCollectionState,
-  initialDataSetCollectionState,
+  DataSetsState,
+  initialDataSetsState,
 } from '@core/store/datasets/datasets.interfaces';
 
 function baseReducer(
-  state: DataSetCollectionState = { ...initialDataSetCollectionState },
+  state: DataSetsState = { ...initialDataSetsState },
   action: DataSetsActions
-): DataSetCollectionState {
+): DataSetsState {
   switch (action.type) {
     case DataSetsActionsTypes.LoadSuccess:
       return {
@@ -24,10 +24,7 @@ function baseReducer(
   }
 }
 
-export function reducer(
-  state: DataSetCollectionState,
-  action: DataSetsActions
-): DataSetCollectionState {
+export function reducer(state: DataSetsState, action: DataSetsActions): DataSetsState {
   return withLoadable(baseReducer, {
     loadingActionType: DataSetsActionsTypes.Load,
     successActionType: DataSetsActionsTypes.LoadSuccess,

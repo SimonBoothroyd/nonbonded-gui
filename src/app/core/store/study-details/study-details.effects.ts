@@ -9,8 +9,7 @@ import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { PROJECTS_ENDPOINT } from '@core/endpoints';
 
 import { Benchmark, Optimization, Study } from '@core/models/projects';
-import { OptimizationResult } from '@core/models/optimization';
-import { BenchmarkResult } from '@core/models/benchmark';
+import { BenchmarkResult, OptimizationResult } from '@core/models/results';
 
 import { DataSetCollection } from '@core/models/datasets';
 

@@ -13,11 +13,10 @@ import { AngularResizedEventModule } from 'angular-resize-event';
 import { PlotlyComponent } from '@shared/components/plotly/plotly.component';
 
 import { PlotlyViaCDNModule } from 'angular-plotly.js';
-import { DataSetComponent } from '@shared/components/data-set/data-set.component';
-import { DataSetCollectionComponent } from '@shared/components/data-set-collection/data-set-collection.component';
-import { DataEntryDialogComponent } from '@shared/components/data-entry-dialog/data-entry-dialog.component';
 import { FormatTextPipe } from '@shared/pipes/format-text.pipe';
 import { TextDescriptionComponent } from '@shared/components/text-description/text-description.component';
+import { SummaryCardListComponent } from '@shared/components/card-lists/summary-card-list/summary-card-list.component';
+import { RouterModule } from '@angular/router';
 
 PlotlyViaCDNModule.plotlyVersion = 'latest';
 
@@ -25,9 +24,7 @@ PlotlyViaCDNModule.plotlyVersion = 'latest';
   declarations: [
     LoadableComponent,
     PlotlyComponent,
-    DataSetComponent,
-    DataSetCollectionComponent,
-    DataEntryDialogComponent,
+    SummaryCardListComponent,
     FormatTextPipe,
     TextDescriptionComponent,
   ],
@@ -38,22 +35,20 @@ PlotlyViaCDNModule.plotlyVersion = 'latest';
     FormsModule,
     PlotlyViaCDNModule,
     AngularResizedEventModule,
+    RouterModule,
   ],
   exports: [
     MaterialModule,
     FlexLayoutModule,
     LoadableComponent,
     PlotlyComponent,
+    SummaryCardListComponent,
     FormsModule,
     PlotlyViaCDNModule,
     AngularResizedEventModule,
-    DataSetComponent,
-    DataSetCollectionComponent,
-    DataEntryDialogComponent,
     FormatTextPipe,
     TextDescriptionComponent,
   ],
-  entryComponents: [DataEntryDialogComponent],
 })
 export class SharedModule {
   constructor(@Optional() @SkipSelf() parentModule: SharedModule) {

@@ -1,7 +1,6 @@
 import { createDefaultLoadable, Loadable } from '@core/loadable/loadable';
 
-import { BenchmarkResult } from '@core/models/benchmark';
-import { OptimizationResult } from '@core/models/optimization';
+import { BenchmarkResult, OptimizationResult } from '@core/models/results';
 
 import { DataSet } from '@core/models/datasets';
 import { PlotData } from '@shared/components/plotly/plotly.interfaces';

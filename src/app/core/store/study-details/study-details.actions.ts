@@ -21,10 +21,13 @@ export class LoadStudyDetails implements Action {
 
 export class LoadStudyDetailsSuccess implements Action {
   readonly type = StudyDetailsActionsTypes.LoadSuccess;
+
   constructor(public payload: StudyDetails) {}
 }
+
 export class LoadStudyDetailsError implements Action {
   readonly type = StudyDetailsActionsTypes.LoadError;
+
   constructor(public error: any) {}
 }
 

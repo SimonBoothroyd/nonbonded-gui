@@ -1,0 +1,22 @@
+<div
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="2rem"
+  class="summaries__container"
+>
+  <h2>{{ title }}</h2>
+  <div *ngFor="let summary of summaries" class="summary__container">
+    <mat-card>
+      <mat-card-title>{{ summary.name ? summary.name : summary.id }}</mat-card-title>
+      <mat-card-subtitle>{{ authorList(summary) }}</mat-card-subtitle>
+      <mat-card-content>{{ summary.description.split('\n')[0] }}</mat-card-content>
+      <mat-divider inset></mat-divider>
+      <mat-card-actions>
+        <div fxFlex></div>
+        <a [routerLink]="['/', baseLink, summary.id]">
+          <button mat-button>MORE</button>
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
