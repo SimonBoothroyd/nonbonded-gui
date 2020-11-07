@@ -1,13 +1,13 @@
 <app-loadable [loadable]="optimization$ | async" class="root__container">
   <div
+    class="page__container"
     fxLayout="column"
     fxLayoutAlign="center center"
     fxLayoutGap="2rem"
-    class="page__container"
   >
     <h1>{{ (optimization$ | async).name }}</h1>
 
-    <div fxLayout="column" fxFlex class="section__container">
+    <div class="section__container" fxFlex fxLayout="column">
       <mat-card>
         <app-text-description
           [text]="(optimization$ | async).description"
@@ -17,7 +17,7 @@
 
     <h2>Force Field</h2>
 
-    <div fxLayout="column" fxFlex class="section__container">
+    <div class="section__container" fxFlex fxLayout="column">
       <mat-card>
         <mat-card-content class="specification__text">
           <div *ngIf="(optimization$ | async).force_field != undefined">
@@ -34,7 +34,7 @@
           </div>
         </mat-card-content>
         <mat-card-subtitle>Parameters to Train</mat-card-subtitle>
-        <mat-divider inset class="spaced-divider"></mat-divider>
+        <mat-divider class="spaced-divider" inset></mat-divider>
         <mat-card-content class="specification__text">
           <ul class="handler-list">
             <li
@@ -59,7 +59,7 @@
 
     <h2>Specification</h2>
 
-    <div fxLayout="column" fxFlex class="section__container">
+    <div class="section__container" fxFlex fxLayout="column">
       <mat-card>
         <mat-card-content class="specification__text">
           <span><b>Engine: </b>{{ (optimization$ | async).engine.type }}</span>
@@ -71,7 +71,7 @@
 
         <div *ngIf="(optimization$ | async).engine.type == 'ForceBalance'">
           <mat-card-subtitle>Trust Radius</mat-card-subtitle>
-          <mat-divider inset class="spaced-divider"></mat-divider>
+          <mat-divider class="spaced-divider" inset></mat-divider>
           <mat-card-content class="specification__text">
             <span
               ><b>Initial radius:</b>
@@ -84,7 +84,7 @@
           </mat-card-content>
 
           <mat-card-subtitle>Priors</mat-card-subtitle>
-          <mat-divider inset class="spaced-divider"></mat-divider>
+          <mat-divider class="spaced-divider" inset></mat-divider>
           <mat-card-content class="specification__text">
             <ul class="handler-list">
               <li
@@ -113,17 +113,17 @@
 
     <div
       *ngFor="let target of (optimization$ | async).targets"
-      fxLayout="column"
-      fxFlex
       class="section__container"
+      fxFlex
+      fxLayout="column"
     >
       <app-evaluator-target
-        [target]="target"
         *ngIf="target.allow_direct_simulation != undefined"
+        [target]="target"
       ></app-evaluator-target>
       <app-recharge-target
-        [target]="target"
         *ngIf="target.esp_settings != undefined"
+        [target]="target"
       ></app-recharge-target>
     </div>
   </div>

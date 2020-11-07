@@ -1,17 +1,17 @@
 <app-loadable [loadable]="project$ | async" class="root__container">
   <mat-sidenav-container class="root__container">
-    <mat-sidenav mode="over" class="sidebar__nav" [(opened)]="navbarOpen">
+    <mat-sidenav [(opened)]="navbarOpen" class="sidebar__nav" mode="over">
       <app-navigation-tree></app-navigation-tree>
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <div fxLayout="row" class="root__container">
+      <div class="root__container" fxLayout="row">
         <div class="sidenav__button-container">
           <button
-            mat-mini-fab
-            color="primary"
             (click)="navbarOpen = !navbarOpen"
             class="sidebar__button"
+            color="primary"
+            mat-mini-fab
           >
             <mat-icon *ngIf="navbarOpen"> menu_open</mat-icon>
             <mat-icon *ngIf="!navbarOpen"> menu</mat-icon>

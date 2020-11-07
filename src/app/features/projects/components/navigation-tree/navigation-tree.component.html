@@ -11,7 +11,7 @@
     matTreeNodePaddingIndent="20"
   >
     <!-- use a disabled button to provide padding for tree leaf -->
-    <button mat-icon-button disabled></button>
+    <button disabled mat-icon-button></button>
     <span [routerLink]="[node.url]">{{ node.name | uppercase }}</span>
   </mat-tree-node>
   <!-- This is the tree node template for expandable nodes -->
@@ -21,10 +21,10 @@
     matTreeNodePaddingIndent="20"
   >
     <button
-      mat-icon-button
-      disableRipple
-      matTreeNodeToggle
       [attr.aria-label]="'Toggle ' + node.name"
+      disableRipple
+      mat-icon-button
+      matTreeNodeToggle
     >
       <mat-icon class="mat-icon-rtl-mirror">
         {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}

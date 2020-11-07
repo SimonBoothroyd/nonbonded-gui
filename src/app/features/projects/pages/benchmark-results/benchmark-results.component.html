@@ -1,4 +1,4 @@
-<div fxLayout="column" fxFill class="root__container" fxLayoutGap="20px">
+<div class="root__container" fxFill fxLayout="column" fxLayoutGap="20px">
   <h1 class="project__card-header">Benchmarking Results</h1>
   <div class="inner__container">
     <div fxLayout="column" fxLayoutGap="2rem">
@@ -15,11 +15,11 @@
           <!--        <div *ngIf="statisticsType" class="graph__container" (resized)="onStatisticGraphResized()">-->
           <div class="graph__container">
             <app-plotly
-              [data]="summaryStatistics$ | async"
-              [config]="{ displayModeBar: false }"
-              [style]="{ position: 'relative', width: '100%', height: '100%' }"
-              [showXTicks]="false"
               #summaryStatisticsComponent
+              [config]="{ displayModeBar: false }"
+              [data]="summaryStatistics$ | async"
+              [showXTicks]="false"
+              [style]="{ position: 'relative', width: '100%', height: '100%' }"
             >
             </app-plotly>
           </div>
@@ -28,7 +28,7 @@
       <mat-card fxFlex>
         <app-loadable [loadable]="results$ | async">
           <mat-form-field>
-            <mat-select placeholder="Select a property type" [(value)]="propertyType">
+            <mat-select [(value)]="propertyType" placeholder="Select a property type">
               <mat-option
                 *ngFor="let pair of (results$ | async).plotData | keyvalue"
                 [value]="pair.key"
@@ -39,9 +39,9 @@
           </mat-form-field>
           <div *ngIf="propertyType" class="graph__container">
             <app-plotly
+              #resultsComponent
               [data]="(results$ | async).plotData[propertyType]"
               [style]="{ position: 'relative', width: '100%', height: '100%' }"
-              #resultsComponent
             ></app-plotly>
           </div>
         </app-loadable>

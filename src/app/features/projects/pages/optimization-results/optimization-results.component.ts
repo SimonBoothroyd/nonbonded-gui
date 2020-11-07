@@ -31,11 +31,9 @@ export class OptimizationResultsComponent implements OnInit, OnDestroy {
   public objectiveFunction$: Observable<PlotData>;
 
   public iterationRMSE$: Observable<TrainingResultsState>;
-  private iterationRMSESubscription: Subscription;
-
   public propertyType: string;
-
   public layoutType: string;
+  private iterationRMSESubscription: Subscription;
 
   constructor(
     private store: Store<State>,

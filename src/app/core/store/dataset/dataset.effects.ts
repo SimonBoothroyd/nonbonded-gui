@@ -17,8 +17,6 @@ import {
 
 @Injectable()
 export class DataSetEffects {
-  constructor(private actions$: Actions, private http: HttpClient) {}
-
   @Effect()
   loadDataSet = this.actions$.pipe(
     ofType(DataSetActionsTypes.Load),
@@ -29,4 +27,6 @@ export class DataSetEffects {
       );
     })
   );
+
+  constructor(private actions$: Actions, private http: HttpClient) {}
 }

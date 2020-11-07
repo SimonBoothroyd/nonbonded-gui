@@ -1,9 +1,9 @@
 <app-loadable [loadable]="project$ | async" class="root__container">
   <div
+    class="page__container"
     fxLayout="column"
     fxLayoutAlign="center center"
     fxLayoutGap="2rem"
-    class="page__container"
   >
     <div fxFlex>
       <h2 class="project__header">{{ (project$ | async).name }}</h2>
@@ -25,9 +25,9 @@
     </div>
     <h2>Studies</h2>
     <app-study-list
-      class="project__card"
       [baseRouteUrl]="'studies'"
       [studies]="(project$ | async).studies"
+      class="project__card"
     ></app-study-list>
   </div>
 </app-loadable>

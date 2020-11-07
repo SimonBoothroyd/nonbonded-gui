@@ -46,21 +46,18 @@ export class PerPropertyDataSet {
 export class DataSetCollectionComponent implements OnInit {
   _dataSet: PerPropertyDataSet = undefined;
 
+  constructor() {}
+
   @Input()
-  set value(value: (DataSetState | DataSetsState)) {
+  set value(value: DataSetState | DataSetsState) {
     if (!value.success) return;
 
     if (!value.data_sets) {
-      this._dataSet = new PerPropertyDataSet(
-        {data_sets: [<DataSetState>value]}
-      )
-    }
-    else {
-      this._dataSet = new PerPropertyDataSet(value)
+      this._dataSet = new PerPropertyDataSet({ data_sets: [<DataSetState>value] });
+    } else {
+      this._dataSet = new PerPropertyDataSet(value);
     }
   }
-
-  constructor() {}
 
   ngOnInit(): void {}
 }

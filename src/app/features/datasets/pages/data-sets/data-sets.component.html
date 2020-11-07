@@ -1,7 +1,7 @@
 <app-loadable [loadable]="dataSets$ | async" class="root__container">
   <app-summary-card-list
-    [summaries]="(dataSets$ | async).data_sets"
     [baseLink]="'datasets'"
+    [summaries]="(dataSets$ | async).data_sets"
     title="Data Sets"
   ></app-summary-card-list>
 </app-loadable>

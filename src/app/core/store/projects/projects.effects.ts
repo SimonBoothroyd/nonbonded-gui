@@ -17,8 +17,6 @@ import {
 
 @Injectable()
 export class ProjectsEffects {
-  constructor(private actions$: Actions, private http: HttpClient) {}
-
   @Effect()
   loadProjects = this.actions$.pipe(
     ofType(ProjectsActionsTypes.Load),
@@ -31,4 +29,6 @@ export class ProjectsEffects {
         );
     })
   );
+
+  constructor(private actions$: Actions, private http: HttpClient) {}
 }

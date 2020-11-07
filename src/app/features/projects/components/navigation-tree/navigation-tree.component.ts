@@ -29,7 +29,38 @@ interface FlatNavigationNode extends BaseNavigationNode {
   styleUrls: ['./navigation-tree.component.scss'],
 })
 export class NavigationTreeComponent implements OnInit, OnDestroy {
+  public project$: Observable<ProjectState>;
+  public treeControl = new FlatTreeControl<FlatNavigationNode>(
+    (node) => node.level,
+    (node) => node.expandable
+  );
   private readonly dataSubscription: Subscription;
+
+  constructor(private store: Store<State>) {
+    this.project$ = this.store.select(selectProjectState);
+
+    this.dataSubscription = combineLatest([this.project$])
+      .pipe(
+        map(([projectState]): NestedNavigationNode[] => {
+          if (!projectState || !projectState.success) return [];
+          return this.buildNodes(projectState);
+        })
+      )
+      .subscribe((innerData) => {
+        if (this.dataSource.data == innerData) return;
+
+        this.dataSource.data = innerData;
+        this.treeControl.expandAll();
+      });
+  }
+
+  public hasChild = (_: number, node: FlatNavigationNode) => node.expandable;
+
+  ngOnInit(): void {}
+
+  ngOnDestroy() {
+    if (this.dataSubscription) this.dataSubscription.unsubscribe();
+  }
 
   private flattenNode = (
     node: NestedNavigationNode,
@@ -49,32 +80,7 @@ export class NavigationTreeComponent implements OnInit, OnDestroy {
     (node) => node.expandable,
     (node) => node.children
   );
-
-  public project$: Observable<ProjectState>;
-
-  public treeControl = new FlatTreeControl<FlatNavigationNode>(
-    (node) => node.level,
-    (node) => node.expandable
-  );
   public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
-  constructor(private store: Store<State>) {
-    this.project$ = this.store.select(selectProjectState);
-
-    this.dataSubscription = combineLatest([this.project$])
-      .pipe(
-        map(([projectState]): NestedNavigationNode[] => {
-          if (!projectState || !projectState.success) return [];
-          return this.buildNodes(projectState);
-        })
-      )
-      .subscribe((innerData) => {
-        if (this.dataSource.data == innerData) return;
-
-        this.dataSource.data = innerData;
-        this.treeControl.expandAll();
-      });
-  }
 
   private buildNodes(project: Project): NestedNavigationNode[] {
     return project.studies.map(
@@ -117,13 +123,5 @@ export class NavigationTreeComponent implements OnInit, OnDestroy {
         ],
       })
     );
-  }
-
-  public hasChild = (_: number, node: FlatNavigationNode) => node.expandable;
-
-  ngOnInit(): void {}
-
-  ngOnDestroy() {
-    if (this.dataSubscription) this.dataSubscription.unsubscribe();
   }
 }

@@ -30,8 +30,15 @@ export interface SelectedDataEntry {
 export class DataSetComponent implements OnInit {
   _dataSet: SubstanceDataSet = undefined;
 
-  @Input()
-  public title: string;
+  @Input() public title: string;
+  @Input() public nColumns: number = 10;
+  @Output() public selectedEntry: SelectedDataEntry = undefined;
+
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private ref: ChangeDetectorRef,
+    private dialog: MatDialog
+  ) {}
 
   @Input()
   public set value(value: SubstanceDataSet) {
@@ -39,19 +46,9 @@ export class DataSetComponent implements OnInit {
     this._dataSet = value;
   }
 
-  @Input() nColumns: number = 10;
-
-  @Output() selectedEntry: SelectedDataEntry = undefined;
-
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    private ref: ChangeDetectorRef,
-    private dialog: MatDialog
-  ) { }
-
   imageEndpoint(smiles: string): string {
-    console.log(MOLECULE_IMAGE_ENDPOINT)
-    return `${MOLECULE_IMAGE_ENDPOINT}/${encodeURI(smiles)}`
+    console.log(MOLECULE_IMAGE_ENDPOINT);
+    return `${MOLECULE_IMAGE_ENDPOINT}/${encodeURI(smiles)}`;
   }
 
   openEntryDialog(substance: string, dataEntries: DataSetEntry[]) {

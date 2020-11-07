@@ -1,13 +1,13 @@
 <app-loadable [loadable]="benchmark$ | async" class="root__container">
   <div
+    class="page__container"
     fxLayout="column"
     fxLayoutAlign="center center"
     fxLayoutGap="2rem"
-    class="page__container"
   >
     <h1>{{ (benchmark$ | async).name }}</h1>
 
-    <div fxLayout="column" fxFlex class="section__container">
+    <div class="section__container" fxFlex fxLayout="column">
       <mat-card>
         <app-text-description
           [text]="(benchmark$ | async).description"
@@ -17,7 +17,7 @@
 
     <h2>Test Set</h2>
 
-    <div fxLayout="column" fxFlex class="section__container">
+    <div class="section__container" fxFlex fxLayout="column">
       <mat-card>
         <mat-card-content>
           <p>

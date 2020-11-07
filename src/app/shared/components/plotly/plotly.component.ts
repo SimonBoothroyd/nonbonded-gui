@@ -36,35 +36,24 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
   public readonly defaultClassName = 'js-plotly-plot';
 
   public plotlyInstance: Plotly.PlotlyHTMLElement;
-
-  private nColumns: number;
-
   @ViewChild('plot', { static: true }) plotEl: ElementRef;
-
   @Input() divId?: string;
-
   @Input() data?: PlotData;
-
   @Input() showLegend: boolean;
-
   @Input() showXTicks: boolean;
   @Input() showYTicks: boolean;
-
   @Input() subplotWidth: number;
   @Input() subplotHeight: number;
-
   @Input() legendOrientation: string;
-
   @Input() layout?: Partial<Plotly.Layout>;
   @Input() config?: Partial<Plotly.Config>;
   @Input() style?: { [key: string]: string };
-
   @Output() initialized = new EventEmitter<Plotly.Figure>();
   @Output() update = new EventEmitter<Plotly.Figure>();
   @Output() error = new EventEmitter<Error>();
-
   @Input() breakpointQueries: string[];
   @Input() breakpointColumns: { [query: string]: number };
+  private nColumns: number;
 
   constructor(
     public plotly: PlotlyService,

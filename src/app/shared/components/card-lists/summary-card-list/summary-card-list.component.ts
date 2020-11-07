@@ -1,6 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Project } from '@core/models/projects';
-import { DataSet } from '@core/models/datasets';
+import { Author } from '@core/models/projects';
+
+
+interface ISummarised {
+  name: string
+  id: string
+
+  description: string
+
+  authors?: Author[]
+}
+
 
 @Component({
   selector: 'app-summary-card-list',
@@ -11,13 +21,13 @@ export class SummaryCardListComponent implements OnInit {
   @Input() title: string = '';
   @Input() baseLink: string = '';
 
-  @Input() summaries: (DataSet | Project)[] = [];
+  @Input() summaries: ISummarised[] = [];
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  authorList(summary: DataSet | Project): string {
+  authorList(summary: ISummarised): string {
     return summary.authors.map((author) => author.name).join(', ');
   }
 }

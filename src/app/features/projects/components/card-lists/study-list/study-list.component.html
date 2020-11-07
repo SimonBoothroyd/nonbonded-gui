@@ -1,4 +1,4 @@
-<mat-card class="study__card" *ngFor="let study of studies">
+<mat-card *ngFor="let study of studies" class="study__card">
   <mat-card-title>{{ study.name }}</mat-card-title>
   <mat-card-content>{{ study.description.split('\n')[0] }}</mat-card-content>
   <mat-divider inset></mat-divider>

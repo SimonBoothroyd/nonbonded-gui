@@ -1,7 +1,7 @@
 <app-loadable [loadable]="projects$ | async" class="root__container">
   <app-summary-card-list
-    [summaries]="(projects$ | async).projects"
     [baseLink]="'projects'"
+    [summaries]="(projects$ | async).projects"
     title="Projects"
   ></app-summary-card-list>
 </app-loadable>

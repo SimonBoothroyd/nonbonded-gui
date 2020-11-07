@@ -1,19 +1,19 @@
 <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2rem">
   <h3>{{ title }}</h3>
 
-  <div fxFill fxLayout="columns" fxLayoutGap="20px" class="root__container">
-    <mat-card fxFlex="100" class="dataset__card_container">
-      <mat-grid-list [cols]="nColumns" rowHeight="1:1" gutterSize="20px">
+  <div class="root__container" fxFill fxLayout="columns" fxLayoutGap="20px">
+    <mat-card class="dataset__card_container" fxFlex="100">
+      <mat-grid-list [cols]="nColumns" gutterSize="20px" rowHeight="1:1">
         <mat-grid-tile
-          matRipple
+          (click)="openEntryDialog(pair.key, pair.value)"
           *ngFor="let pair of _dataSet | keyvalue"
           [colspan]="pair.key.split(' + ').length"
           class="tile__container"
-          (click)="openEntryDialog(pair.key, pair.value)"
+          matRipple
         >
           <img
-            [alt]="pair.key"
             *ngFor="let smiles of pair.key.split(' + ')"
+            [alt]="pair.key"
             [src]="imageEndpoint(smiles)"
             height="100%"
           />
