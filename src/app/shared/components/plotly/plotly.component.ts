@@ -24,7 +24,7 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Plotly } from 'angular-plotly.js/src/app/shared/plotly.interface';
 import { PlotlyService } from 'angular-plotly.js';
 
-import { PlotData } from '@shared/components/plotly/plotly.interfaces';
+import { FigureState } from '@shared/components/plotly/plotly.interfaces';
 
 @Component({
   selector: 'app-plotly',
@@ -33,27 +33,30 @@ import { PlotData } from '@shared/components/plotly/plotly.interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
+  private nColumns: number;
+
   public readonly defaultClassName = 'js-plotly-plot';
 
   public plotlyInstance: Plotly.PlotlyHTMLElement;
+
   @ViewChild('plot', { static: true }) plotEl: ElementRef;
+
   @Input() divId?: string;
-  @Input() data?: PlotData;
-  @Input() showLegend: boolean;
-  @Input() showXTicks: boolean;
-  @Input() showYTicks: boolean;
+
+  @Input() figure: FigureState;
+
   @Input() subplotWidth: number;
   @Input() subplotHeight: number;
-  @Input() legendOrientation: string;
-  @Input() layout?: Partial<Plotly.Layout>;
+
   @Input() config?: Partial<Plotly.Config>;
   @Input() style?: { [key: string]: string };
+
+  @Input() breakpointQueries: string[];
+  @Input() breakpointColumns: { [query: string]: number };
+
   @Output() initialized = new EventEmitter<Plotly.Figure>();
   @Output() update = new EventEmitter<Plotly.Figure>();
   @Output() error = new EventEmitter<Error>();
-  @Input() breakpointQueries: string[];
-  @Input() breakpointColumns: { [query: string]: number };
-  private nColumns: number;
 
   constructor(
     public plotly: PlotlyService,
@@ -62,33 +65,18 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
   ) {
     this.nColumns = 1;
 
-    this.legendOrientation = 'h';
-
-    this.subplotWidth = 350;
-    this.subplotHeight = 350;
-
-    this.showLegend = true;
-
-    this.showXTicks = true;
-    this.showYTicks = true;
+    this.subplotWidth = 260;
+    this.subplotHeight = 260;
 
     this.breakpointQueries = [
-      '(max-width: 499px)',
-      '(min-width: 500px) and (max-width: 849px)',
-      '(min-width: 850px) and (max-width: 1199px)',
-      '(min-width: 1200px) and (max-width: 1549px)',
-      '(min-width: 1550px) and (max-width: 1899px)',
-      '(min-width: 1900px) and (max-width: 2249px)',
-      '(min-width: 2250px)',
+      '(max-width: 999px)',
+      '(min-width: 1000px) and (max-width: 1259px)',
+      '(min-width: 1260px)',
     ];
     this.breakpointColumns = {
-      '(max-width: 499px)': 1,
-      '(min-width: 500px) and (max-width: 849px)': 1,
-      '(min-width: 850px) and (max-width: 1199px)': 2,
-      '(min-width: 1200px) and (max-width: 1549px)': 3,
-      '(min-width: 1550px) and (max-width: 1899px)': 4,
-      '(min-width: 1900px) and (max-width: 2249px)': 5,
-      '(min-width: 2250px)': 6,
+      '(max-width: 999px)': 1,
+      '(min-width: 1000px) and (max-width: 1259px)': 2,
+      '(min-width: 1260px)': 3,
     };
   }
 
@@ -113,7 +101,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
 
   createPlot(): Promise<void> {
     return this.plotly
-      .newPlot(this.plotEl.nativeElement, [], this.layout, this.config, undefined)
+      .newPlot(this.plotEl.nativeElement, [], undefined, this.config, undefined)
       .then(
         (plotlyInstance) => {
           this.plotlyInstance = plotlyInstance;
@@ -144,15 +132,24 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
       throw error;
     }
 
-    if (this.data.loading || this.data.error) return;
+    if (!this.figure || !this.figure.success || !this.plotly || !this.plotlyInstance)
+      return;
 
-    this.updateSubplots();
+    let subData = this.figure.subplots.map((subplot, i) =>
+      subplot.traces.map((trace) => ({
+        ...trace,
+        xaxis: `x${i + 1}`,
+        yaxis: `y${i + 1}`,
+      }))
+    );
 
-    const layout = { ...this.layout };
-    const config = { ...this.config };
+    let data = JSON.parse(JSON.stringify([].concat(...subData)));
+
+    let layout = this.generateLayout();
+    let config = { ...this.config };
 
     return this.plotly
-      .update(this.plotlyInstance, this.data.traces, layout, config, undefined)
+      .update(this.plotlyInstance, data, layout, config, undefined)
       .then(
         () => {
           const figure = this.createFigure();
@@ -182,63 +179,83 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
       break;
     }
 
-    if (this.plotly && this.plotlyInstance && this.data && this.data.success) {
+    if (this.plotly && this.plotlyInstance && this.figure && this.figure.success) {
       this.updatePlot()
         .then(() => this.resizePlot())
         .then(() => this.ref.detectChanges());
     }
   }
 
-  updateSubplots() {
-    if (
-      !this.data ||
-      this.data.loading ||
-      this.data.error ||
-      !this.plotly ||
-      !this.plotlyInstance
-    )
-      return;
+  private generateLayout() {
+    const nSubplots = this.figure.subplots.length;
 
-    const nSubplots = this.data.subplotTitles.length;
+    const nCols = Math.max(1, Math.min(this.nColumns, nSubplots));
+    const nRows = Math.max(1, Math.ceil(nSubplots / nCols));
 
-    const nColumns = Math.max(1, Math.min(this.nColumns, nSubplots));
-    const nRows = Math.max(1, Math.ceil(nSubplots / nColumns));
+    // Define any plot sub-titles.
+    const annotations = this.figure.subplots.map((subplot, i) =>
+      !subplot.title
+        ? undefined
+        : {
+            font: { size: 12 },
+            showarrow: false,
+            text: subplot.title,
+            x: 0.5,
+            xanchor: 'center',
+            xref: i > 0 ? `x${i + 1} domain` : 'x domain',
+            y: 1.01,
+            yanchor: 'bottom',
+            yref: i > 0 ? `y${i + 1} domain` : 'y domain',
+          }
+    );
 
-    const legendHeight = this.showLegend && this.legendOrientation == 'h' ? 150 : 0;
-    const legendWidth = this.showLegend && this.legendOrientation == 'v' ? 150 : 0;
+    // Define any x-axis titles.
+    const xAxes = this.figure.subplots.reduce(
+      (object, subplot, i) => ({
+        ...object,
+        [`xaxis${i + 1}`]: {
+          title: subplot.x_axis_label,
+          showticklabels: subplot.show_x_ticks,
+        },
+      }),
+      {}
+    );
 
-    this.layout = {
-      grid: { rows: nRows, columns: nColumns, pattern: 'independent' },
-      width: this.subplotWidth * nColumns + legendWidth,
-      height: this.subplotHeight * nRows + legendHeight,
+    // Define any y-axis titles.
+    const yAxes = this.figure.subplots.reduce(
+      (object, subplot, i) => ({
+        ...object,
+        [`yaxis${i + 1}`]: {
+          title: i % nCols == 0 ? subplot.y_axis_label : undefined,
+          showticklabels: subplot.show_y_ticks,
+        },
+      }),
+      {}
+    );
+
+    // Match axes if requested.
+    if (this.figure.shared_axes) {
+      for (let k in xAxes) {
+        if (k == 'xaxis1') {
+          continue;
+        }
+        xAxes[k]['matches'] = 'x';
+      }
+      for (let k in yAxes) yAxes[k]['matches'] = 'x';
+    }
+
+    return {
+      grid: { rows: nRows, columns: nCols, pattern: 'independent' },
+      legend: this.figure.legend,
+      width: this.subplotWidth * nCols,
+      height: this.subplotHeight * nRows,
+      annotations: annotations,
       margin: {
         t: 50,
         b: 50,
       },
-      title: false,
+      ...xAxes,
+      ...yAxes,
     };
-
-    if (this.showLegend) this.layout.legend = { orientation: this.legendOrientation };
-    else this.layout.showlegend = false;
-
-    for (let trace of this.data.traces) {
-      // let xIndex = trace.index % nColumns;
-      // let yIndex = Math.floor(trace.index / nColumns);
-
-      trace.xaxis = `x${trace.index + 1}`;
-      trace.yaxis = `y${trace.index + 1}`;
-
-      this.layout[`xaxis${trace.index + 1}`] = {
-        showticklabels: this.showXTicks,
-        title: this.data.subplotTitles[trace.index],
-      };
-      this.layout[`yaxis${trace.index + 1}`] = {
-        showticklabels: this.showYTicks,
-      };
-      // if (xIndex == 0)
-      //   this.layout[`yaxis${trace.index + 1}`] = {
-      //     title: 'RMSE',
-      //   };
-    }
   }
 }

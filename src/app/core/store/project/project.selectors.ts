@@ -106,7 +106,7 @@ export const getCurrentBenchmarkState = createSelector(
     if (benchmark == null) {
       return {
         ...initialBenchmarkState,
-        error: { message: 'The benchmark could not be found.' },
+        error: { message: 'The benchmarks could not be found.' },
       };
     }
 

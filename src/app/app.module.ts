@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ProjectsModule } from '@app/features/projects/projects.module';
 import { DatasetsModule } from '@app/features/datasets/datasets.module';
+import { MolsetsModule } from '@app/features/molsets/molsets.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { DatasetsModule } from '@app/features/datasets/datasets.module';
     MaterialModule,
 
     DatasetsModule,
+    MolsetsModule,
     ProjectsModule,
 
     BrowserModule,

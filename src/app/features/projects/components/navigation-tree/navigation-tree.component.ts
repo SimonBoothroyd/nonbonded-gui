@@ -12,6 +12,7 @@ import { ProjectState } from '@core/store/project/project.interfaces';
 interface BaseNavigationNode {
   name: string;
   url: string;
+  icon?: string;
 }
 
 interface NestedNavigationNode extends BaseNavigationNode {
@@ -67,8 +68,7 @@ export class NavigationTreeComponent implements OnInit, OnDestroy {
     level: number
   ): FlatNavigationNode => {
     return {
-      name: node.name,
-      url: node.url,
+      ...node,
       expandable: !!node.children && node.children.length > 0,
       level: level,
     };
@@ -95,15 +95,14 @@ export class NavigationTreeComponent implements OnInit, OnDestroy {
               (value): NestedNavigationNode => ({
                 name: value.name,
                 url: `/projects/${project.id}/studies/${study.id}/optimizations/${value.id}`,
-                children: [
-                  {
-                    name: 'Results',
-                    url: `/projects/${project.id}/studies/${study.id}/optimizations/${value.id}/results`,
-                  },
-                ],
               })
             ),
           },
+          // {
+          //   name: 'Optimization Results',
+          //   url: `/projects/${project.id}/studies/${study.id}/optimizations/results`,
+          //   icon: "insights",
+          // },
           {
             name: 'Benchmarks',
             url: `/projects/${project.id}/studies/${study.id}/benchmarks`,
@@ -111,14 +110,13 @@ export class NavigationTreeComponent implements OnInit, OnDestroy {
               (value): NestedNavigationNode => ({
                 name: value.name,
                 url: `/projects/${project.id}/studies/${study.id}/benchmarks/${value.id}`,
-                children: [
-                  {
-                    name: 'Results',
-                    url: `/projects/${project.id}/studies/${study.id}/benchmarks/${value.id}/results`,
-                  },
-                ],
               })
             ),
+          },
+          {
+            name: 'Benchmark Results',
+            url: `/projects/${project.id}/studies/${study.id}/benchmarks/results`,
+            icon: 'bar_chart',
           },
         ],
       })

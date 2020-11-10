@@ -47,7 +47,6 @@ export class DataSetComponent implements OnInit {
   }
 
   imageEndpoint(smiles: string): string {
-    console.log(MOLECULE_IMAGE_ENDPOINT);
     return `${MOLECULE_IMAGE_ENDPOINT}/${encodeURI(smiles)}`;
   }
 

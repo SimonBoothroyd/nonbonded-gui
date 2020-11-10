@@ -7,30 +7,25 @@ import {
 
 import { Observable, of } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { catchError, switchMap, tap } from 'rxjs/operators';
 
 import { State } from '@core/store';
 
-import { LoadStudyDetails } from '@core/store/study-details/study-details.actions';
-import { getHasStudyDetailsLoaded } from '@core/store/study-details/study-details.selectors';
+import { getHasMoleculeSetLoaded } from '@core/store/molset/molset.selectors';
+import { LoadMoleculeSet } from '@core/store/molset/molset.actions';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
-export class StudyDetailsStoreGuard implements CanActivate {
+export class MoleculeSetStoreGuard implements CanActivate {
   constructor(private store: Store<State>) {}
 
   getFromStoreOrAPI(next: ActivatedRouteSnapshot): Observable<boolean> {
     return this.store.pipe(
-      select(getHasStudyDetailsLoaded, {
-        projectId: next.params.projectId,
-        studyId: next.params.studyId,
-      }),
+      select(getHasMoleculeSetLoaded, { moleculeSetId: next.params.moleculeSetId }),
       tap((loaded) => {
         if (!loaded) {
-          this.store.dispatch(
-            new LoadStudyDetails(next.params.projectId, next.params.studyId)
-          );
+          this.store.dispatch(new LoadMoleculeSet(next.params.moleculeSetId));
         }
       })
     );

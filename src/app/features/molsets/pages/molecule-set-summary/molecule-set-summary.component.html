@@ -1,0 +1,43 @@
+<app-loadable [loadable]="moleculeSet$ | async" class="root__container">
+  <div
+    class="page__container"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="2rem"
+  >
+    <div fxFlex>
+      <h2 class="project__header">{{ (moleculeSet$ | async).id }}</h2>
+
+      <mat-list class="list-horizontal">
+        <mat-list-item *ngFor="let author of (moleculeSet$ | async).authors">
+          <mat-icon matListIcon>account_circle</mat-icon>
+          <p matLine>{{ author.name }}</p>
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+    <div class="project__card">
+      <mat-card>
+        <app-text-description
+          text="{{ (moleculeSet$ | async).description }}"
+        ></app-text-description>
+      </mat-card>
+    </div>
+
+    <h2>Molecules</h2>
+
+    <div class="project__card">
+      <mat-card class="dataset__card_container" fxFlex="100">
+        <mat-grid-list [cols]="nColumns" gutterSize="20px" rowHeight="1:1">
+          <mat-grid-tile
+            *ngFor="let smiles of (moleculeSet$ | async).entries"
+            [colspan]="1"
+            class="tile__container"
+          >
+            <img [alt]="smiles" [src]="imageEndpoint(smiles)" height="100%" />
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card>
+    </div>
+  </div>
+</app-loadable>

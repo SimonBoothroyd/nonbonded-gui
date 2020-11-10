@@ -29,7 +29,6 @@
           *ngFor="let optimization of (study$ | async).optimizations; last as last"
           [className]="last ? '' : 'section__spacer'"
           [overviewLink]="['optimizations', optimization.id]"
-          [resultsLink]="['optimizations', optimization.id, 'results']"
           [subStudy]="optimization"
         >
         </app-sub-study-card>

@@ -44,7 +44,7 @@ export type Id1 = number;
 /**
  * The type of property that this value corresponds to. This should correspond to an `openff.evaluator.properties` property class name.
  */
-export type PropertyType = string | string | string | string | string | string;
+export type PropertyType = string;
 /**
  * The temperature (K) at which this value was measured.
  */
@@ -112,7 +112,7 @@ export type ModelVersion1 = number;
 /**
  * The entries in the set.
  */
-export type Entries1 = [string, ...string[]];
+export type Entries1 = string[];
 /**
  * A collection of molecule sets.
  */

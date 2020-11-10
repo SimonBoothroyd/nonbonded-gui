@@ -8,7 +8,8 @@ import { State } from '@core/store';
 
 import { OptimizationState } from '@core/store/project/project.interfaces';
 import { getCurrentOptimizationState } from '@core/store/project/project.selectors';
-import { Parameter, Priors } from '@core/models/projects';
+import { Optimization, Parameter, Priors } from '@core/models/projects';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-optimization-summary',
@@ -19,7 +20,7 @@ import { Parameter, Priors } from '@core/models/projects';
 export class OptimizationSummaryComponent implements OnInit {
   optimization$: Observable<OptimizationState>;
 
-  constructor(private store: Store<State>) {}
+  constructor(private store: Store<State>, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     this.optimization$ = this.store.select(getCurrentOptimizationState);
@@ -59,5 +60,27 @@ export class OptimizationSummaryComponent implements OnInit {
     }
 
     return groupedPriors;
+  }
+
+  forceFieldName(optimization: Optimization): string {
+    if (optimization.force_field.inner_content.toLowerCase().indexOf('xml') >= 0) {
+      return 'force-field.offxml';
+    } else {
+      return 'force-field.json';
+    }
+  }
+
+  forceFieldSrc(optimization: Optimization): SafeUrl {
+    if (optimization.force_field.inner_content.toLowerCase().indexOf('xml') >= 0) {
+      return this.sanitizer.bypassSecurityTrustUrl(
+        'data:text/xml;charset=utf-8,' +
+          encodeURIComponent(optimization.force_field.inner_content)
+      );
+    } else {
+      return this.sanitizer.bypassSecurityTrustUrl(
+        'data:text/json;charset=utf-8,' +
+          encodeURIComponent(optimization.force_field.inner_content)
+      );
+    }
   }
 }

@@ -1,53 +1,25 @@
-<app-loadable [loadable]="optimization$ | async" class="root__container">
+<app-loadable [loadable]="results$ | async" class="root__container">
   <div
     class="page__container"
     fxLayout="column"
     fxLayoutAlign="center center"
     fxLayoutGap="2rem"
   >
-    <h1>{{ (optimization$ | async).name }} Results</h1>
+    <h1>Optimization Results</h1>
 
-    <mat-card fxFlex>{{ (optimization$ | async).description }}</mat-card>
+    <h2>Objective Function</h2>
 
-    <div [fxLayout]="layoutType" fxFlex fxLayoutGap="2rem">
-      <mat-card fxFlex>
-        <app-loadable [loadable]="objectiveFunction$ | async">
+    <div class="section__container" fxFlex fxLayout="column">
+      <mat-card>
+        <div class="graph__container">
           <app-plotly
-            [data]="objectiveFunction$ | async"
-            [showLegend]="false"
-            [showXTicks]="true"
-            [showYTicks]="true"
+            [figure]="figureToState((results$ | async).objectiveFunction)"
             [style]="{ position: 'relative', width: '100%', height: '100%' }"
-            [subplotHeight]="400"
-            [subplotWidth]="475"
+            [config]="{ displayModeBar: false }"
+            [subplotWidth]="500"
+            [subplotHeight]="500"
           ></app-plotly>
-        </app-loadable>
-      </mat-card>
-      <mat-card fxFlex>
-        <app-loadable [loadable]="iterationRMSE$ | async">
-          <mat-form-field>
-            <mat-select [(value)]="propertyType" placeholder="Select a property type">
-              <mat-option
-                *ngFor="let pair of (iterationRMSE$ | async).plotData | keyvalue"
-                [value]="pair.key"
-              >
-                {{ pair.key }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <div *ngIf="propertyType">
-            <app-plotly
-              [data]="(iterationRMSE$ | async).plotData[propertyType]"
-              [legendOrientation]="'v'"
-              [showLegend]="true"
-              [showXTicks]="true"
-              [showYTicks]="true"
-              [style]="{ position: 'relative', width: '100%', height: '100%' }"
-              [subplotHeight]="400"
-              [subplotWidth]="600"
-            ></app-plotly>
-          </div>
-        </app-loadable>
+        </div>
       </mat-card>
     </div>
   </div>

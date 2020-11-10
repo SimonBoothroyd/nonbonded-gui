@@ -7,6 +7,8 @@
   >
     <h1>{{ (optimization$ | async).name }}</h1>
 
+    <h3 class="optimization__id">(id={{ (optimization$ | async).id }})</h3>
+
     <div class="section__container" fxFlex fxLayout="column">
       <mat-card>
         <app-text-description
@@ -23,7 +25,12 @@
           <div *ngIf="(optimization$ | async).force_field != undefined">
             <span
               >This will be an optimization of a user specified force field which can be
-              downloaded <a [routerLink]="'.'">from here</a>.</span
+              downloaded
+              <a
+                [download]="forceFieldName(optimization$ | async)"
+                [href]="forceFieldSrc(optimization$ | async)"
+                >from here</a
+              >.</span
             >
           </div>
           <div *ngIf="(optimization$ | async).optimization_id != undefined">

@@ -11,7 +11,9 @@
     matTreeNodePaddingIndent="20"
   >
     <!-- use a disabled button to provide padding for tree leaf -->
-    <button disabled mat-icon-button></button>
+    <button disabled mat-icon-button>
+      <mat-icon *ngIf="node.icon" class="mat-icon-rtl-mirror">{{ node.icon }}</mat-icon>
+    </button>
     <span [routerLink]="[node.url]">{{ node.name | uppercase }}</span>
   </mat-tree-node>
   <!-- This is the tree node template for expandable nodes -->

@@ -1,13 +1,4 @@
-import { Plotly } from 'angular-plotly.js/src/app/shared/plotly.interface';
-import { createDefaultLoadable, Loadable } from '@core/loadable/loadable';
+import { Loadable } from '@core/loadable/loadable';
+import { Figure } from '@core/models/plotly';
 
-export interface PlotData extends Loadable {
-  subplotTitles: string[];
-  traces: Plotly.Data[];
-}
-
-export const initialPlotData: PlotData = {
-  ...createDefaultLoadable(),
-  subplotTitles: [],
-  traces: [],
-};
+export interface FigureState extends Figure, Loadable {}

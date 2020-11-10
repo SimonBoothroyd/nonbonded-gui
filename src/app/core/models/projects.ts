@@ -614,7 +614,7 @@ export interface Study {
 }
 
 /**
- * A base class for optimization and benchmark sub-studies, which share largely the
+ * A base class for optimization and benchmark-results sub-studies, which share largely the
  * same fields.
  */
 export interface Optimization {
@@ -763,7 +763,7 @@ export interface Parameter {
 }
 
 /**
- * A base class for optimization and benchmark sub-studies, which share largely the
+ * A base class for optimization and benchmark-results sub-studies, which share largely the
  * same fields.
  */
 export interface Benchmark {

@@ -1,7 +1,8 @@
 import { withLoadable } from '@core/loadable/with-loadable';
+
 import {
-  initialBenchmarkResultsState,
   BenchmarkResultsState,
+  initialBenchmarkResultsState,
 } from '@core/store/benchmark-results/benchmark-results.interfaces';
 import {
   BenchmarkResultsActions,
@@ -13,12 +14,6 @@ function baseReducer(
   action: BenchmarkResultsActions
 ): BenchmarkResultsState {
   switch (action.type) {
-    case BenchmarkResultsActionsTypes.Load:
-      return {
-        ...state,
-        projectId: action.projectId,
-        studyId: action.studyId,
-      };
     case BenchmarkResultsActionsTypes.LoadSuccess:
       return {
         ...state,

@@ -1,0 +1,7 @@
+<app-loadable [loadable]="moleculeSets$ | async" class="root__container">
+  <app-summary-card-list
+    [baseLink]="'molsets'"
+    [summaries]="(moleculeSets$ | async).molecule_sets"
+    title="Molecule Sets"
+  ></app-summary-card-list>
+</app-loadable>

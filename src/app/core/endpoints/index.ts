@@ -6,3 +6,5 @@ export const MOLECULE_IMAGE_ENDPOINT = 'http://127.0.0.1:8000/api/dev/smiles';
 export const PROJECTS_ENDPOINT = `${ROOT_ENDPOINT}/projects`;
 export const DATA_SETS_ENDPOINT = `${ROOT_ENDPOINT}/datasets`;
 export const MOLECULE_SETS_ENDPOINT = `${ROOT_ENDPOINT}/molsets`;
+
+export const PLOTLY_ENDPOINT = `${ROOT_ENDPOINT}/plotly`;

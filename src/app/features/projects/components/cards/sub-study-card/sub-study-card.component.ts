@@ -10,7 +10,7 @@ export class SubStudyCardComponent implements OnInit {
   @Input() subStudy: Benchmark | Optimization;
 
   @Input() overviewLink: string[];
-  @Input() resultsLink: string[];
+  @Input() resultsLink?: string[];
 
   constructor() {}
 

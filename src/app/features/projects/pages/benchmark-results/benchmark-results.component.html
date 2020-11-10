@@ -1,51 +1,95 @@
-<div class="root__container" fxFill fxLayout="column" fxLayoutGap="20px">
-  <h1 class="project__card-header">Benchmarking Results</h1>
-  <div class="inner__container">
-    <div fxLayout="column" fxLayoutGap="2rem">
-      <mat-card fxFlex>
-        <app-loadable [loadable]="summaryStatistics$ | async">
-          <!--        <mat-radio-group-->
-          <!--          [(ngModel)]="statisticsType"-->
-          <!--          (change)="onStatisticTypeChanged()"-->
-          <!--          aria-label="Select an option"-->
-          <!--        >-->
-          <!--          <mat-radio-button value="RMSE">RMSE</mat-radio-button>-->
-          <!--          <mat-radio-button value="R^2">R^2</mat-radio-button>-->
-          <!--        </mat-radio-group>-->
-          <!--        <div *ngIf="statisticsType" class="graph__container" (resized)="onStatisticGraphResized()">-->
-          <div class="graph__container">
-            <app-plotly
-              #summaryStatisticsComponent
-              [config]="{ displayModeBar: false }"
-              [data]="summaryStatistics$ | async"
-              [showXTicks]="false"
-              [style]="{ position: 'relative', width: '100%', height: '100%' }"
-            >
-            </app-plotly>
-          </div>
-        </app-loadable>
+<app-loadable [loadable]="results$ | async" class="root__container">
+  <div
+    class="page__container"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="2rem"
+  >
+    <h1 class="project__card-header">Benchmarking Results</h1>
+
+    <h2>Overall RMSE</h2>
+
+    <div class="section__container" fxFlex fxLayout="column">
+      <mat-card>
+        <div class="graph__container">
+          <app-plotly
+            [figure]="figureToState((results$ | async).overallRMSE)"
+            [style]="{ position: 'relative', width: '100%', height: '100%' }"
+            [config]="{ displayModeBar: false }"
+          ></app-plotly>
+        </div>
       </mat-card>
-      <mat-card fxFlex>
-        <app-loadable [loadable]="results$ | async">
-          <mat-form-field>
-            <mat-select [(value)]="propertyType" placeholder="Select a property type">
-              <mat-option
-                *ngFor="let pair of (results$ | async).plotData | keyvalue"
-                [value]="pair.key"
-              >
-                {{ pair.key }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <div *ngIf="propertyType" class="graph__container">
-            <app-plotly
-              #resultsComponent
-              [data]="(results$ | async).plotData[propertyType]"
-              [style]="{ position: 'relative', width: '100%', height: '100%' }"
-            ></app-plotly>
-          </div>
-        </app-loadable>
+    </div>
+
+    <h2>Experiment vs Reference</h2>
+
+    <div
+      *ngFor="let pair of (results$ | async).scatter | keyvalue"
+      class="section__container"
+      fxFlex
+      fxLayout="column"
+    >
+      <mat-card>
+        {{ pair.key }}
+
+        <div class="graph__container">
+          <app-plotly
+            [figure]="figureToState(pair.value)"
+            [style]="{ position: 'relative', width: '100%', height: '100%' }"
+            [config]="{ displayModeBar: false }"
+          ></app-plotly>
+        </div>
       </mat-card>
     </div>
   </div>
-</div>
+</app-loadable>
+
+<!--<div class="root__container" fxFill fxLayout="column" fxLayoutGap="20px">-->
+<!--  <h1 class="project__card-header">Benchmarking Results</h1>-->
+<!--  <div class="inner__container">-->
+<!--    <div fxLayout="column" fxLayoutGap="2rem">-->
+<!--&lt;!&ndash;      <mat-card fxFlex>&ndash;&gt;-->
+<!--&lt;!&ndash;        <app-loadable [loadable]="summaryStatistics$ | async">&ndash;&gt;-->
+<!--&lt;!&ndash;          &lt;!&ndash;        <mat-radio-group&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          &lt;!&ndash;          [(ngModel)]="statisticsType"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          &lt;!&ndash;          (change)="onStatisticTypeChanged()"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          &lt;!&ndash;          aria-label="Select an option"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          &lt;!&ndash;        >&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          &lt;!&ndash;          <mat-radio-button value="RMSE">RMSE</mat-radio-button>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          &lt;!&ndash;          <mat-radio-button value="R^2">R^2</mat-radio-button>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          &lt;!&ndash;        </mat-radio-group>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          &lt;!&ndash;        <div *ngIf="statisticsType" class="graph__container" (resized)="onStatisticGraphResized()">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="graph__container">&ndash;&gt;-->
+<!--&lt;!&ndash;            <app-plotly&ndash;&gt;-->
+<!--&lt;!&ndash;              #summaryStatisticsComponent&ndash;&gt;-->
+<!--&lt;!&ndash;              [config]="{ displayModeBar: false }"&ndash;&gt;-->
+<!--&lt;!&ndash;              [data]="summaryStatistics$ | async"&ndash;&gt;-->
+<!--&lt;!&ndash;              [showXTicks]="false"&ndash;&gt;-->
+<!--&lt;!&ndash;              [style]="{ position: 'relative', width: '100%', height: '100%' }"&ndash;&gt;-->
+<!--&lt;!&ndash;            >&ndash;&gt;-->
+<!--&lt;!&ndash;            </app-plotly>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </app-loadable>&ndash;&gt;-->
+<!--&lt;!&ndash;      </mat-card>&ndash;&gt;-->
+<!--      <mat-card fxFlex>-->
+<!--          <mat-form-field>-->
+<!--            <mat-select [(value)]="propertyType" placeholder="Select a property type">-->
+<!--              <mat-option-->
+<!--                *ngFor="let pair of (results$ | async).plotData | keyvalue"-->
+<!--                [value]="pair.key"-->
+<!--              >-->
+<!--                {{ pair.key }}-->
+<!--              </mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+<!--          <div *ngIf="propertyType" class="graph__container">-->
+<!--            <app-plotly-->
+<!--              #resultsComponent-->
+<!--              [data]="(results$ | async).plotData[propertyType]"-->
+<!--              [style]="{ position: 'relative', width: '100%', height: '100%' }"-->
+<!--            ></app-plotly>-->
+<!--          </div>-->
+<!--      </mat-card>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

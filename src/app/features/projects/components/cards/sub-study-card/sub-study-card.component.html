@@ -7,7 +7,7 @@
     <a [routerLink]="overviewLink">
       <button mat-button>MORE</button>
     </a>
-    <a [routerLink]="resultsLink">
+    <a *ngIf="resultsLink" [routerLink]="resultsLink">
       <button mat-button>RESULTS</button>
     </a>
   </mat-card-actions>

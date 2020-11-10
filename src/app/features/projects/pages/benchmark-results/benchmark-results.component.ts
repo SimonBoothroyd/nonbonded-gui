@@ -1,16 +1,15 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs';
-
 import { Store } from '@ngrx/store';
 
 import { State } from '@core/store';
-import {
-  getTestScatterPlot,
-  getTestSummaryPlot,
-} from '@core/store/study-details/study-details.selectors';
-import { PlotData } from '@shared/components/plotly/plotly.interfaces';
-import { TestResultsState } from '@core/store/study-details/study-details.interfaces';
+import { BenchmarkResultsState } from '@core/store/benchmark-results/benchmark-results.interfaces';
+import { Observable, Subscription } from 'rxjs';
+import { selectBenchmarkResultsState } from '@core/store/benchmark-results/benchmark-results.selectors';
+import { getRouterInfo } from '@core/store/routes/route.selectors';
+import { LoadBenchmarkResults } from '@core/store/benchmark-results/benchmark-results.actions';
+import { Figure } from '@core/models/plotly';
+import { FigureState } from '@shared/components/plotly/plotly.interfaces';
 
 @Component({
   selector: 'app-test-results',
@@ -19,19 +18,32 @@ import { TestResultsState } from '@core/store/study-details/study-details.interf
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BenchmarkResultsComponent implements OnInit, OnDestroy {
-  public summaryStatistics$: Observable<PlotData>;
-  public results$: Observable<TestResultsState>;
+  private resultsSubscription: Subscription;
 
-  public propertyType: string;
+  public results$: Observable<BenchmarkResultsState>;
 
   constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
-    this.summaryStatistics$ = this.store.select(getTestSummaryPlot, {
-      statisticsType: 'RMSE',
-    });
-    this.results$ = this.store.select(getTestScatterPlot);
+    this.resultsSubscription = this.store
+      .select(getRouterInfo)
+      .subscribe((routerInfo) => {
+        this.store.dispatch(
+          new LoadBenchmarkResults(
+            routerInfo.params.projectId,
+            routerInfo.params.studyId
+          )
+        );
+      });
+
+    this.results$ = this.store.select(selectBenchmarkResultsState);
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    if (this.resultsSubscription) this.resultsSubscription.unsubscribe();
+  }
+
+  figureToState(figure: Figure): FigureState {
+    return { ...figure, loading: !figure, success: figure != undefined, error: null };
+  }
 }

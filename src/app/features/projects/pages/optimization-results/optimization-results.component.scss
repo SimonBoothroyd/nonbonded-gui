@@ -17,12 +17,16 @@
   margin-bottom: 3rem;
 }
 
-.inner__container {
-  overflow: auto;
-  height: 100%;
-  width: 100%;
+.section__container {
+  margin: 0 auto 2rem;
+  width: 60%;
 }
 
-.mat-radio-button ~ .mat-radio-button {
-  margin-left: 16px;
+.section__container .mat-card-title {
+  font-size: 1rem;
+}
+
+.graph__container {
+  margin: auto;
+  min-height: 100px;
 }

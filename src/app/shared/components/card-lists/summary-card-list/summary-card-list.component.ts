@@ -1,16 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Author } from '@core/models/projects';
 
-
 interface ISummarised {
-  name: string
-  id: string
+  name?: string;
+  id: string;
 
-  description: string
+  description: string;
 
-  authors?: Author[]
+  authors?: Author[];
 }
-
 
 @Component({
   selector: 'app-summary-card-list',

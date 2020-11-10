@@ -8,7 +8,6 @@ import { ProjectStoreGuard } from '@app/features/projects/guards/project-store.g
 import { ProjectContainerComponent } from '@app/features/projects/pages/project-container/project-container.component';
 import { StudiesComponent } from '@app/features/projects/pages/studies/studies.component';
 import { StudySummaryComponent } from '@app/features/projects/pages/study-summary/study-summary.component';
-import { StudyDetailsStoreGuard } from '@app/features/projects/guards/study-details-store.guard';
 import { OptimizationsComponent } from '@app/features/projects/pages/optimizations/optimizations.component';
 import { OptimizationSummaryComponent } from '@app/features/projects/pages/optimization-summary/optimization-summary.component';
 import { OptimizationResultsComponent } from '@app/features/projects/pages/optimization-results/optimization-results.component';
@@ -24,17 +23,12 @@ const optimizationRoutes = {
       component: OptimizationsComponent,
     },
     {
+      path: 'results',
+      component: OptimizationResultsComponent,
+    },
+    {
       path: ':optimizationId',
-      children: [
-        {
-          path: '',
-          component: OptimizationSummaryComponent,
-        },
-        {
-          path: 'results',
-          component: OptimizationResultsComponent,
-        },
-      ],
+      component: OptimizationSummaryComponent,
     },
   ],
 };
@@ -47,17 +41,12 @@ const benchmarkRoutes = {
       component: BenchmarksComponent,
     },
     {
-      path: ':benchmarkId',
-      children: [
-        {
-          path: '',
-          component: BenchmarkSummaryComponent,
-        },
-      ],
-    },
-    {
       path: 'results',
       component: BenchmarkResultsComponent,
+    },
+    {
+      path: ':benchmarkId',
+      component: BenchmarkSummaryComponent,
     },
   ],
 };
@@ -89,7 +78,6 @@ const routes: Routes = [
               },
               {
                 path: ':studyId',
-                canActivate: [StudyDetailsStoreGuard],
                 children: [
                   {
                     path: '',
