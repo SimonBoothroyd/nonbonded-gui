@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProjectsModule } from '@app/features/projects/projects.module';
 import { DatasetsModule } from '@app/features/datasets/datasets.module';
 import { MolsetsModule } from '@app/features/molsets/molsets.module';
+import { PlotlyModule } from '@app/features/plotly/plotly.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { MolsetsModule } from '@app/features/molsets/molsets.module';
     DatasetsModule,
     MolsetsModule,
     ProjectsModule,
+    PlotlyModule,
 
     BrowserModule,
     BrowserAnimationsModule,

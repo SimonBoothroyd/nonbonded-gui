@@ -17,6 +17,7 @@ import { FormatTextPipe } from '@shared/pipes/format-text.pipe';
 import { TextDescriptionComponent } from '@shared/components/text-description/text-description.component';
 import { SummaryCardListComponent } from '@shared/components/card-lists/summary-card-list/summary-card-list.component';
 import { RouterModule } from '@angular/router';
+import { PlotlyLegendEntryComponent } from '@shared/components/plotly-legend-entry/plotly-legend-entry.component';
 
 PlotlyViaCDNModule.plotlyVersion = 'latest';
 
@@ -24,6 +25,7 @@ PlotlyViaCDNModule.plotlyVersion = 'latest';
   declarations: [
     LoadableComponent,
     PlotlyComponent,
+    PlotlyLegendEntryComponent,
     SummaryCardListComponent,
     FormatTextPipe,
     TextDescriptionComponent,
@@ -42,6 +44,7 @@ PlotlyViaCDNModule.plotlyVersion = 'latest';
     FlexLayoutModule,
     LoadableComponent,
     PlotlyComponent,
+    PlotlyLegendEntryComponent,
     SummaryCardListComponent,
     FormsModule,
     PlotlyViaCDNModule,

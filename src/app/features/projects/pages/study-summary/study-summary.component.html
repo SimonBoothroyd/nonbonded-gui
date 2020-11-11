@@ -29,6 +29,7 @@
           *ngFor="let optimization of (study$ | async).optimizations; last as last"
           [className]="last ? '' : 'section__spacer'"
           [overviewLink]="['optimizations', optimization.id]"
+          [resultsLink]="['optimization-results']"
           [subStudy]="optimization"
         >
         </app-sub-study-card>
@@ -39,7 +40,7 @@
           *ngFor="let benchmark of (study$ | async).benchmarks; last as last"
           [className]="last ? '' : 'section__spacer'"
           [overviewLink]="['benchmarks', benchmark.id]"
-          [resultsLink]="['benchmarks', 'results']"
+          [resultsLink]="['benchmark-results']"
           [subStudy]="benchmark"
         >
         </app-sub-study-card>

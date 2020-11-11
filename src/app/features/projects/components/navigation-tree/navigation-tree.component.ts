@@ -98,11 +98,11 @@ export class NavigationTreeComponent implements OnInit, OnDestroy {
               })
             ),
           },
-          // {
-          //   name: 'Optimization Results',
-          //   url: `/projects/${project.id}/studies/${study.id}/optimizations/results`,
-          //   icon: "insights",
-          // },
+          {
+            name: 'Optimization Results',
+            url: `/projects/${project.id}/studies/${study.id}/optimization-results`,
+            icon: 'insights',
+          },
           {
             name: 'Benchmarks',
             url: `/projects/${project.id}/studies/${study.id}/benchmarks`,
@@ -115,7 +115,7 @@ export class NavigationTreeComponent implements OnInit, OnDestroy {
           },
           {
             name: 'Benchmark Results',
-            url: `/projects/${project.id}/studies/${study.id}/benchmarks/results`,
+            url: `/projects/${project.id}/studies/${study.id}/benchmark-results`,
             icon: 'bar_chart',
           },
         ],

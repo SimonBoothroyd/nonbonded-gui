@@ -23,10 +23,6 @@ const optimizationRoutes = {
       component: OptimizationsComponent,
     },
     {
-      path: 'results',
-      component: OptimizationResultsComponent,
-    },
-    {
       path: ':optimizationId',
       component: OptimizationSummaryComponent,
     },
@@ -39,10 +35,6 @@ const benchmarkRoutes = {
     {
       path: '',
       component: BenchmarksComponent,
-    },
-    {
-      path: 'results',
-      component: BenchmarkResultsComponent,
     },
     {
       path: ':benchmarkId',
@@ -84,7 +76,15 @@ const routes: Routes = [
                     component: StudySummaryComponent,
                   },
                   optimizationRoutes,
+                  {
+                    path: 'optimization-results',
+                    component: OptimizationResultsComponent,
+                  },
                   benchmarkRoutes,
+                  {
+                    path: 'benchmark-results',
+                    component: BenchmarkResultsComponent,
+                  },
                 ],
               },
             ],

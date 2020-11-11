@@ -13,8 +13,7 @@
       <mat-card>
         <div class="graph__container">
           <app-plotly
-            [figure]="figureToState((results$ | async).objectiveFunction)"
-            [style]="{ position: 'relative', width: '100%', height: '100%' }"
+            [figure]="(results$ | async).objectiveFunction"
             [config]="{ displayModeBar: false }"
             [subplotWidth]="500"
             [subplotHeight]="500"

@@ -6,8 +6,6 @@ import { OptimizationResultsState } from '@core/store/optimization-results/optim
 import { getRouterInfo } from '@core/store/routes/route.selectors';
 import { LoadOptimizationResults } from '@core/store/optimization-results/optimization-results.actions';
 import { selectOptimizationResultsState } from '@core/store/optimization-results/optimization-results.selectors';
-import { Figure } from '@core/models/plotly';
-import { FigureState } from '@shared/components/plotly/plotly.interfaces';
 
 @Component({
   selector: 'app-optimization-results',
@@ -39,9 +37,5 @@ export class OptimizationResultsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.resultsSubscription) this.resultsSubscription.unsubscribe();
-  }
-
-  figureToState(figure: Figure): FigureState {
-    return { ...figure, loading: !figure, success: figure != undefined, error: null };
   }
 }
