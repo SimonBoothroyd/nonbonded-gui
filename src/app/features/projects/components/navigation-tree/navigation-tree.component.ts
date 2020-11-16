@@ -51,7 +51,10 @@ export class NavigationTreeComponent implements OnInit, OnDestroy {
         if (this.dataSource.data == innerData) return;
 
         this.dataSource.data = innerData;
-        this.treeControl.expandAll();
+
+        this.treeControl.dataNodes
+          .filter((node) => node.level == 0)
+          .forEach((node) => this.treeControl.expand(node));
       });
   }
 

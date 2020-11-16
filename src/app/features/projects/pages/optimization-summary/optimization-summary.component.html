@@ -69,14 +69,26 @@
     <div class="section__container" fxFlex fxLayout="column">
       <mat-card>
         <mat-card-content class="specification__text">
-          <span><b>Engine: </b>{{ (optimization$ | async).engine.type }}</span>
+          <span
+            ><b>Engine: </b
+            >{{
+              !(optimization$ | async).engine
+                ? 'Unspecified'
+                : (optimization$ | async).engine.type
+            }}</span
+          >
           <span
             ><b>Maximum iterations: </b
             >{{ (optimization$ | async).max_iterations }}</span
           >
         </mat-card-content>
 
-        <div *ngIf="(optimization$ | async).engine.type == 'ForceBalance'">
+        <div
+          *ngIf="
+            (optimization$ | async).engine != undefined &&
+            (optimization$ | async).engine.type == 'ForceBalance'
+          "
+        >
           <mat-card-subtitle>Trust Radius</mat-card-subtitle>
           <mat-divider class="spaced-divider" inset></mat-divider>
           <mat-card-content class="specification__text">

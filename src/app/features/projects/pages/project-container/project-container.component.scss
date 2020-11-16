@@ -14,9 +14,9 @@
 }
 
 .sidebar__button {
-  position: relative;
+  position: fixed;
   left: 20px;
-  top: 20px;
+  top: 80px;
   z-index: 500;
 }
 
@@ -26,10 +26,6 @@
 
 .sidebar__nav {
   width: 20rem;
-}
-
-.sidenav__button-container {
-  width: 60px;
 }
 
 .sidenav__inner-content {

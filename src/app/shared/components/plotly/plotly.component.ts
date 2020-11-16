@@ -220,6 +220,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
         t: 50,
         b: includeXAxisPadding ? 50 : 0,
       },
+      hovermode: 'closest',
       ...xAxes,
       ...yAxes,
     };
@@ -285,8 +286,6 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private toggleTrace(legendGroup: string, traceName: string) {
-    if (!this.toggleLegendTimer) return;
-
     this._plotData
       .filter((trace) => trace.legendgroup == legendGroup && trace.name == traceName)
       .forEach((trace) => (trace.visible = !trace.visible));
@@ -320,6 +319,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     this.toggleLegendTimer = setTimeout(() => {
+      this.toggleLegendTimer = undefined;
       this.toggleTrace(legendGroup, traceName);
     }, 250);
   }
