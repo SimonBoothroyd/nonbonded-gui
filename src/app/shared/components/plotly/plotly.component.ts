@@ -19,7 +19,7 @@ import {
 
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
-import { Plotly } from 'angular-plotly.js/src/app/shared/plotly.interface';
+import { Plotly } from 'angular-plotly.js/lib/plotly.interface';
 import { PlotlyService } from 'angular-plotly.js';
 
 import { Subscription } from 'rxjs';
@@ -65,6 +65,8 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() subplotWidth: number;
   @Input() subplotHeight: number;
+
+  @Input() autoLeftMargin: boolean = false;
 
   @Input() config?: Partial<Plotly.Config>;
 
@@ -186,6 +188,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
         ...object,
         [`yaxis${i + 1}`]: {
           title: i % nCols == 0 ? subplot.y_axis_label : undefined,
+          automargin: this.autoLeftMargin,
           showticklabels: subplot.show_y_ticks,
         },
       }),
@@ -218,6 +221,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
       annotations: annotations,
       margin: {
         t: 50,
+        // l: this.leftMargin == undefined ? 80 : this.leftMargin,
         b: includeXAxisPadding ? 50 : 0,
       },
       hovermode: 'closest',

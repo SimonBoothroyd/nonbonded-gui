@@ -1,8 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Figure } from '@core/models/plotly';
-import {
-  RMSEPlotCollection,
-} from '@core/store/optimization-plots/optimization-plots.interfaces';
+import { RMSEPlotCollection } from '@core/store/optimization-plots/optimization-plots.interfaces';
 
 export enum OptimizationPlotsActionsTypes {
   LoadObjectivePlot = '[OPTIMIZATION-OBJECTIVE] LOAD',

@@ -20,7 +20,7 @@ import { ProjectEffects } from '@core/store/project/project.effects';
 import { DataSetsEffects } from '@core/store/datasets/datasets.effects';
 import { DataSetEffects } from '@core/store/dataset/dataset.effects';
 import { BenchmarkResultsEffects } from '@core/store/benchmark-results/benchmark-results.effects';
-import { OptimizationResultsEffects } from '@core/store/optimization-plots/optimization-plots.effects';
+import { OptimizationPlotsEffects } from '@core/store/optimization-plots/optimization-plots.effects';
 import { MoleculeSetEffects } from '@core/store/molset/molset.effects';
 
 @NgModule({
@@ -40,7 +40,7 @@ import { MoleculeSetEffects } from '@core/store/molset/molset.effects';
       DataSetEffects,
       MoleculeSetEffects,
       BenchmarkResultsEffects,
-      OptimizationResultsEffects,
+      OptimizationPlotsEffects,
     ]),
 
     StoreRouterConnectingModule.forRoot({

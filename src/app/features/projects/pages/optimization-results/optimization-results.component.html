@@ -1,4 +1,4 @@
-<div class="root__container">
+<app-loadable [loadable]="study$ | async" class="root__container">
   <div
     class="page__container"
     fxLayout="column"
@@ -11,17 +11,77 @@
 
     <div class="section__container" fxFlex fxLayout="column">
       <mat-card>
-        <app-loadable [loadable]="(plots$ | async).objectiveFunction">
+        <app-loadable
+          *ngIf="(plots$ | async).objectiveFunction != undefined"
+          [loadable]="(plots$ | async).objectiveFunction"
+        >
           <div class="graph__container">
             <app-plotly
               [figure]="(plots$ | async).objectiveFunction"
               [config]="{ displayModeBar: false }"
+              [subplotWidth]="400"
+              [subplotHeight]="350"
+            ></app-plotly>
+          </div>
+        </app-loadable>
+      </mat-card>
+    </div>
+
+    <h2>Target Results</h2>
+
+    <div class="section__container" fxFlex fxLayout="column">
+      <mat-card>
+        <mat-form-field appearance="fill">
+          <mat-label>Optimization</mat-label>
+          <mat-select [(value)]="selectedOptimization">
+            <mat-option
+              *ngFor="let optimization of (study$ | async).optimizations"
+              [value]="optimization.id"
+            >
+              {{ optimization.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="selectedOptimization != undefined" appearance="fill">
+          <mat-label>Target</mat-label>
+          <mat-select [(value)]="selectedTarget">
+            <mat-option
+              *ngFor="let target of getTargets(study$ | async)"
+              [value]="target"
+            >
+              {{ target }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="selectedTarget != undefined" appearance="fill">
+          <mat-label>Data Type</mat-label>
+          <mat-select [(value)]="selectedDataType">
+            <mat-option
+              *ngFor="let dataType of getDataTypes((plots$ | async).rmsePlotCollection)"
+              [value]="dataType"
+            >
+              {{ dataType }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <app-loadable
+          *ngIf="getRMSEFigure((plots$ | async).rmsePlotCollection) != undefined"
+          [loadable]="(plots$ | async).objectiveFunction"
+        >
+          <div class="graph__container">
+            <app-plotly
+              [figure]="getRMSEFigure((plots$ | async).rmsePlotCollection)"
+              [config]="{ displayModeBar: false }"
               [subplotWidth]="500"
-              [subplotHeight]="500"
+              [subplotHeight]="getRMSEPlotHeight((plots$ | async).rmsePlotCollection)"
+              [autoLeftMargin]="true"
             ></app-plotly>
           </div>
         </app-loadable>
       </mat-card>
     </div>
   </div>
-</div>
+</app-loadable>

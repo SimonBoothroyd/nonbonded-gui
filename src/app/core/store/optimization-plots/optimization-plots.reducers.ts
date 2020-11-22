@@ -46,7 +46,7 @@ export function reducer(
         rmsePlotCollection: {
           ...state.rmsePlotCollection,
           ...createDefaultLoadable(),
-          loading: true
+          loading: true,
         },
       };
     case OptimizationPlotsActionsTypes.LoadRMSEPlotSuccess:
