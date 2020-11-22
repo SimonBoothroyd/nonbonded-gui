@@ -9,7 +9,6 @@ import { LoadableComponent } from '@shared/components/loadable/loadable.componen
 import { throwIfAlreadyLoaded } from '@core/guards/module-import.guard';
 import { FormsModule } from '@angular/forms';
 
-import { AngularResizedEventModule } from 'angular-resize-event';
 import { PlotlyComponent } from '@shared/components/plotly/plotly.component';
 
 import { PlotlyViaWindowModule } from 'angular-plotly.js';
@@ -34,7 +33,6 @@ import { PlotlyLegendEntryComponent } from '@shared/components/plotly-legend-ent
     FlexLayoutModule,
     FormsModule,
     PlotlyViaWindowModule,
-    AngularResizedEventModule,
     RouterModule,
   ],
   exports: [
@@ -46,7 +44,6 @@ import { PlotlyLegendEntryComponent } from '@shared/components/plotly-legend-ent
     SummaryCardListComponent,
     FormsModule,
     PlotlyViaWindowModule,
-    AngularResizedEventModule,
     FormatTextPipe,
     TextDescriptionComponent,
   ],
