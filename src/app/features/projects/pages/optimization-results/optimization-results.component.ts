@@ -63,6 +63,7 @@ export class OptimizationResultsComponent implements OnInit, OnDestroy {
     )[0];
     return optimization.targets.map((x) => x.id);
   }
+
   public getDataTypes(plotCollection: RMSEPlotCollection): string[] {
     if (this.selectedOptimization == undefined || this.selectedTarget == undefined)
       return [];

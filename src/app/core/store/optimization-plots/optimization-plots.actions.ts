@@ -24,24 +24,32 @@ class LoadOptimizationPlots {
 export class LoadObjectivePlot extends LoadOptimizationPlots implements Action {
   readonly type = OptimizationPlotsActionsTypes.LoadObjectivePlot;
 }
+
 export class LoadObjectivePlotSuccess implements Action {
   readonly type = OptimizationPlotsActionsTypes.LoadObjectivePlotSuccess;
+
   constructor(public payload: Figure) {}
 }
+
 export class LoadObjectivePlotError implements Action {
   readonly type = OptimizationPlotsActionsTypes.LoadObjectivePlotError;
+
   constructor(public error: any) {}
 }
 
 export class LoadRMSEPlot extends LoadOptimizationPlots implements Action {
   readonly type = OptimizationPlotsActionsTypes.LoadRMSEPlot;
 }
+
 export class LoadRMSEPlotSuccess implements Action {
   readonly type = OptimizationPlotsActionsTypes.LoadRMSEPlotSuccess;
+
   constructor(public payload: RMSEPlotCollection) {}
 }
+
 export class LoadRMSEPlotError implements Action {
   readonly type = OptimizationPlotsActionsTypes.LoadRMSEPlotError;
+
   constructor(public error: any) {}
 }
 
