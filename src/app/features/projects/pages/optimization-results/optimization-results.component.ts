@@ -2,10 +2,13 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from '@core/store';
-import { OptimizationResultsState } from '@core/store/optimization-results/optimization-results.interfaces';
 import { getRouterInfo } from '@core/store/routes/route.selectors';
-import { LoadOptimizationResults } from '@core/store/optimization-results/optimization-results.actions';
-import { selectOptimizationResultsState } from '@core/store/optimization-results/optimization-results.selectors';
+import { selectOptimizationPlots } from '@core/store/optimization-plots/optimization-plots.selectors';
+import {
+  LoadObjectivePlot,
+  LoadRMSEPlot
+} from '@core/store/optimization-plots/optimization-plots.actions';
+import { OptimizationPlots } from '@core/store/optimization-plots/optimization-plots.interfaces';
 
 @Component({
   selector: 'app-optimization-results',
@@ -16,7 +19,7 @@ import { selectOptimizationResultsState } from '@core/store/optimization-results
 export class OptimizationResultsComponent implements OnInit, OnDestroy {
   private resultsSubscription: Subscription;
 
-  public results$: Observable<OptimizationResultsState>;
+  public plots$: Observable<OptimizationPlots>;
 
   constructor(private store: Store<State>) {}
 
@@ -25,14 +28,20 @@ export class OptimizationResultsComponent implements OnInit, OnDestroy {
       .select(getRouterInfo)
       .subscribe((routerInfo) => {
         this.store.dispatch(
-          new LoadOptimizationResults(
+          new LoadObjectivePlot(
+            routerInfo.params.projectId,
+            routerInfo.params.studyId
+          )
+        );
+        this.store.dispatch(
+          new LoadRMSEPlot(
             routerInfo.params.projectId,
             routerInfo.params.studyId
           )
         );
       });
 
-    this.results$ = this.store.select(selectOptimizationResultsState);
+    this.plots$ = this.store.select(selectOptimizationPlots);
   }
 
   ngOnDestroy() {

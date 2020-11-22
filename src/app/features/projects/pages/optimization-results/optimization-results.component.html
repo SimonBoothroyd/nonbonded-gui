@@ -1,4 +1,4 @@
-<app-loadable [loadable]="results$ | async" class="root__container">
+<div class="root__container">
   <div
     class="page__container"
     fxLayout="column"
@@ -11,15 +11,17 @@
 
     <div class="section__container" fxFlex fxLayout="column">
       <mat-card>
-        <div class="graph__container">
-          <app-plotly
-            [figure]="(results$ | async).objectiveFunction"
-            [config]="{ displayModeBar: false }"
-            [subplotWidth]="500"
-            [subplotHeight]="500"
-          ></app-plotly>
-        </div>
+        <app-loadable [loadable]="(plots$ | async).objectiveFunction">
+          <div class="graph__container">
+            <app-plotly
+              [figure]="(plots$ | async).objectiveFunction"
+              [config]="{ displayModeBar: false }"
+              [subplotWidth]="500"
+              [subplotHeight]="500"
+            ></app-plotly>
+          </div>
+        </app-loadable>
       </mat-card>
     </div>
   </div>
-</app-loadable>
+</div>

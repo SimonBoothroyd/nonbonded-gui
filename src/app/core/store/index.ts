@@ -7,7 +7,7 @@ import * as projectsReducers from '@core/store/projects/projects.reducers';
 import * as projectReducers from '@core/store/project/project.reducers';
 
 import * as benchmarkResultsReducers from '@core/store/benchmark-results/benchmark-results.reducers';
-import * as optimizationResultsReducers from '@core/store/optimization-results/optimization-results.reducers';
+import * as optimizationPlotsReducers from '@core/store/optimization-plots/optimization-plots.reducers';
 
 import * as datasetsReducers from '@core/store/datasets/datasets.reducers';
 import * as datasetReducers from '@core/store/dataset/dataset.reducers';
@@ -20,7 +20,7 @@ import { ProjectState } from '@core/store/project/project.interfaces';
 import { DataSetsState } from '@core/store/datasets/datasets.interfaces';
 import { DataSetState } from '@core/store/dataset/dataset.interfaces';
 import { BenchmarkResultsState } from '@core/store/benchmark-results/benchmark-results.interfaces';
-import { OptimizationResultsState } from '@core/store/optimization-results/optimization-results.interfaces';
+import { OptimizationPlots } from '@core/store/optimization-plots/optimization-plots.interfaces';
 import { MoleculeSetState } from '@core/store/molset/molset.interfaces';
 import { MoleculeSetsState } from '@core/store/molsets/molsets.interfaces';
 
@@ -35,7 +35,7 @@ export interface State {
   molsets: MoleculeSetsState;
 
   benchmarkResults: BenchmarkResultsState;
-  optimizationResults: OptimizationResultsState;
+  optimizationPlots: OptimizationPlots;
 
   router: RouterReducerState<RouterStateUrl>;
 }
@@ -51,7 +51,7 @@ export const reducers: ActionReducerMap<State> = {
   molsets: molsetsReducers.reducer,
 
   benchmarkResults: benchmarkResultsReducers.reducer,
-  optimizationResults: optimizationResultsReducers.reducer,
+  optimizationPlots: optimizationPlotsReducers.reducer,
 
   router: routerReducer,
 };
