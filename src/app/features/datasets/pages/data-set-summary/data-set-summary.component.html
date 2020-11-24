@@ -1,13 +1,13 @@
-<app-loadable [loadable]="dataSet$ | async" class="root__container">
+<app-loadable [loadable]="dataSet$ | async">
   <div
-    class="page__container"
+    class="content-body"
     fxLayout="column"
-    fxLayoutAlign="center center"
-    fxLayoutGap="2rem"
+    fxLayoutAlign="space-between center"
+    fxLayoutGap="24px"
   >
-    <div fxFlex>
-      <h2 class="project__header">{{ (dataSet$ | async).id }}</h2>
+    <h1 class="id-header">{{ (dataSet$ | async).id }}</h1>
 
+    <div>
       <mat-list class="list-horizontal">
         <mat-list-item *ngFor="let author of (dataSet$ | async).authors">
           <mat-icon matListIcon>account_circle</mat-icon>
@@ -16,7 +16,7 @@
       </mat-list>
     </div>
 
-    <div class="project__card">
+    <div class="content-card">
       <mat-card>
         <app-text-description
           text="{{ (dataSet$ | async).description }}"
@@ -24,7 +24,7 @@
       </mat-card>
     </div>
 
-    <div class="project__card">
+    <div class="content-card">
       <app-data-set-collection [value]="dataSet$ | async"></app-data-set-collection>
     </div>
   </div>

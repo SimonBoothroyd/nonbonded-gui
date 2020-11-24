@@ -1,0 +1,41 @@
+// The SCSS for this control is based off of the
+:host {
+  font-size: 13px;
+
+  min-width: 200px;
+
+  position: sticky;
+  top: 24px;
+
+  padding-left: 25px;
+
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+
+  @media (max-width: 939px) {
+    display: none;
+  }
+}
+
+.table-of-contents-container {
+  width: 100%;
+  padding: 5px 0 10px 10px;
+
+  & + .table-of-contents-container {
+    padding-top: 8px;
+  }
+
+  border-left: 2px solid #673ab7;
+}
+
+a {
+  line-height: 16px;
+  margin: 8px 0 0;
+  position: relative;
+  text-decoration: none;
+  display: block;
+  text-overflow: ellipsis;
+  width: 100%;
+  overflow: hidden;
+}

@@ -1,11 +1,24 @@
-h3 {
-  cursor: pointer;
-  outline: none;
-  text-align: center;
-  margin: 20px 0 10px 10px;
-}
+.root-nav {
+  position: sticky;
+  top: 0;
 
-.mat-tree-node span {
-  cursor: pointer;
-  outline: none;
+  background: white;
+
+  .root-nav-content {
+    width: 260px;
+    height: calc(100vh - 56px);
+    overflow: auto;
+
+    h3 {
+      cursor: pointer;
+      outline: none;
+      text-align: center;
+      margin: 20px 0 10px 10px;
+    }
+
+    .mat-tree-node span {
+      cursor: pointer;
+      outline: none;
+    }
+  }
 }

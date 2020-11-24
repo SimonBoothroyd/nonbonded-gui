@@ -32,7 +32,7 @@
     <span><b>Data sets: </b></span>
     <ul>
       <li *ngFor="let dataSetId of target.data_set_ids">
-        <a [routerLink]="['/datasets', dataSetId]"
+        <a [routerLink]="['/', 'datasets', 'phys-prop', dataSetId]"
           ><i>{{ dataSetId }}</i></a
         >
       </li>

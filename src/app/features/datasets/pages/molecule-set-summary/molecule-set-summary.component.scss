@@ -1,6 +1,6 @@
 :host {
+  flex: 1;
   padding: 20px 50px;
-  width: 100%;
 }
 
 mat-list.list-horizontal {
@@ -13,4 +13,15 @@ mat-list.list-horizontal {
     width: auto;
     margin: auto;
   }
+}
+
+.tile__container {
+  border: 1px solid lightgrey;
+}
+
+.dataset__card_container {
+  overflow: auto;
+}
+
+.substance__tile {
 }

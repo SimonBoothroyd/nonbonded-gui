@@ -14,18 +14,22 @@ import { PlotlyComponent } from '@shared/components/plotly/plotly.component';
 import { PlotlyViaWindowModule } from 'angular-plotly.js';
 import { FormatTextPipe } from '@shared/pipes/format-text.pipe';
 import { TextDescriptionComponent } from '@shared/components/text-description/text-description.component';
-import { SummaryCardListComponent } from '@shared/components/card-lists/summary-card-list/summary-card-list.component';
+import { SummaryCardComponent } from '@shared/components/summary-card/summary-card.component';
 import { RouterModule } from '@angular/router';
 import { PlotlyLegendEntryComponent } from '@shared/components/plotly-legend-entry/plotly-legend-entry.component';
+import { NavbarComponent } from '@shared/components/navbar/navbar.component';
+import { TableOfContentsComponent } from './components/table-of-contents/table-of-contents.component';
 
 @NgModule({
   declarations: [
     LoadableComponent,
+    NavbarComponent,
     PlotlyComponent,
     PlotlyLegendEntryComponent,
-    SummaryCardListComponent,
+    SummaryCardComponent,
     FormatTextPipe,
     TextDescriptionComponent,
+    TableOfContentsComponent,
   ],
   imports: [
     CommonModule,
@@ -39,13 +43,15 @@ import { PlotlyLegendEntryComponent } from '@shared/components/plotly-legend-ent
     MaterialModule,
     FlexLayoutModule,
     LoadableComponent,
+    NavbarComponent,
     PlotlyComponent,
     PlotlyLegendEntryComponent,
-    SummaryCardListComponent,
+    SummaryCardComponent,
     FormsModule,
     PlotlyViaWindowModule,
     FormatTextPipe,
     TextDescriptionComponent,
+    TableOfContentsComponent,
   ],
 })
 export class SharedModule {

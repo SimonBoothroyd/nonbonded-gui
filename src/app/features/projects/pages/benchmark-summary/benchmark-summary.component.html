@@ -1,66 +1,72 @@
-<app-loadable [loadable]="benchmark$ | async" class="root__container">
-  <div
-    class="page__container"
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    fxLayoutGap="2rem"
-  >
-    <h1>{{ (benchmark$ | async).name }}</h1>
+<div class="content-container">
+  <app-loadable [loadable]="benchmark$ | async">
+    <div
+      id="benchmarkSummarySection"
+      class="content-body"
+      fxLayout="column"
+      fxLayoutAlign="space-between center"
+      fxLayoutGap="24px"
+    >
+      <h1>{{ (benchmark$ | async).name }}</h1>
+      <h3 class="id-header">(id={{ (benchmark$ | async).id }})</h3>
 
-    <h3 class="benchmark__id">(id={{ (benchmark$ | async).id }})</h3>
+      <div class="content-card">
+        <mat-card>
+          <app-text-description
+            [text]="(benchmark$ | async).description"
+          ></app-text-description>
+        </mat-card>
+      </div>
 
-    <div class="section__container" fxFlex fxLayout="column">
-      <mat-card>
-        <app-text-description
-          [text]="(benchmark$ | async).description"
-        ></app-text-description>
-      </mat-card>
-    </div>
+      <h2 id="force-field">Force Field</h2>
 
-    <h2>Force Field</h2>
-
-    <div class="section__container" fxFlex fxLayout="column">
-      <mat-card>
-        <mat-card-content class="specification__text">
-          <div *ngIf="(benchmark$ | async).force_field != undefined">
-            <span
-              >This will be a benchmark of a user specified force field which can be
-              downloaded
-              <a
-                [download]="forceFieldName(benchmark$ | async)"
-                [href]="forceFieldSrc(benchmark$ | async)"
-                >from here</a
-              >.</span
-            >
-          </div>
-          <div *ngIf="(benchmark$ | async).optimization_id != undefined">
-            <span
-              >This will be a benchmark of the force field which was produced by the
-              {{ (benchmark$ | async).optimization_id }} optimization.</span
-            >
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-
-    <h2>Test Set</h2>
-
-    <div class="section__container" fxFlex fxLayout="column">
-      <mat-card>
-        <mat-card-content>
-          <p>
-            The test set for this benchmark is a combination of the:
-          </p>
-          <ul>
-            <li *ngFor="let dataSetId of (benchmark$ | async).test_set_ids">
-              <a [routerLink]="['/datasets', dataSetId]"
-                ><i>{{ dataSetId }}</i></a
+      <div class="content-card">
+        <mat-card>
+          <mat-card-content class="specification__text">
+            <div *ngIf="(benchmark$ | async).force_field != undefined">
+              <span
+                >This will be a benchmark of a user specified force field which can be
+                downloaded
+                <a
+                  [download]="forceFieldName(benchmark$ | async)"
+                  [href]="forceFieldSrc(benchmark$ | async)"
+                  >from here</a
+                >.</span
               >
-            </li>
-          </ul>
-          <p>data sets.</p>
-        </mat-card-content>
-      </mat-card>
+            </div>
+            <div *ngIf="(benchmark$ | async).optimization_id != undefined">
+              <span
+                >This will be a benchmark of the force field which was produced by the
+                {{ (benchmark$ | async).optimization_id }} optimization.</span
+              >
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <h2 id="test-sets">Test Sets</h2>
+
+      <div class="content-card">
+        <mat-card>
+          <mat-card-content>
+            <p>
+              The test set for this benchmark is a combination of the:
+            </p>
+            <ul>
+              <li *ngFor="let dataSetId of (benchmark$ | async).test_set_ids">
+                <a [routerLink]="['/', 'datasets', 'phys-prop', dataSetId]"
+                  ><i>{{ dataSetId }}</i></a
+                >
+              </li>
+            </ul>
+            <p>physical property data sets.</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
-  </div>
-</app-loadable>
+
+    <app-table-of-contents
+      [container]="'benchmarkSummarySection'"
+    ></app-table-of-contents>
+  </app-loadable>
+</div>

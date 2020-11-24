@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '@shared/shared.module';
 
-import { DatasetsRootComponent } from '@app/features/datasets/datasets-root.component';
 import { DataSetsComponent } from '@app/features/datasets/pages/data-sets/data-sets.component';
 
 import { DataSetComponent } from '@app/features/datasets/components/data-set/data-set.component';
@@ -12,15 +11,16 @@ import { DataEntryDialogComponent } from '@app/features/datasets/components/data
 
 import { DatasetsRoutes } from '@app/features/datasets/datasets.routes';
 import { DataSetSummaryComponent } from '@app/features/datasets/pages/data-set-summary/data-set-summary.component';
+import { MoleculeSetSummaryComponent } from '@app/features/datasets/pages/molecule-set-summary/molecule-set-summary.component';
 
 @NgModule({
   declarations: [
-    DatasetsRootComponent,
     DataSetsComponent,
     DataSetComponent,
     DataSetSummaryComponent,
     DataSetCollectionComponent,
     DataEntryDialogComponent,
+    MoleculeSetSummaryComponent,
   ],
   imports: [CommonModule, DatasetsRoutes, SharedModule],
   entryComponents: [DataEntryDialogComponent],

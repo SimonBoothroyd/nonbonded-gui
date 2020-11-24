@@ -1,33 +1,41 @@
-<app-loadable [loadable]="project$ | async" class="root__container">
-  <div
-    class="page__container"
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    fxLayoutGap="2rem"
-  >
-    <div fxFlex>
-      <h2 class="project__header">{{ (project$ | async).name }}</h2>
+<div class="content-container">
+  <app-loadable [loadable]="project$ | async">
+    <div
+      id="projectSummarySection"
+      class="content-body"
+      fxLayout="column"
+      fxLayoutAlign="space-between center"
+      fxLayoutGap="24px"
+    >
+      <h1>{{ (project$ | async).name }}</h1>
+      <h3 class="id-header">(id={{ (project$ | async).id }})</h3>
 
-      <mat-list class="list-horizontal">
-        <mat-list-item *ngFor="let author of (project$ | async).authors">
-          <mat-icon matListIcon>account_circle</mat-icon>
-          <p matLine>{{ author.name }}</p>
-        </mat-list-item>
-      </mat-list>
+      <div class="content-card">
+        <mat-list class="list-horizontal">
+          <mat-list-item *ngFor="let author of (project$ | async).authors">
+            <mat-icon matListIcon>account_circle</mat-icon>
+            <p matLine>{{ author.name }}</p>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <div class="content-card">
+        <mat-card>
+          <app-text-description
+            text="{{ (project$ | async).description }}"
+          ></app-text-description>
+        </mat-card>
+      </div>
+
+      <h2 id="studies">Studies</h2>
+
+      <div class="content-card" *ngFor="let study of (project$ | async).studies">
+        <app-summary-card [baseLink]="'studies'" [summary]="study"></app-summary-card>
+      </div>
     </div>
 
-    <div class="project__card">
-      <mat-card>
-        <app-text-description
-          text="{{ (project$ | async).description }}"
-        ></app-text-description>
-      </mat-card>
-    </div>
-    <h2>Studies</h2>
-    <app-study-list
-      [baseRouteUrl]="'studies'"
-      [studies]="(project$ | async).studies"
-      class="project__card"
-    ></app-study-list>
-  </div>
-</app-loadable>
+    <app-table-of-contents
+      [container]="'projectSummarySection'"
+    ></app-table-of-contents>
+  </app-loadable>
+</div>

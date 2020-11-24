@@ -1,0 +1,12 @@
+<!--The design of this component is based upon that used for the main
+https://material.angular.io/ site.-->
+<div class="table-of-contents-container">
+  <nav [attr.aria-label]="'Table of Contents'">
+    <a>{{ getTableContents().title }}</a>
+    <a
+      *ngFor="let link of getTableContents().links"
+      [href]="getBaseUrl(routerState$ | async) + '#' + link.reference"
+      >{{ link.text }}</a
+    >
+  </nav>
+</div>

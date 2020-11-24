@@ -3,17 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '@shared/shared.module';
 
-import { ProjectsRootComponent } from '@app/features/projects/projects-root.component';
-
 import { ProjectSummaryComponent } from '@app/features/projects/pages/project-summary/project-summary.component';
 import { ProjectsComponent } from '@app/features/projects/pages/projects/projects.component';
 
 import { ProjectContainerComponent } from '@app/features/projects/pages/project-container/project-container.component';
 import { StudiesComponent } from './pages/studies/studies.component';
-import { StudyListComponent } from '@app/features/projects/components/card-lists/study-list/study-list.component';
 import { StudySummaryComponent } from './pages/study-summary/study-summary.component';
-
-import { SubStudyCardComponent } from '@app/features/projects/components/cards/sub-study-card/sub-study-card.component';
 
 import { OptimizationsComponent } from '@app/features/projects/pages/optimizations/optimizations.component';
 import { OptimizationSummaryComponent } from '@app/features/projects/pages/optimization-summary/optimization-summary.component';
@@ -30,14 +25,11 @@ import { RechargeTargetComponent } from './components/targets/recharge-target/re
 
 @NgModule({
   declarations: [
-    ProjectsRootComponent,
     ProjectsComponent,
     ProjectSummaryComponent,
     ProjectContainerComponent,
     StudiesComponent,
-    StudyListComponent,
     StudySummaryComponent,
-    SubStudyCardComponent,
     OptimizationsComponent,
     OptimizationSummaryComponent,
     OptimizationResultsComponent,

@@ -68,7 +68,7 @@
     <span><b>Data sets: </b></span>
     <ul>
       <li *ngFor="let dataSetId of target.molecule_set_ids">
-        <a [routerLink]="['/molsets', dataSetId]"
+        <a [routerLink]="['/', 'datasets', 'quantum', dataSetId]"
           ><i>{{ dataSetId }}</i></a
         >
       </li>

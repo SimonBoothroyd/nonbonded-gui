@@ -1,149 +1,154 @@
-<app-loadable [loadable]="optimization$ | async" class="root__container">
-  <div
-    class="page__container"
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    fxLayoutGap="2rem"
-  >
-    <h1>{{ (optimization$ | async).name }}</h1>
+<div class="content-container">
+  <app-loadable [loadable]="optimization$ | async">
+    <div
+      id="optimizationSummarySection"
+      class="content-body"
+      fxLayout="column"
+      fxLayoutAlign="space-between center"
+      fxLayoutGap="24px"
+    >
+      <h1>{{ (optimization$ | async).name }}</h1>
 
-    <h3 class="optimization__id">(id={{ (optimization$ | async).id }})</h3>
+      <h3 class="id-header">(id={{ (optimization$ | async).id }})</h3>
 
-    <div class="section__container" fxFlex fxLayout="column">
-      <mat-card>
-        <app-text-description
-          [text]="(optimization$ | async).description"
-        ></app-text-description>
-      </mat-card>
-    </div>
+      <div class="content-card">
+        <mat-card>
+          <app-text-description
+            [text]="(optimization$ | async).description"
+          ></app-text-description>
+        </mat-card>
+      </div>
 
-    <h2>Force Field</h2>
+      <h2 id="force-field">Force Field</h2>
 
-    <div class="section__container" fxFlex fxLayout="column">
-      <mat-card>
-        <mat-card-content class="specification__text">
-          <div *ngIf="(optimization$ | async).force_field != undefined">
-            <span
-              >This will be an optimization of a user specified force field which can be
-              downloaded
-              <a
-                [download]="forceFieldName(optimization$ | async)"
-                [href]="forceFieldSrc(optimization$ | async)"
-                >from here</a
-              >.</span
-            >
-          </div>
-          <div *ngIf="(optimization$ | async).optimization_id != undefined">
-            <span
-              >This will be an optimization of the force field which was produced by the
-              {{ (optimization$ | async).optimization_id }} optimization.</span
-            >
-          </div>
-        </mat-card-content>
-        <mat-card-subtitle>Parameters to Train</mat-card-subtitle>
-        <mat-divider class="spaced-divider" inset></mat-divider>
-        <mat-card-content class="specification__text">
-          <ul class="handler-list">
-            <li
-              *ngFor="
-                let handlerGroup of groupParameters(
-                  (optimization$ | async).parameters_to_train
-                ) | keyvalue
-              "
-            >
-              <b>{{ handlerGroup.key }}: </b>
-              <ul>
-                <li *ngFor="let smirksGroup of handlerGroup.value | keyvalue">
-                  <span class="code-style">{{ smirksGroup.key }}</span
-                  >: {{ smirksGroup.value.join(', ') }}
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </mat-card-content>
-      </mat-card>
-    </div>
-
-    <h2>Specification</h2>
-
-    <div class="section__container" fxFlex fxLayout="column">
-      <mat-card>
-        <mat-card-content class="specification__text">
-          <span
-            ><b>Engine: </b
-            >{{
-              !(optimization$ | async).engine
-                ? 'Unspecified'
-                : (optimization$ | async).engine.type
-            }}</span
-          >
-          <span
-            ><b>Maximum iterations: </b
-            >{{ (optimization$ | async).max_iterations }}</span
-          >
-        </mat-card-content>
-
-        <div
-          *ngIf="
-            (optimization$ | async).engine != undefined &&
-            (optimization$ | async).engine.type == 'ForceBalance'
-          "
-        >
-          <mat-card-subtitle>Trust Radius</mat-card-subtitle>
-          <mat-divider class="spaced-divider" inset></mat-divider>
+      <div class="content-card">
+        <mat-card>
           <mat-card-content class="specification__text">
-            <span
-              ><b>Initial radius:</b>
-              {{ (optimization$ | async).engine.initial_trust_radius }}</span
-            >
-            <span
-              ><b>Minimum radius:</b>
-              {{ (optimization$ | async).engine.minimum_trust_radius }}</span
-            >
+            <div *ngIf="(optimization$ | async).force_field != undefined">
+              <span
+                >This will be an optimization of a user specified force field which can be
+                downloaded
+                <a
+                  [download]="forceFieldName(optimization$ | async)"
+                  [href]="forceFieldSrc(optimization$ | async)"
+                  >from here</a
+                >.</span
+              >
+            </div>
+            <div *ngIf="(optimization$ | async).optimization_id != undefined">
+              <span
+                >This will be an optimization of the force field which was produced by the
+                {{ (optimization$ | async).optimization_id }} optimization.</span
+              >
+            </div>
           </mat-card-content>
-
-          <mat-card-subtitle>Priors</mat-card-subtitle>
+          <mat-card-subtitle>Parameters to Train</mat-card-subtitle>
           <mat-divider class="spaced-divider" inset></mat-divider>
           <mat-card-content class="specification__text">
             <ul class="handler-list">
               <li
                 *ngFor="
-                  let handlerGroup of groupPriors(
-                    (optimization$ | async).engine.priors
+                  let handlerGroup of groupParameters(
+                    (optimization$ | async).parameters_to_train
                   ) | keyvalue
                 "
               >
                 <b>{{ handlerGroup.key }}: </b>
                 <ul>
-                  <li *ngFor="let attributeGroup of handlerGroup.value | keyvalue">
-                    <span
-                      ><i>{{ attributeGroup.key }}:</i> {{ attributeGroup.value }}</span
-                    >
+                  <li *ngFor="let smirksGroup of handlerGroup.value | keyvalue">
+                    <span class="code-style">{{ smirksGroup.key }}</span
+                    >: {{ smirksGroup.value.join(', ') }}
                   </li>
                 </ul>
               </li>
             </ul>
           </mat-card-content>
-        </div>
-      </mat-card>
+        </mat-card>
+      </div>
+
+      <h2 id="specification">Specification</h2>
+
+      <div class="content-card">
+        <mat-card>
+          <mat-card-content class="specification__text">
+            <span
+              ><b>Engine: </b
+              >{{
+                !(optimization$ | async).engine
+                  ? 'Unspecified'
+                  : (optimization$ | async).engine.type
+              }}</span
+            >
+            <span
+              ><b>Maximum iterations: </b
+              >{{ (optimization$ | async).max_iterations }}</span
+            >
+          </mat-card-content>
+
+          <div
+            *ngIf="
+              (optimization$ | async).engine != undefined &&
+              (optimization$ | async).engine.type == 'ForceBalance'
+            "
+          >
+            <mat-card-subtitle>Trust Radius</mat-card-subtitle>
+            <mat-divider class="spaced-divider" inset></mat-divider>
+            <mat-card-content class="specification__text">
+              <span
+                ><b>Initial radius:</b>
+                {{ (optimization$ | async).engine.initial_trust_radius }}</span
+              >
+              <span
+                ><b>Minimum radius:</b>
+                {{ (optimization$ | async).engine.minimum_trust_radius }}</span
+              >
+            </mat-card-content>
+
+            <mat-card-subtitle>Priors</mat-card-subtitle>
+            <mat-divider class="spaced-divider" inset></mat-divider>
+            <mat-card-content class="specification__text">
+              <ul class="handler-list">
+                <li
+                  *ngFor="
+                    let handlerGroup of groupPriors(
+                      (optimization$ | async).engine.priors
+                    ) | keyvalue
+                  "
+                >
+                  <b>{{ handlerGroup.key }}: </b>
+                  <ul>
+                    <li *ngFor="let attributeGroup of handlerGroup.value | keyvalue">
+                      <span
+                        ><i>{{ attributeGroup.key }}:</i> {{ attributeGroup.value }}</span
+                      >
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </mat-card-content>
+          </div>
+        </mat-card>
+      </div>
+
+      <h2 id="targets">Targets</h2>
+
+      <div
+        *ngFor="let target of (optimization$ | async).targets"
+        class="content-card"
+      >
+        <app-evaluator-target
+          *ngIf="target.allow_direct_simulation != undefined"
+          [target]="target"
+        ></app-evaluator-target>
+        <app-recharge-target
+          *ngIf="target.esp_settings != undefined"
+          [target]="target"
+        ></app-recharge-target>
+      </div>
     </div>
 
-    <h2>Targets</h2>
-
-    <div
-      *ngFor="let target of (optimization$ | async).targets"
-      class="section__container"
-      fxFlex
-      fxLayout="column"
-    >
-      <app-evaluator-target
-        *ngIf="target.allow_direct_simulation != undefined"
-        [target]="target"
-      ></app-evaluator-target>
-      <app-recharge-target
-        *ngIf="target.esp_settings != undefined"
-        [target]="target"
-      ></app-recharge-target>
-    </div>
-  </div>
-</app-loadable>
+    <app-table-of-contents
+      [container]="'optimizationSummarySection'"
+    ></app-table-of-contents>
+  </app-loadable>
+</div>

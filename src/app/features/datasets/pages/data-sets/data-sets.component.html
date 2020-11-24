@@ -1,7 +1,14 @@
-<app-loadable [loadable]="dataSets$ | async" class="root__container">
-  <app-summary-card-list
-    [baseLink]="'datasets'"
-    [summaries]="(dataSets$ | async).data_sets"
-    title="Data Sets"
-  ></app-summary-card-list>
+<app-loadable [loadable]="dataSets$ | async">
+  <div
+    class="content-body"
+    fxLayout="column"
+    fxLayoutAlign="space-between center"
+    fxLayoutGap="24px"
+  >
+    <h1>Property Data Sets</h1>
+
+    <div class="content-card" *ngFor="let dataSet of (dataSets$ | async).data_sets">
+      <app-summary-card [baseLink]="'/datasets/phys-prop'" [summary]="dataSet"></app-summary-card>
+    </div>
+  </div>
 </app-loadable>

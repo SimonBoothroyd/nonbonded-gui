@@ -1,31 +1,4 @@
 :host {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.root__container {
-  height: 100%;
+  padding: 20px 50px;
   width: 100%;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.page__container {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-}
-
-.section__container {
-  margin: 0 auto 2rem;
-  width: 60%;
-}
-
-.section__header {
-  text-align: center;
-}
-
-.section__spacer {
-  margin-bottom: 1rem;
 }

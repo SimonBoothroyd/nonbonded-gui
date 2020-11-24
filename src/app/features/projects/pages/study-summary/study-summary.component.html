@@ -1,50 +1,46 @@
-<app-loadable [loadable]="study$ | async" class="root__container">
-  <div
-    class="page__container"
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    fxLayoutGap="2rem"
-  >
-    <h2>{{ (study$ | async).name }}</h2>
-
-    <div class="section__container" fxFlex fxLayout="column">
-      <mat-card>
-        <app-text-description
-          [text]="(study$ | async).description"
-        ></app-text-description>
-      </mat-card>
-    </div>
-
+<div class="content-container">
+  <app-loadable [loadable]="study$ | async">
     <div
-      class="section__container"
-      fxFlex
-      fxLayout="row"
-      fxLayout.sm="column"
-      fxLayout.xs="column"
-      fxLayoutGap="2rem"
+      id="studySummarySection"
+      class="content-body"
+      fxLayout="column"
+      fxLayoutAlign="space-between center"
+      fxLayoutGap="24px"
     >
-      <div fxFlex>
-        <h2 class="section__header">Optimizations</h2>
-        <app-sub-study-card
-          *ngFor="let optimization of (study$ | async).optimizations; last as last"
-          [className]="last ? '' : 'section__spacer'"
-          [overviewLink]="['optimizations', optimization.id]"
-          [resultsLink]="['optimization-results']"
-          [subStudy]="optimization"
-        >
-        </app-sub-study-card>
+      <h1>{{ (study$ | async).name }}</h1>
+
+      <h3 class="id-header">(id={{ (study$ | async).id }})</h3>
+
+      <div class="content-card">
+        <mat-card>
+          <app-text-description
+            [text]="(study$ | async).description"
+          ></app-text-description>
+        </mat-card>
       </div>
-      <div fxFlex>
-        <h2 class="section__header">Benchmarks</h2>
-        <app-sub-study-card
-          *ngFor="let benchmark of (study$ | async).benchmarks; last as last"
-          [className]="last ? '' : 'section__spacer'"
-          [overviewLink]="['benchmarks', benchmark.id]"
-          [resultsLink]="['benchmark-results']"
-          [subStudy]="benchmark"
-        >
-        </app-sub-study-card>
+
+      <h2 id="optimizations">Optimizations</h2>
+
+      <div
+        class="content-card"
+        *ngFor="let optimization of (study$ | async).optimizations"
+      >
+        <app-summary-card
+          [baseLink]="'optimizations'"
+          [summary]="optimization"
+        ></app-summary-card>
+      </div>
+
+      <h2 id="benchmarks">Benchmarks</h2>
+
+      <div class="content-card" *ngFor="let benchmark of (study$ | async).benchmarks">
+        <app-summary-card
+          [baseLink]="'benchmarks'"
+          [summary]="benchmark"
+        ></app-summary-card>
       </div>
     </div>
-  </div>
-</app-loadable>
+
+    <app-table-of-contents [container]="'studySummarySection'"></app-table-of-contents>
+  </app-loadable>
+</div>

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ProjectsRootComponent } from '@app/features/projects/projects-root.component';
 import { ProjectSummaryComponent } from '@app/features/projects/pages/project-summary/project-summary.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { ProjectStoreGuard } from '@app/features/projects/guards/project-store.guard';
@@ -46,7 +45,6 @@ const benchmarkRoutes = {
 const routes: Routes = [
   {
     path: 'projects',
-    component: ProjectsRootComponent,
     children: [
       {
         path: '',

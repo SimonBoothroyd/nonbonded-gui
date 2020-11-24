@@ -1,6 +1,52 @@
+@import '~@angular/material/theming';
+
 html,
 body {
   height: 100%;
   width: 100%;
   margin: 0;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background: #fafafa;
+}
+
+.id-header {
+  font-family: 'Roboto Mono', monospace;
+}
+h3.id-header {
+  font-family: 'Roboto Mono', monospace;
+  margin-top: -18px;
+}
+
+.content-grid {
+  width: 80%;
+}
+
+.content-container {
+  display: flex;
+  align-items: flex-start;
+
+  app-loadable {
+    display: inherit;
+    align-items: inherit;
+  }
+}
+
+.content-body {
+  margin: 0 auto;
+
+  h1 {
+    text-align: center;
+  }
+
+  h2 {
+    text-align: center;
+  }
+}
+
+.content-card {
+  width: 100%;
+  max-width: 800px;
 }

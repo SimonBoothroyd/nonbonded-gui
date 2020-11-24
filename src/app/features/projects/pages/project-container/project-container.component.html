@@ -1,23 +1,32 @@
-<app-loadable [loadable]="project$ | async" class="root__container">
-  <mat-sidenav-container class="root__container">
-    <mat-sidenav [(opened)]="navbarOpen" class="sidebar__nav" mode="over">
-      <app-navigation-tree></app-navigation-tree>
-    </mat-sidenav>
+<!--The design of this container is based upon that used for the main
+https://material.angular.io/ site.-->
+<mat-sidenav-container class="root-sidenav-container">
+  <mat-sidenav
+    #rootSidenav
+    class="root-sidenav"
+    *ngIf="isSmallScreen$ | async"
+    [opened]="(isSmallScreen$ | async) === false"
+    [mode]="(isSmallScreen$ | async) ? 'over' : 'side'"
+    [fixedInViewport]="isSmallScreen$ | async"
+    [fixedTopGap]="56"
+  >
+    <app-navigation-tree></app-navigation-tree>
+  </mat-sidenav>
 
-    <mat-sidenav-content>
-      <div class="root__container" fxLayout="row">
-        <button
-          (click)="navbarOpen = !navbarOpen"
-          class="sidebar__button"
-          color="primary"
-          mat-mini-fab
-        >
-          <mat-icon> menu</mat-icon>
-        </button>
-        <div class="sidenav__inner-content">
-          <router-outlet></router-outlet>
-        </div>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</app-loadable>
+  <div class="root-sidenav-content">
+    <mat-toolbar *ngIf="(isSmallScreen$ | async) === true" color="secondary">
+      <button (click)="toggleSidenav(rootSidenav)" mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <div class="root-sidenav-inner-content">
+      <main class="root-sidenav-body-content">
+        <app-navigation-tree
+          *ngIf="(isSmallScreen$ | async) === false"
+        ></app-navigation-tree>
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </div>
+</mat-sidenav-container>

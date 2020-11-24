@@ -1,7 +1,14 @@
-<app-loadable [loadable]="projects$ | async" class="root__container">
-  <app-summary-card-list
-    [baseLink]="'projects'"
-    [summaries]="(projects$ | async).projects"
-    title="Projects"
-  ></app-summary-card-list>
+<app-loadable [loadable]="projects$ | async">
+  <div
+    class="content-body"
+    fxLayout="column"
+    fxLayoutAlign="space-between center"
+    fxLayoutGap="24px"
+  >
+    <h1>Projects</h1>
+
+    <div class="content-card" *ngFor="let project of (projects$ | async).projects">
+      <app-summary-card [baseLink]="'/projects'" [summary]="project"></app-summary-card>
+    </div>
+  </div>
 </app-loadable>

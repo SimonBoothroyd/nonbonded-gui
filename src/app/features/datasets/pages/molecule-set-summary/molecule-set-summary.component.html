@@ -1,13 +1,13 @@
 <app-loadable [loadable]="moleculeSet$ | async" class="root__container">
   <div
-    class="page__container"
+    class="content-body"
     fxLayout="column"
-    fxLayoutAlign="center center"
-    fxLayoutGap="2rem"
+    fxLayoutAlign="space-between center"
+    fxLayoutGap="24px"
   >
-    <div fxFlex>
-      <h2 class="project__header">{{ (moleculeSet$ | async).id }}</h2>
+    <h1 class="id-header">{{ (moleculeSet$ | async).id }}</h1>
 
+    <div>
       <mat-list class="list-horizontal">
         <mat-list-item *ngFor="let author of (moleculeSet$ | async).authors">
           <mat-icon matListIcon>account_circle</mat-icon>
@@ -16,7 +16,7 @@
       </mat-list>
     </div>
 
-    <div class="project__card">
+    <div class="content-card">
       <mat-card>
         <app-text-description
           text="{{ (moleculeSet$ | async).description }}"
@@ -26,7 +26,7 @@
 
     <h2>Molecules</h2>
 
-    <div class="project__card">
+    <div class="content-card">
       <mat-card class="dataset__card_container" fxFlex="100">
         <mat-grid-list [cols]="nColumns" gutterSize="20px" rowHeight="1:1">
           <mat-grid-tile
