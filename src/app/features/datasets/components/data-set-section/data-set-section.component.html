@@ -1,4 +1,9 @@
-<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2rem">
+<div
+  *ngIf="value != undefined"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="2rem"
+>
   <h3>{{ title }}</h3>
 
   <div class="root__container" fxFill fxLayout="columns" fxLayoutGap="20px">
@@ -6,7 +11,7 @@
       <mat-grid-list [cols]="nColumns" gutterSize="20px" rowHeight="1:1">
         <mat-grid-tile
           (click)="openEntryDialog(pair.key, pair.value)"
-          *ngFor="let pair of _dataSet | keyvalue"
+          *ngFor="let pair of value | keyvalue"
           [colspan]="pair.key.split(' + ').length"
           class="tile__container"
           matRipple

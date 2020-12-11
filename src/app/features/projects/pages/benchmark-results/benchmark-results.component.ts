@@ -1,13 +1,23 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 
 import { Store } from '@ngrx/store';
 
 import { State } from '@core/store';
-import { BenchmarkResultsState } from '@core/store/benchmark-results/benchmark-results.interfaces';
 import { Observable, Subscription } from 'rxjs';
-import { selectBenchmarkResultsState } from '@core/store/benchmark-results/benchmark-results.selectors';
-import { getRouterInfo } from '@core/store/routes/route.selectors';
-import { LoadBenchmarkResults } from '@core/store/benchmark-results/benchmark-results.actions';
+import { StudyState } from '@core/store/project/project.interfaces';
+import { BenchmarkPlots } from '@core/store/benchmark-plots/benchmark-plots.interfaces';
+import { getCurrentStudyState } from '@core/store/project/project.selectors';
+import {
+  LoadRMSEPlot,
+  LoadScatterPlots,
+} from '@core/store/benchmark-plots/benchmark-plots.actions';
+import { selectBenchmarkPlots } from '@core/store/benchmark-plots/benchmark-plots.selectors';
 
 @Component({
   selector: 'app-test-results',
@@ -16,28 +26,25 @@ import { LoadBenchmarkResults } from '@core/store/benchmark-results/benchmark-re
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BenchmarkResultsComponent implements OnInit, OnDestroy {
-  private resultsSubscription: Subscription;
+  private plotsSubscription: Subscription;
 
-  public results$: Observable<BenchmarkResultsState>;
+  public study$: Observable<StudyState>;
+  public plots$: Observable<BenchmarkPlots>;
 
-  constructor(private store: Store<State>) {}
+  constructor(private store: Store<State>, public ref: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.resultsSubscription = this.store
-      .select(getRouterInfo)
-      .subscribe((routerInfo) => {
-        this.store.dispatch(
-          new LoadBenchmarkResults(
-            routerInfo.params.projectId,
-            routerInfo.params.studyId
-          )
-        );
-      });
+    this.study$ = this.store.select(getCurrentStudyState);
 
-    this.results$ = this.store.select(selectBenchmarkResultsState);
+    this.plotsSubscription = this.study$.subscribe((study) => {
+      this.store.dispatch(new LoadScatterPlots(study.project_id, study.id));
+      this.store.dispatch(new LoadRMSEPlot(study.project_id, study.id));
+    });
+
+    this.plots$ = this.store.select(selectBenchmarkPlots);
   }
 
   ngOnDestroy() {
-    if (this.resultsSubscription) this.resultsSubscription.unsubscribe();
+    if (this.plotsSubscription) this.plotsSubscription.unsubscribe();
   }
 }

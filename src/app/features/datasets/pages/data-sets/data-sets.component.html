@@ -1,14 +1,34 @@
-<app-loadable [loadable]="dataSets$ | async">
-  <div
-    class="content-body"
+<div
+  class="content-body"
+  fxLayout="column"
+  fxLayoutAlign="space-between center"
+  fxLayoutGap="24px"
+>
+  <h1>Physical Property Data Sets</h1>
+
+  <app-loadable
     fxLayout="column"
     fxLayoutAlign="space-between center"
     fxLayoutGap="24px"
+    [loadable]="getDataSetState(dataSets$ | async)"
   >
-    <h1>Property Data Sets</h1>
-
     <div class="content-card" *ngFor="let dataSet of (dataSets$ | async).data_sets">
-      <app-summary-card [baseLink]="'/datasets/phys-prop'" [summary]="dataSet"></app-summary-card>
+      <app-summary-card [baseLink]="'/dataSets'" [summary]="dataSet"></app-summary-card>
     </div>
-  </div>
-</app-loadable>
+  </app-loadable>
+
+  <mat-paginator
+    [pageIndex]="(routerInfo$ | async).queryParams.skip"
+    [length]="
+      (dataSets$ | async).metadata == undefined
+        ? 0
+        : (dataSets$ | async).metadata.total_records
+    "
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[pageSize]"
+    (page)="onPageChanged($event)"
+    showFirstLastButtons="true"
+    hidePageSize="false"
+  >
+  </mat-paginator>
+</div>

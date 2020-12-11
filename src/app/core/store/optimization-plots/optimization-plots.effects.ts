@@ -14,6 +14,7 @@ import {
   LoadObjectivePlotError,
   LoadObjectivePlotSuccess,
   LoadRMSEPlot,
+  LoadRMSEPlotError,
   LoadRMSEPlotSuccess,
   OptimizationPlotsActionsTypes,
 } from '@core/store/optimization-plots/optimization-plots.actions';
@@ -48,7 +49,7 @@ export class OptimizationPlotsEffects {
           map((response: RMSEPlotDict) => {
             return new LoadRMSEPlotSuccess({ plots: response });
           }),
-          catchError((error) => of(new LoadRMSEPlotSuccess(error)))
+          catchError((error) => of(new LoadRMSEPlotError(error)))
         );
     })
   );

@@ -6,6 +6,22 @@
  */
 
 /**
+ * Metadata associated with a collection retrieved from a RESTful API such as pagination information.
+ */
+export type Metadata = CollectionMeta;
+/**
+ * The number of skipped records.
+ */
+export type Skip = number;
+/**
+ * The maximum number of records returned.
+ */
+export type Limit = number;
+/**
+ * The total number of records in the collection
+ */
+export type TotalRecords = number;
+/**
  * The current version of this model. Models with different version numbers are incompatible.
  */
 export type ModelVersion = number;
@@ -355,7 +371,7 @@ export type ModelVersion3 = number;
 /**
  * The unique identifiers of the physical property data sets to include in this optimization target.
  */
-export type DataSetIds = [string, ...string[]];
+export type DataSetIds = string[];
 /**
  * This option controls whether the OpenFF Evaluator should be allowed to attempt to estimate the physical property training set using the direct simulation calculation layer.
  */
@@ -385,39 +401,11 @@ export type Weight1 = number;
  */
 export type ModelVersion4 = number;
 /**
- * The unique identifiers of the molecule sets to include in this optimization target.
+ * The unique identifiers of the QC data sets to include in this optimization target.
  */
-export type MoleculeSetIds = [string, ...string[]];
+export type QcDataSetIds = string[];
 /**
- * The settings to use when generating conformers for each molecule in the training molecule sets.
- */
-export type ConformerSettings1 = ConformerSettings;
-/**
- * The method to use to generate the conformers.
- */
-export type Method = string;
-/**
- * The mode in which to generate the conformers.
- */
-export type SamplingMode = string;
-/**
- * The maximum number of conformers to generate.
- */
-export type MaxConformers = number;
-/**
- * The settings to use when generating the electrostatic data for each molecule in the training molecule sets.
- */
-export type EspSettings = ESPSettings;
-/**
- * The basis set to use in the ESP calculation.
- */
-export type Basis = string;
-/**
- * The method to use in the ESP calculation.
- */
-export type Method1 = string;
-/**
- * The settings to use when generating the grid to generate the electrostatic potential on.
+ * The settings which define the grid to compute the ESP and electric field on for each entry in each QC data set (``qc_data_set_ids``).
  */
 export type GridSettings1 = GridSettings;
 /**
@@ -436,49 +424,6 @@ export type InnerVdwScale = number;
  * A scalar which defines the outer radius of the shell around the molecule to retain grid points within.
  */
 export type OuterVdwScale = number;
-/**
- * The settings to use if including a polarizable continuum model in the ESP calculation.
- */
-export type PcmSettings = PCMSettings;
-/**
- * The solver to use.
- */
-export type Solver = string;
-/**
- * The solvent to simulate. This controls the dielectric constant of the model.
- */
-export type Solvent = string;
-/**
- * The type of atomic radii to use when computing the molecular cavity.
- */
-export type RadiiModel = string;
-/**
- * Whether to scale the atomic radii by a factor of 1.2.
- */
-export type RadiiScaling = boolean;
-/**
- * The average area of the surface partition for the cavity.
- */
-export type CavityArea = number;
-/**
- * An enumeration of the possible DFT grid settings to use when computing
- * properties using PSI4.
- *
- * * Default - The values of `dft_spherical_points`, `dft_radial_points`,
- *   and `dft_pruning_scheme` are not explicitly set and are left for Psi4 to
- *   select.
- * * Medium - `dft_spherical_points=434`, `dft_radial_points=85`,
- *   `dft_pruning_scheme=robust` [1]_.
- * * Fine - `dft_spherical_points=590`, `dft_radial_points=99`,
- *   `dft_pruning_scheme=robust` [2]_.
- *
- * References
- * ----------
- * [1] http://forum.psicode.org/t/dft-scf-not-converging/1725/7 (accessed 22/09/2020)
- * [2] http://www.psicode.org/psi4manual/1.3.2/dft.html#grid-selection
- *     (accessed 22/09/2020)
- */
-export type DFTGridSettings = 'default' | 'medium' | 'fine';
 /**
  * The type of electrostatic property to train against.
  */
@@ -560,20 +505,45 @@ export type Studies = Study[];
  */
 export type Projects = Project[];
 /**
+ * Metadata associated with a collection retrieved from a RESTful API such as pagination information.
+ */
+export type Metadata1 = CollectionMeta;
+/**
  * A collection of studies.
  */
 export type Studies1 = Study[];
 /**
+ * Metadata associated with a collection retrieved from a RESTful API such as pagination information.
+ */
+export type Metadata2 = CollectionMeta;
+/**
  * A collection of optimizations.
  */
 export type Optimizations1 = Optimization[];
+/**
+ * Metadata associated with a collection retrieved from a RESTful API such as pagination information.
+ */
+export type Metadata3 = CollectionMeta;
 /**
  * A collection of benchmarks.
  */
 export type Benchmarks1 = Benchmark[];
 
 export interface ProjectCollection {
+  metadata?: Metadata;
   projects?: Projects;
+
+  [k: string]: unknown;
+}
+
+/**
+ * A data model which stores metadata about a retrieved collection, such as
+ * pagination information.
+ */
+export interface CollectionMeta {
+  skip: Skip;
+  limit: Limit;
+  total_records: TotalRecords;
 
   [k: string]: unknown;
 }
@@ -614,7 +584,7 @@ export interface Study {
 }
 
 /**
- * A base class for optimization and benchmark-results sub-studies, which share largely the
+ * A base class for optimization and benchmark sub-studies, which share largely the
  * same fields.
  */
 export interface Optimization {
@@ -694,35 +664,9 @@ export interface RechargeTarget {
   id: Id4;
   weight?: Weight1;
   model_version?: ModelVersion4;
-  molecule_set_ids: MoleculeSetIds;
-  conformer_settings: ConformerSettings1;
-  esp_settings: EspSettings;
-  property: Property;
-
-  [k: string]: unknown;
-}
-
-/**
- * The settings to use when generating conformers for a
- * particular molecule.
- */
-export interface ConformerSettings {
-  method?: Method;
-  sampling_mode?: SamplingMode;
-  max_conformers?: MaxConformers;
-
-  [k: string]: unknown;
-}
-
-/**
- * A class which contains the settings to use in an ESP calculation.
- */
-export interface ESPSettings {
-  basis?: Basis;
-  method?: Method1;
+  qc_data_set_ids: QcDataSetIds;
   grid_settings: GridSettings1;
-  pcm_settings?: PcmSettings;
-  psi4_dft_grid_settings?: DFTGridSettings;
+  property: Property;
 
   [k: string]: unknown;
 }
@@ -740,20 +684,6 @@ export interface GridSettings {
   [k: string]: unknown;
 }
 
-/**
- * A class which describes the polarizable continuum model (PCM)
- * to include in the calculation of an ESP.
- */
-export interface PCMSettings {
-  solver?: Solver;
-  solvent?: Solvent;
-  radii_model?: RadiiModel;
-  radii_scaling?: RadiiScaling;
-  cavity_area?: CavityArea;
-
-  [k: string]: unknown;
-}
-
 export interface Parameter {
   handler_type: HandlerType;
   smirks: Smirks;
@@ -763,7 +693,7 @@ export interface Parameter {
 }
 
 /**
- * A base class for optimization and benchmark-results sub-studies, which share largely the
+ * A base class for optimization and benchmark sub-studies, which share largely the
  * same fields.
  */
 export interface Benchmark {
@@ -782,18 +712,21 @@ export interface Benchmark {
 }
 
 export interface StudyCollection {
+  metadata?: Metadata1;
   studies?: Studies1;
 
   [k: string]: unknown;
 }
 
 export interface OptimizationCollection {
+  metadata?: Metadata2;
   optimizations?: Optimizations1;
 
   [k: string]: unknown;
 }
 
 export interface BenchmarkCollection {
+  metadata?: Metadata3;
   benchmarks?: Benchmarks1;
 
   [k: string]: unknown;

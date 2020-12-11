@@ -26,8 +26,8 @@
           <mat-card-content class="specification__text">
             <div *ngIf="(optimization$ | async).force_field != undefined">
               <span
-                >This will be an optimization of a user specified force field which can be
-                downloaded
+                >This will be an optimization of a user specified force field which can
+                be downloaded
                 <a
                   [download]="forceFieldName(optimization$ | async)"
                   [href]="forceFieldSrc(optimization$ | async)"
@@ -37,8 +37,8 @@
             </div>
             <div *ngIf="(optimization$ | async).optimization_id != undefined">
               <span
-                >This will be an optimization of the force field which was produced by the
-                {{ (optimization$ | async).optimization_id }} optimization.</span
+                >This will be an optimization of the force field which was produced by
+                the {{ (optimization$ | async).optimization_id }} optimization.</span
               >
             </div>
           </mat-card-content>
@@ -119,7 +119,8 @@
                   <ul>
                     <li *ngFor="let attributeGroup of handlerGroup.value | keyvalue">
                       <span
-                        ><i>{{ attributeGroup.key }}:</i> {{ attributeGroup.value }}</span
+                        ><i>{{ attributeGroup.key }}:</i>
+                        {{ attributeGroup.value }}</span
                       >
                     </li>
                   </ul>
@@ -132,16 +133,13 @@
 
       <h2 id="targets">Targets</h2>
 
-      <div
-        *ngFor="let target of (optimization$ | async).targets"
-        class="content-card"
-      >
+      <div *ngFor="let target of (optimization$ | async).targets" class="content-card">
         <app-evaluator-target
           *ngIf="target.allow_direct_simulation != undefined"
           [target]="target"
         ></app-evaluator-target>
         <app-recharge-target
-          *ngIf="target.esp_settings != undefined"
+          *ngIf="target.grid_settings != undefined"
           [target]="target"
         ></app-recharge-target>
       </div>

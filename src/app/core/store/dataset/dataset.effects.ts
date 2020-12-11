@@ -21,10 +21,12 @@ export class DataSetEffects {
   loadDataSet = this.actions$.pipe(
     ofType(DataSetActionsTypes.Load),
     switchMap((action: LoadDataSet) => {
-      return this.http.get<DataSet>(`${DATA_SETS_ENDPOINT}/${action.dataSetId}`).pipe(
-        map((response: DataSet) => new LoadDataSetSuccess(response)),
-        catchError((error) => of(new LoadDataSetError(error)))
-      );
+      return this.http
+        .get<DataSet>(`${DATA_SETS_ENDPOINT}/phys-prop/${action.dataSetId}`)
+        .pipe(
+          map((response: DataSet) => new LoadDataSetSuccess(response)),
+          catchError((error) => of(new LoadDataSetError(error)))
+        );
     })
   );
 

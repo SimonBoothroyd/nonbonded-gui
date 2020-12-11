@@ -11,10 +11,9 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DataEntryDialogComponent } from '@app/features/datasets/components/data-entry-dialog/data-entry-dialog.component';
 import { MOLECULE_IMAGE_ENDPOINT } from '@core/endpoints';
-
-export interface SubstanceDataSet {
-  [substance: string]: DataSetEntry[];
-}
+import { SubstanceDataSet } from '@core/store/dataset/dataset.interfaces';
+import { Store } from '@ngrx/store';
+import { State } from '@core/store';
 
 export interface SelectedDataEntry {
   substance: string;
@@ -22,28 +21,36 @@ export interface SelectedDataEntry {
 }
 
 @Component({
-  selector: 'app-data-set',
-  templateUrl: './data-set.component.html',
-  styleUrls: ['./data-set.component.scss'],
+  selector: 'app-data-set-section',
+  templateUrl: './data-set-section.component.html',
+  styleUrls: ['./data-set-section.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataSetComponent implements OnInit {
-  _dataSet: SubstanceDataSet = undefined;
-
+export class DataSetSectionComponent implements OnInit {
   @Input() public title: string;
   @Input() public nColumns: number = 10;
+
+  @Input() public value: SubstanceDataSet = undefined;
+
   @Output() public selectedEntry: SelectedDataEntry = undefined;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     private ref: ChangeDetectorRef,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private store: Store<State>
   ) {}
 
-  @Input()
-  public set value(value: SubstanceDataSet) {
-    this.selectedEntry = undefined;
-    this._dataSet = value;
+  ngOnInit(): void {
+    this.breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ])
+      .subscribe((state: BreakpointState) => this.updateColumns(state));
   }
 
   imageEndpoint(smiles: string): string {
@@ -59,18 +66,6 @@ export class DataSetComponent implements OnInit {
     };
 
     this.dialog.open(DataEntryDialogComponent, dialogConfig);
-  }
-
-  ngOnInit(): void {
-    this.breakpointObserver
-      .observe([
-        Breakpoints.XSmall,
-        Breakpoints.Small,
-        Breakpoints.Medium,
-        Breakpoints.Large,
-        Breakpoints.XLarge,
-      ])
-      .subscribe((state: BreakpointState) => this.updateColumns(state));
   }
 
   updateColumns(state: BreakpointState) {

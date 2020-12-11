@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { State } from '@core/store';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Project } from '@core/models/projects';
+import { Project, Study } from '@core/models/projects';
 import { ProjectState } from '@core/store/project/project.interfaces';
 
 interface BaseNavigationNode {
@@ -85,43 +85,58 @@ export class NavigationTreeComponent implements OnInit, OnDestroy {
   );
   public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
+  private buildChildren(study: Study) {
+    let children = [];
+
+    if (study.optimizations.length > 0) {
+      children.push(
+        {
+          name: 'Optimizations',
+          url: null,
+          children: study.optimizations.map(
+            (value): NestedNavigationNode => ({
+              name: value.name,
+              url: `/projects/${study.project_id}/studies/${study.id}/optimizations/${value.id}`,
+            })
+          ),
+        },
+        {
+          name: 'Optimization Results',
+          url: `/projects/${study.project_id}/studies/${study.id}/optimization-results`,
+          icon: 'insights',
+        }
+      );
+    }
+
+    if (study.benchmarks.length > 0) {
+      children.push(
+        {
+          name: 'Benchmarks',
+          url: null,
+          children: study.benchmarks.map(
+            (value): NestedNavigationNode => ({
+              name: value.name,
+              url: `/projects/${study.project_id}/studies/${study.id}/benchmarks/${value.id}`,
+            })
+          ),
+        },
+        {
+          name: 'Benchmark Results',
+          url: `/projects/${study.project_id}/studies/${study.id}/benchmark-results`,
+          icon: 'bar_chart',
+        }
+      );
+    }
+
+    return children;
+  }
+
   private buildNodes(project: Project): NestedNavigationNode[] {
     return project.studies.map(
       (study): NestedNavigationNode => ({
         name: study.name,
         url: `/projects/${project.id}/studies/${study.id}`,
-        children: [
-          {
-            name: 'Optimizations',
-            url: `/projects/${project.id}/studies/${study.id}/optimizations`,
-            children: study.optimizations.map(
-              (value): NestedNavigationNode => ({
-                name: value.name,
-                url: `/projects/${project.id}/studies/${study.id}/optimizations/${value.id}`,
-              })
-            ),
-          },
-          {
-            name: 'Optimization Results',
-            url: `/projects/${project.id}/studies/${study.id}/optimization-results`,
-            icon: 'insights',
-          },
-          {
-            name: 'Benchmarks',
-            url: `/projects/${project.id}/studies/${study.id}/benchmarks`,
-            children: study.benchmarks.map(
-              (value): NestedNavigationNode => ({
-                name: value.name,
-                url: `/projects/${project.id}/studies/${study.id}/benchmarks/${value.id}`,
-              })
-            ),
-          },
-          {
-            name: 'Benchmark Results',
-            url: `/projects/${project.id}/studies/${study.id}/benchmark-results`,
-            icon: 'bar_chart',
-          },
-        ],
+        children: this.buildChildren(study),
       })
     );
   }

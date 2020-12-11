@@ -135,6 +135,8 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private generatePlotData() {
+    if (this._figure.subplots == undefined) return [];
+
     let traces = this._figure.subplots.map((subplot, i) =>
       subplot.traces.map((trace) => ({
         ...trace,
@@ -148,6 +150,8 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private generateLayout() {
+    if (this._figure.subplots == undefined) return {};
+
     const nSubplots = this._figure.subplots.length;
 
     const nCols = Math.max(1, Math.min(this.plotsPerRow, nSubplots));

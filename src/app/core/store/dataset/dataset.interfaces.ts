@@ -1,4 +1,4 @@
-import { DataSet } from '@core/models/datasets';
+import { DataSet, DataSetEntry } from '@core/models/datasets';
 import { createDefaultLoadable, Loadable } from '@core/loadable/loadable';
 
 export const initialDataSet: DataSet = {
@@ -7,6 +7,10 @@ export const initialDataSet: DataSet = {
   authors: [],
   entries: [],
 };
+
+export interface SubstanceDataSet {
+  [substance: string]: DataSetEntry[];
+}
 
 export interface DataSetState extends Loadable, DataSet {}
 

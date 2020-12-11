@@ -24,8 +24,14 @@
       </mat-card>
     </div>
 
-    <div class="content-card">
-      <app-data-set-collection [value]="dataSet$ | async"></app-data-set-collection>
+    <div
+      class="content-card"
+      *ngFor="let pair of perPropertyDataSets(dataSet$ | async) | keyvalue"
+    >
+      <app-data-set-section
+        [title]="pair.key"
+        [value]="pair.value"
+      ></app-data-set-section>
     </div>
   </div>
 </app-loadable>

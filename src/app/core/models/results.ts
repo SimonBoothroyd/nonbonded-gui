@@ -22,7 +22,7 @@ export type ProjectId = string;
  */
 export type ModelVersion = number;
 /**
- * The analysed results of the benchmark-results
+ * The analysed results of the benchmark
  */
 export type DataSetResult1 = DataSetResult;
 /**

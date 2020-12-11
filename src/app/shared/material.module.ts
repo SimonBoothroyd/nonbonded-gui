@@ -15,6 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatRippleModule } from '@angular/material/core';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   exports: [
@@ -26,6 +27,7 @@ import { MatTreeModule } from '@angular/material/tree';
     MatIconModule,
     MatMenuModule,
     MatListModule,
+    MatPaginatorModule,
     MatProgressSpinnerModule,
     MatRadioModule,
     MatRippleModule,

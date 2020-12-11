@@ -18,7 +18,11 @@
             node.icon
           }}</mat-icon>
         </button>
-        <span [routerLink]="[node.url]">{{ node.name | uppercase }}</span>
+
+        <span *ngIf="node.url" [routerLink]="[node.url]">{{
+          node.name | uppercase
+        }}</span>
+        <span *ngIf="!node.url">{{ node.name | uppercase }}</span>
       </mat-tree-node>
       <!-- This is the tree node template for expandable nodes -->
       <mat-tree-node
@@ -36,7 +40,10 @@
             {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
           </mat-icon>
         </button>
-        <span [routerLink]="[node.url]">{{ node.name | uppercase }}</span>
+        <span *ngIf="node.url" [routerLink]="[node.url]">{{
+          node.name | uppercase
+        }}</span>
+        <span *ngIf="!node.url">{{ node.name | uppercase }}</span>
       </mat-tree-node>
     </mat-tree>
   </div>

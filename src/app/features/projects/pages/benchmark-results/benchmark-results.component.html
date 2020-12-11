@@ -1,11 +1,11 @@
 <div class="content-container">
-  <app-loadable [loadable]="results$ | async" class="root__container">
+  <app-loadable [loadable]="study$ | async" class="root__container">
     <div
       class="content-body"
       fxLayout="column"
       fxLayoutAlign="space-between center"
       fxLayoutGap="24px"
-      #benchmarkResultSection
+      id="benchmarkResultSection"
     >
       <h1>Benchmarking Results</h1>
 
@@ -13,19 +13,30 @@
 
       <div class="content-card">
         <mat-card>
-          <div class="graph__container">
-            <app-plotly
-              [figure]="(results$ | async).overallRMSE"
-              [config]="{ displayModeBar: false }"
-            ></app-plotly>
-          </div>
+          <app-loadable
+            *ngIf="(plots$ | async).overallRMSE != undefined"
+            [loadable]="(plots$ | async).overallRMSE"
+          >
+            <div class="graph__container">
+              <app-plotly
+                [figure]="(plots$ | async).overallRMSE"
+                [config]="{ displayModeBar: false }"
+              ></app-plotly>
+            </div>
+          </app-loadable>
         </mat-card>
       </div>
 
       <h2 id="experiment-vs-reference">Experiment vs Reference</h2>
 
+      <app-loadable
+        *ngIf="(plots$ | async).scatterPlotCollection != undefined"
+        [loadable]="(plots$ | async).scatterPlotCollection"
+      >
+      </app-loadable>
+
       <div
-        *ngFor="let pair of (results$ | async).scatter | keyvalue"
+        *ngFor="let pair of (plots$ | async).scatterPlotCollection.plots | keyvalue"
         class="content-card"
       >
         <mat-card>
@@ -41,8 +52,8 @@
       </div>
     </div>
 
-    <app-table-of-contents
-      [container]="'#benchmarkResultSection'"
-    ></app-table-of-contents>
+    <!--    <app-table-of-contents-->
+    <!--      [container]="'benchmarkResultSection'"-->
+    <!--    ></app-table-of-contents>-->
   </app-loadable>
 </div>

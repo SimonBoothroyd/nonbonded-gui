@@ -6,6 +6,22 @@
  */
 
 /**
+ * Metadata associated with a collection retrieved from a RESTful API such as pagination information.
+ */
+export type Metadata = CollectionMeta;
+/**
+ * The number of skipped records.
+ */
+export type Skip = number;
+/**
+ * The maximum number of records returned.
+ */
+export type Limit = number;
+/**
+ * The total number of records in the collection
+ */
+export type TotalRecords = number;
+/**
  * The unique identifier associated with the set.
  */
 export type Id = string;
@@ -72,7 +88,7 @@ export type Doi = string;
 /**
  * The components in the systems for which the measurement was made.
  */
-export type Components = [Component, ...Component[]];
+export type Components = Component[];
 /**
  * The smiles representation of the component.
  */
@@ -90,9 +106,13 @@ export type ExactAmount = number;
  */
 export type Role = string;
 /**
- * A collection of data sets.
+ * The stored collection of physical property data sets.
  */
 export type DataSets = DataSet[];
+/**
+ * Metadata associated with a collection retrieved from a RESTful API such as pagination information.
+ */
+export type Metadata1 = CollectionMeta;
 /**
  * The unique identifier associated with the set.
  */
@@ -110,23 +130,39 @@ export type Authors1 = Author[];
  */
 export type ModelVersion1 = number;
 /**
- * The entries in the set.
+ * The ids of the QCA compute records to include in the data set.
  */
 export type Entries1 = string[];
 /**
- * A collection of molecule sets.
+ * The stored collection of quantum chemical data sets.
  */
-export type MoleculeSets = MoleculeSet[];
+export type DataSets1 = QCDataSet[];
 
+/**
+ * A collection of physical property data sets.
+ */
 export interface DataSetCollection {
+  metadata?: Metadata;
   data_sets?: DataSets;
 
   [k: string]: unknown;
 }
 
 /**
- * The base class for sets of measurements or molecules to train and
- * test against.
+ * A data model which stores metadata about a retrieved collection, such as
+ * pagination information.
+ */
+export interface CollectionMeta {
+  skip: Skip;
+  limit: Limit;
+  total_records: TotalRecords;
+
+  [k: string]: unknown;
+}
+
+/**
+ * A data set of physical property measurements which have been collected from
+ * an experimental data source.
  */
 export interface DataSet {
   id: Id;
@@ -174,19 +210,20 @@ export interface Component {
 }
 
 /**
- * A collection of sets of molecules.
+ * A collection of quantum chemical data sets.
  */
-export interface MoleculeSetCollection {
-  molecule_sets?: MoleculeSets;
+export interface QCDataSetCollection {
+  metadata?: Metadata1;
+  data_sets?: DataSets1;
 
   [k: string]: unknown;
 }
 
 /**
- * The set of molecules which forms either a train or test set for
- * certain (predominantly QM based) targets.
+ * A reference to a data set of quantum chemical (QC) computations which have been
+ * stored in the main QCArchive repository.
  */
-export interface MoleculeSet {
+export interface QCDataSet {
   id: Id2;
   description: Description1;
   authors: Authors1;

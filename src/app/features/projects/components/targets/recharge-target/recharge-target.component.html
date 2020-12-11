@@ -12,65 +12,21 @@
       ><b>Weight: </b> <i>{{ target.weight }}</i></span
     >
   </mat-card-content>
-  <mat-card-subtitle>Conformer Generation</mat-card-subtitle>
-  <mat-divider class="spaced-divider" inset></mat-divider>
-  <mat-card-content class="specification__text">
-    <span><b>Method:</b> {{ target.conformer_settings.method }}</span>
-    <span><b>Sampling mode:</b> {{ target.conformer_settings.sampling_mode }}</span>
-    <span
-      ><b>Maximum conformers:</b> {{ target.conformer_settings.max_conformers }}</span
-    >
-  </mat-card-content>
-  <mat-card-subtitle>QM Settings</mat-card-subtitle>
-  <mat-divider class="spaced-divider" inset></mat-divider>
-  <mat-card-content class="specification__text">
-    <span><b>Basis:</b> {{ target.esp_settings.basis }}</span>
-    <span><b>Method:</b> {{ target.esp_settings.method }}</span>
-    <span
-      ><b>DFT grid density:</b> {{ target.esp_settings.psi4_dft_grid_settings }}</span
-    >
-  </mat-card-content>
   <mat-card-subtitle>Grid Settings</mat-card-subtitle>
   <mat-divider class="spaced-divider" inset></mat-divider>
   <mat-card-content class="specification__text">
-    <span><b>Type:</b> {{ target.esp_settings.grid_settings.type }}</span>
-    <span><b>Spacing:</b> {{ target.esp_settings.grid_settings.spacing }}</span>
-    <span
-      ><b>Inner vdW scale:</b>
-      {{ target.esp_settings.grid_settings.inner_vdw_scale }}</span
-    >
-    <span
-      ><b>Outer vdW scale:</b>
-      {{ target.esp_settings.grid_settings.outer_vdw_scale }}</span
-    >
+    <span><b>Type:</b> {{ target.grid_settings.type }}</span>
+    <span><b>Spacing:</b> {{ target.grid_settings.spacing }}</span>
+    <span><b>Inner vdW scale:</b> {{ target.grid_settings.inner_vdw_scale }}</span>
+    <span><b>Outer vdW scale:</b> {{ target.grid_settings.outer_vdw_scale }}</span>
   </mat-card-content>
-  <div *ngIf="target.esp_settings.pcm_settings != undefined">
-    <mat-card-subtitle>Implicit Solvent</mat-card-subtitle>
-    <mat-divider class="spaced-divider" inset></mat-divider>
-    <mat-card-content class="specification__text">
-      <span><b>Solver:</b> {{ target.esp_settings.pcm_settings.solver }}</span>
-      <span><b>Solvent:</b> {{ target.esp_settings.pcm_settings.solvent }}</span>
-      <span
-        ><b>Radii model:</b> {{ target.esp_settings.pcm_settings.radii_model }}</span
-      >
-      <span
-        ><b>Radii scaling:</b>
-        {{ target.esp_settings.pcm_settings.radii_scaling }}</span
-      >
-      <span
-        ><b>Cavity area:</b> {{ target.esp_settings.pcm_settings.cavity_area }}</span
-      >
-    </mat-card-content>
-  </div>
   <mat-card-subtitle>Training Data</mat-card-subtitle>
   <mat-divider class="spaced-divider" inset></mat-divider>
   <mat-card-content class="specification__text">
     <span><b>Data sets: </b></span>
     <ul>
-      <li *ngFor="let dataSetId of target.molecule_set_ids">
-        <a [routerLink]="['/', 'datasets', 'quantum', dataSetId]"
-          ><i>{{ dataSetId }}</i></a
-        >
+      <li *ngFor="let dataSetId of target.qc_data_set_ids">
+        <i>{{ dataSetId }}</i>
       </li>
     </ul>
   </mat-card-content>
