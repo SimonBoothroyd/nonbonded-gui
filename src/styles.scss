@@ -55,3 +55,9 @@ h3.id-header {
   width: 100%;
   max-width: 800px;
 }
+
+.specification__text li span.code-style {
+  font-family: 'Roboto Mono', monospace;
+  line-height: 20px;
+  display: inline;
+}

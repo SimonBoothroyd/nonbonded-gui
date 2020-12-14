@@ -13,7 +13,7 @@ https://material.angular.io/ site.-->
     <app-navigation-tree></app-navigation-tree>
   </mat-sidenav>
 
-  <div class="root-sidenav-content">
+  <div class="root-sidenav-content" #scrollContainer>
     <mat-toolbar *ngIf="(isSmallScreen$ | async) === true" color="secondary">
       <button (click)="toggleSidenav(rootSidenav)" mat-icon-button>
         <mat-icon>menu</mat-icon>

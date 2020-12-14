@@ -12,4 +12,12 @@ export class EvaluatorTargetComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  formatDenominator(denominatorKey: string) {
+    if (denominatorKey == "Density") return "ρ"
+    if (denominatorKey == "EnthalpyOfMixing") return "ΔHmix"
+    if (denominatorKey == "EnthalpyOfVaporization") return "ΔHvap"
+    if (denominatorKey == "ExcessMolarVolume") return "ΔVex"
+    if (denominatorKey == "SolvationFreeEnergy") return "ΔGsolv"
+  }
 }

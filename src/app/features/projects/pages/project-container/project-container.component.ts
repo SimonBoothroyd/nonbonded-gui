@@ -1,12 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { ProjectState } from '@core/store/project/project.interfaces';
 import { selectProjectState } from '@core/store/project/project.selectors';
@@ -28,6 +29,7 @@ const SMALL_WIDTH_BREAKPOINT = 939;
 })
 export class ProjectContainerComponent implements OnInit, OnDestroy {
   @ViewChild(MatSidenav) rootSidenav: MatSidenav;
+  @ViewChild('scrollContainer') scrollContainer: ElementRef<HTMLElement>;
 
   public isExtraSmallScreen$: Observable<boolean>;
   public isSmallScreen$: Observable<boolean>;
@@ -40,9 +42,15 @@ export class ProjectContainerComponent implements OnInit, OnDestroy {
     private router: Router,
     breakpoints: BreakpointObserver
   ) {
-    // this.routerSubscription = router.events
-    //   .pipe(filter((a) => a instanceof NavigationEnd))
-    //   .subscribe((_) => (this.navbarOpen = false));
+    this.routerSubscription = this.router.events.subscribe((evt) => {
+      if (!(evt instanceof NavigationEnd)) {
+        return;
+      }
+
+      if (this.scrollContainer) {
+        this.scrollContainer.nativeElement.parentElement.scrollTop = 0;
+      }
+    });
 
     this.isSmallScreen$ = breakpoints
       .observe(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`)
