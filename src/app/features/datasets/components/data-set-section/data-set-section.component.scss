@@ -6,14 +6,11 @@
 
 .tile__container {
   border: 1px solid lightgrey;
+  background: white;
 }
 
 .tile__container:hover {
   border: 2px solid mediumseagreen;
-}
-
-.dataset__card_container {
-  overflow: auto;
 }
 
 .selected__card_container {

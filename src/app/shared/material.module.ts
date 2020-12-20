@@ -16,10 +16,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatRippleModule } from '@angular/material/core';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   exports: [
     MatButtonModule,
+    MatCheckboxModule,
     MatCardModule,
     MatDialogModule,
     MatFormFieldModule,

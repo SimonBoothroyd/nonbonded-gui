@@ -56,7 +56,8 @@
                 <b>{{ handlerGroup.key }}: </b>
                 <ul>
                   <li *ngFor="let smirksGroup of handlerGroup.value | keyvalue">
-                    <span class="code-style">{{ smirksGroup.key }}: {{ smirksGroup.value.join(', ') }}</span
+                    <span class="code-style"
+                      >{{ smirksGroup.key }} : {{ smirksGroup.value.join(', ') }}</span
                     >
                   </li>
                 </ul>
@@ -119,8 +120,7 @@
                   <ul>
                     <li *ngFor="let attributeGroup of handlerGroup.value | keyvalue">
                       <span class="code-style"
-                        >{{ attributeGroup.key }}:
-                        {{ attributeGroup.value }}</span
+                        >{{ attributeGroup.key }}: {{ attributeGroup.value }}</span
                       >
                     </li>
                   </ul>

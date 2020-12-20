@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { DataSet } from '@core/models/datasets';
+import { DataSet } from '@core/store/dataset/dataset.interfaces';
 
 export enum DataSetActionsTypes {
   Load = '[DATASET] LOAD',

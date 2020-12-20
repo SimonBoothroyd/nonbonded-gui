@@ -1,7 +1,12 @@
-table {
-  width: 350px;
+.root-container {
+  max-height: 400px;
+  overflow: auto;
 }
 
-h3 {
-  text-align: center;
+.table-container {
+  margin-top: 24px;
+
+  div {
+    margin-bottom: 10px;
+  }
 }

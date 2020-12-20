@@ -4,12 +4,13 @@
     fxLayout="column"
     fxLayoutAlign="space-between center"
     fxLayoutGap="24px"
+    *ngIf="dataSet$ | async as dataSet"
   >
-    <h1 class="id-header">{{ (dataSet$ | async).id }}</h1>
+    <h1 class="id-header">{{ dataSet.id }}</h1>
 
     <div>
       <mat-list class="list-horizontal">
-        <mat-list-item *ngFor="let author of (dataSet$ | async).authors">
+        <mat-list-item *ngFor="let author of dataSet.authors">
           <mat-icon matListIcon>account_circle</mat-icon>
           <p matLine>{{ author.name }}</p>
         </mat-list-item>
@@ -18,20 +19,45 @@
 
     <div class="content-card">
       <mat-card>
-        <app-text-description
-          text="{{ (dataSet$ | async).description }}"
-        ></app-text-description>
+        <markdown
+          class="variable-binding"
+          [data]="cleanupText(dataSet.description)"
+        ></markdown>
       </mat-card>
     </div>
 
-    <div
-      class="content-card"
-      *ngFor="let pair of perPropertyDataSets(dataSet$ | async) | keyvalue"
-    >
+    <div class="content-card" *ngIf="routerInfo$ | async as routerInfo">
+      <div class="filter-section" *ngIf="dataTypeFilters$ | async as dataTypeFilters">
+        <div>Filter by:</div>
+        <div>
+          <mat-checkbox
+            *ngFor="let dataType of dataSet.dataTypes"
+            [checked]="dataTypeFilters.indexOf(dataType) >= 0"
+            (change)="onToggleFilter(dataType, routerInfo, $event)"
+          >
+            {{ dataType }}
+          </mat-checkbox>
+        </div>
+      </div>
       <app-data-set-section
-        [title]="pair.key"
-        [value]="pair.value"
+        class="data-set-section"
+        *ngIf="nEntries(dataSet) > 0"
+        [value]="paginatedEntries(dataSet, routerInfo)"
+        (selected)="openEntryDialog($event, dataSet)"
       ></app-data-set-section>
+
+      <mat-paginator
+        [length]="nEntries(dataSet)"
+        [pageSize]="PAGE_SIZE"
+        [pageIndex]="pageIndex(routerInfo)"
+        [pageSizeOptions]="[PAGE_SIZE]"
+        showFirstLastButtons="true"
+        hidePageSize="false"
+        (page)="onPageChanged(routerInfo, $event)"
+      >
+      </mat-paginator>
     </div>
+
+    <div class="content-card"></div>
   </div>
 </app-loadable>

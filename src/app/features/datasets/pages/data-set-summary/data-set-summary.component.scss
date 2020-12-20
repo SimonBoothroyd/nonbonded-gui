@@ -14,3 +14,21 @@ mat-list.list-horizontal {
     margin: auto;
   }
 }
+
+.mat-checkbox {
+  margin-left: 10px;
+}
+
+.content-body .filter-section {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.content-body .filter-section > div {
+  display: inline;
+}
+
+.content-body .data-set-section {
+  //max-height: 500px;
+  margin-top: 24px;
+}

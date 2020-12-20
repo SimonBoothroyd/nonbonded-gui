@@ -16,7 +16,9 @@
   <mat-divider class="spaced-divider" inset></mat-divider>
   <mat-card-content class="specification__text">
     <span><b>Allow direct simulation:</b> {{ target.allow_direct_simulation }}</span>
-    <span *ngIf="target.n_molecules != undefined"><b>Default number of molecules:</b> {{ target.n_molecules }}</span>
+    <span *ngIf="target.n_molecules != undefined"
+      ><b>Default number of molecules:</b> {{ target.n_molecules }}</span
+    >
   </mat-card-content>
   <mat-card-subtitle>Re-weighting Layer</mat-card-subtitle>
   <mat-divider class="spaced-divider" inset></mat-divider>
@@ -40,7 +42,9 @@
     <span><b>Denominators: </b></span>
     <ul>
       <li *ngFor="let denominator of target.denominators | keyvalue">
-        <span class="code-style">{{ formatDenominator(denominator.key) }}: {{ denominator.value }}</span>
+        <span class="code-style"
+          >{{ formatDenominator(denominator.key) }} : {{ denominator.value }}</span
+        >
       </li>
     </ul>
   </mat-card-content>

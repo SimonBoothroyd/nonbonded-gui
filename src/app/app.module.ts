@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ProjectsModule } from '@app/features/projects/projects.module';
 import { DatasetsModule } from '@app/features/datasets/datasets.module';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,8 @@ import { DatasetsModule } from '@app/features/datasets/datasets.module';
     BrowserAnimationsModule,
 
     AppRoutingModule,
+
+    MarkdownModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -10,6 +10,8 @@ import { DataEntryDialogComponent } from '@app/features/datasets/components/data
 
 import { DatasetsRoutes } from '@app/features/datasets/datasets.routes';
 import { DataSetSummaryComponent } from '@app/features/datasets/pages/data-set-summary/data-set-summary.component';
+import { MarkdownModule } from 'ngx-markdown';
+import { DataTableComponent } from './components/data-table/data-table.component';
 
 @NgModule({
   declarations: [
@@ -17,8 +19,9 @@ import { DataSetSummaryComponent } from '@app/features/datasets/pages/data-set-s
     DataSetSectionComponent,
     DataSetSummaryComponent,
     DataEntryDialogComponent,
+    DataTableComponent,
   ],
-  imports: [CommonModule, DatasetsRoutes, SharedModule],
+  imports: [CommonModule, DatasetsRoutes, SharedModule, MarkdownModule.forRoot()],
   entryComponents: [DataEntryDialogComponent],
 })
 export class DatasetsModule {}

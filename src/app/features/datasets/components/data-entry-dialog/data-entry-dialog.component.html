@@ -1,21 +1,19 @@
-<h3>{{ substance }}</h3>
+<div class="root-container">
+  <div>
+    <mat-grid-list
+      [cols]="substance.split(' + ').length"
+      gutterSize="0"
+      rowHeight="100px"
+      fxFlex="100"
+    >
+      <mat-grid-tile *ngFor="let smiles of substance.split(' + ')" [colspan]="1">
+        <img [alt]="smiles" [src]="imageEndpoint(smiles)" height="100%" />
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
 
-<table [dataSource]="dataEntries" mat-table>
-  <ng-container matColumnDef="temperature">
-    <th *matHeaderCellDef mat-header-cell>T (K)</th>
-    <td *matCellDef="let element" mat-cell>{{ element.temperature.toFixed(2) }}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="pressure">
-    <th *matHeaderCellDef mat-header-cell>Pressure (kPa)</th>
-    <td *matCellDef="let element" mat-cell>{{ element.pressure.toFixed(3) }}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="components">
-    <th *matHeaderCellDef mat-header-cell>Mole Fractions</th>
-    <td *matCellDef="let element" mat-cell>{{ mapComponents(element) }}</td>
-  </ng-container>
-
-  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-  <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
-</table>
+  <div *ngFor="let dataType of dataTypes()" class="table-container">
+    <div>{{ dataType }}</div>
+    <app-data-table [entries]="dataTypeEntries(dataType)"></app-data-table>
+  </div>
+</div>
